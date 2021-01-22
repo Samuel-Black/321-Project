@@ -1,8 +1,9 @@
+@import "~bootstrap/scss/bootstrap";
 @import './components/Fonts.scss';
 
 body {
   margin: 0;
-  font-family: 'Rabbit-on-the-Moon' !important;
+  font-family: 'Rabbit-on-the-Moon';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

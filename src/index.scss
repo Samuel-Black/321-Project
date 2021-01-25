@@ -1,11 +1,13 @@
 @import "~bootstrap/scss/bootstrap";
 @import './components/Fonts.scss';
+@import './components/Colours.scss';
 
 body {
   margin: 0;
   font-family: 'Rabbit-on-the-Moon';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: $primaryWhite;
 }
 
 code {

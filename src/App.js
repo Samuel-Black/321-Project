@@ -10,7 +10,7 @@ export default function App() {
           <h1>JumpStart</h1>
         </div>
         <div id="Home-Button" class="row justify-content-md-center">
-          <a href="/LevelSelect">
+          <a href="/LevelNavigation">
             <button type="button" class="btn btn-primary"><FaPlay size={125} /></button>
           </a>
         </div>

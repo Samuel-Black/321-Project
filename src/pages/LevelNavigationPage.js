@@ -1,17 +1,11 @@
 import React from 'react';
+import './LevelNavigationPage.scss';
+import Routes from '../components/routes/Level-Routes';
 
-export default class LevelNavigationPage extends React.Component {
-    
-    constructor(props) {
-        super(props);
-    }
+export default function LevelNavigationPage () {
 
-    render() {
-        return (
-            <div>
-                
-            </div>
-        );
-    }
+    return (
+        <Routes />
+    );
 
 }

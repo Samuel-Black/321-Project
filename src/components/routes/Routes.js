@@ -1,19 +1,18 @@
 import React, { Component } from "react";
-import { Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Home from "../../App";
 import LevelNav from "../../pages/LevelNavigationPage";
-import history from './history';
-
-export default class Routes extends Component {
+import Game1 from "../../pages/Game1";
+export default class MyRoutes extends Component {
     render() {
         return (
-            <Router history={history}>
-                <Switch>
-                    <Route path="/" exact component={Home} />
-                    <Route path="/LevelNavigation" exact component={LevelNav} />
-                </Switch>
-            </Router>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="LevelNavigation/*" element={<LevelNav />}>
+                    <Route path="Game1" element={<Game1 />} />
+                </Route>
+            </Routes>
         )
     }
 }

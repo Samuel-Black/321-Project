@@ -1,12 +1,40 @@
-#Level-Nav-Background {
-  height: 100vh;  
+@import '../components/Colours.scss';
+
+#Level-Nav-Background-Container {
   width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#Level-Nav-Background {
+  height: inherit;
+  width: inherit;
   background-image: url('../assets/backgrounds/Jungle-Level-Background.svg');
-  background-repeat: no-repeat;
+  white-space: nowrap;
+  
+  /*background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
+  background-size: cover;*/
 }
 
 #Level-Nav {
-    height: 100vh;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    &:hover {
+      a {
+        text-decoration: none;
+      }
+    }
+}
+
+.nav-item {
+  border: 2px solid white;
+  background: white;
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  margin: 50px;
+  color: black;
 }

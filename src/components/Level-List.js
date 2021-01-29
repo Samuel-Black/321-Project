@@ -18,7 +18,13 @@ export const Levels = [
         name: "Game3",
         to: "Game3", // used as the link for routes
         className: gameClassName
-    }  
+    },   
+    {
+        id: 4,
+        name: "Game4",
+        to: "Game4", // used as the link for routes
+        className: gameClassName
+    }   
 ];
 
 export default {

@@ -1,0 +1,24 @@
+.target {
+    width: 200px;
+    height: 216px;
+    border: 1px solid #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    margin: 16px;
+    &.green {
+      background: green;
+    }
+    &.yellow {
+      background: yellow;
+    }
+    &.red {
+      background: red;
+    }
+    & img {
+      height:100%;
+    }
+  }
+  
+  

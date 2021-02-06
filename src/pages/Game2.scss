@@ -1,0 +1,10 @@
+.game-background {
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  align-items: center;
+  background-image: url('../assets/backgrounds/Farm-Level-Background.svg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}

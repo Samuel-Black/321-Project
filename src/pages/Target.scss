@@ -1,0 +1,19 @@
+.target {
+    width: 200px;
+    height: 216px;
+    border: 1px solid #111;
+    &.green {
+      background: green;
+    }
+    &.yellow {
+      background: yellow;
+    }
+    &.red {
+      background: red;
+    }
+    & img {
+      height:100%;
+    }
+  }
+  
+  

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { DropTarget } from "react-dnd";
 import "./Target.scss";
-import { ItemTypes } from '../components/DragItemTypes'
 
 class Target extends Component {
 

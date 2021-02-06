@@ -1,7 +1,8 @@
 import React from "react";
 import Source from "./Source";
 import Target from "./Target";
-import { ItemTypes } from '../components/DragItemTypes'
+import './Game2.scss';
+import { ItemTypes } from '../components/DragItemTypes';
 import shuffleArray from '../components/images/Randomize-Images';
 import assignValues from '../components/images/Assign-Values';
 import sortImages from '../components/images/Sort-Images';
@@ -21,14 +22,13 @@ images = assignValues(images);
 let shuffledImages = shuffleArray(images);
 shuffledImages = sortImages(shuffledImages);
 
-console.log(shuffledImages);
-
 export default class Container extends React.Component {
     constructor() {
       super();
       this.state = {
         droppedItemLeft: {},
-        droppedItemRight: {}
+        droppedItemRight: {},
+        win: false
       };
       this.onDropLeft = this.onDropLeft.bind(this);
       this.onDropRight = this.onDropRight.bind(this);
@@ -38,31 +38,58 @@ export default class Container extends React.Component {
       this.setState({
         droppedItemLeft: item
       });
+      this.winCondition();
     }
   
     onDropRight(item) {
       this.setState({
         droppedItemRight: item
       });
+      this.winCondition();
+    }
+
+    winCondition() {
+      if(this.state.droppedItemLeft.correct && this.state.droppedItemRight.correct) {
+        this.setState({
+          win: true
+        });
+      }
     }
   
     render() {
       return (
-        <div className="App">
-          <div className="source">
-          {shuffledImages.left.map((image) => (
-            <Source image={image.default} correct={image.correct} position={image.position} />
-          ))}
+        <div className="game-background">
+          <div className="container">
+            <div className="row align-items-center">
+              <div className="col-lg">
+                {shuffledImages.left.map((image) => (
+                <div className="row justify-content-center">
+                  <Source image={image.default} correct={image.correct} position={image.position} />
+                </div>
+                ))}
+              </div>
+              
+              <div className= "row">
+                <div className="col-lg-12">
+                  {this.state.win ? 'True' : 'False'}
+                </div>
+                <div className="col-lg">
+                  <Target position={ItemTypes.CARDLEFT} droppedItem={this.state.droppedItemLeft} onDrop={this.onDropLeft} />
+                </div>
+                <div className="col-lg">
+                  <Target position={ItemTypes.CARDRIGHT} droppedItem={this.state.droppedItemRight} onDrop={this.onDropRight} />
+                </div>
+              </div>
+
+              <div className="col-lg">
+                {shuffledImages.right.map((image) => (
+                  <div className="row justify-content-center">
+                    <Source image={image.default} correct={image.correct} position={image.position} />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-          <div className="destination">
-            <Target position={'Left'} droppedItem={this.state.droppedItemLeft} onDrop={this.onDropLeft} />
-          </div>
-          <div className="destination">
-            <Target position={'Right'} droppedItem={this.state.droppedItemRight} onDrop={this.onDropRight} />
-          </div>
-          {shuffledImages.right.map((image) => (
-            <Source image={image.default} correct={image.correct} position={image.position} />
-          ))}
         </div>
       );
     }

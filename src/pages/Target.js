@@ -16,9 +16,8 @@ class Target extends Component {
         }
 
         return connectDropTarget(
-            <div className={`target ${className}`} correct={droppedItem.correct}>
+            <div id={this.props.position == 'Left' ? 'Left-Target' : 'Right-Target'} className={`target ${className}`} correct={droppedItem.correct}>
                 <img src={droppedItem.image} />
-                {droppedItem.correct && "DisplayThisText"}
             </div>
         );
     }

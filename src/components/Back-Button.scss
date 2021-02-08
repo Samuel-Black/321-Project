@@ -1,0 +1,14 @@
+@import '../components/Colours.scss';
+
+#Back-Button {
+    position: absolute;
+    top: 1%;
+    left: 1%;
+    &:hover {
+        cursor: pointer;
+    }
+    #Back {
+        fill: $pastelYellow;
+        color: $maastrichtBlue;
+    }
+}

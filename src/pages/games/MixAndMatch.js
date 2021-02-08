@@ -1,8 +1,10 @@
-import React from "react";
-import Source from "./Source";
-import Target from "./Target";
-import './MixAndMatch.scss';
-import { ItemTypes } from '../components/DragItemTypes';
+import React from "react"
+import Source from "../../components/mixandmatch/Source"
+import Target from "../../components/mixandmatch/Target"
+import './MixAndMatch.scss'
+import { ItemTypes } from '../../components/DragItemTypes'
+import { shuffleArray } from '../../components/images/Image-Functions'
+import BackButton from '../../components/Back-Button'
 
 export default class MixAndMatch extends React.Component {
     constructor(props) {
@@ -10,7 +12,7 @@ export default class MixAndMatch extends React.Component {
       this.state = {
         droppedItemLeft: {},
         droppedItemRight: {},
-        win: false
+        win: false,
       };
       this.onDropLeft = this.onDropLeft.bind(this);
       this.onDropRight = this.onDropRight.bind(this);
@@ -29,7 +31,6 @@ export default class MixAndMatch extends React.Component {
       });
       this.winCondition();
     }
-
     winCondition() {
       if(this.state.droppedItemLeft.correct && this.state.droppedItemRight.correct) {
         this.setState({
@@ -41,10 +42,11 @@ export default class MixAndMatch extends React.Component {
         });
       }
     }
-  
+
     render() {
       return (
         <div className="game-background">
+          <BackButton />
           <div className="container">
             <div className="row align-items-center">
               <div className="col-lg">

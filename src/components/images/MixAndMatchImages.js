@@ -1,6 +1,4 @@
-import shuffleArray from '../components/images/Randomize-Images';
-import assignValues from '../components/images/Assign-Values';
-import sortImages from '../components/images/Sort-Images';
+import { shuffleArray, assignValues, sortImages } from './Image-Functions';
 
 const importAll = require =>
   require.keys().reduce((acc, next) => {
@@ -9,7 +7,7 @@ const importAll = require =>
   }, {});
 
 const imageModules = importAll(
-  require.context('../assets/games/mix&match/Balance_Arms/Difficulty 2/', false, /\.(png|jpe?g|svg)$/)
+  require.context('../../assets/games/mix&match/Balance_Arms/Difficulty 2/', false, /\.(png|jpe?g|svg)$/)
 );
 
 let images = Object.values(imageModules);

@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import LevelNavIndex from '../../pages/LevelNavigationIndex';
-import Game1 from '../../pages/Game1';
-import MixAndMatch from '../../pages/MixAndMatch';
-import { MaMBalanceArms } from '../../components/MixAndMatchImages'
+import Game1 from '../../pages/games/Game1';
+import MixAndMatch from '../../pages/games/MixAndMatch';
+import { MaMBalanceArms } from '../../components/images/MixAndMatchImages'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 

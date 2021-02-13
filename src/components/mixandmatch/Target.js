@@ -4,23 +4,23 @@ import "./Target.scss";
 
 class Target extends Component {
 
-    render() {
-        const { isOver, canDrop, connectDropTarget, droppedItem } = this.props;
-        let className = "";
-        if (isOver && canDrop) {
-            className = "green";
-        } else if (!isOver && canDrop) {
-            className = "yellow";
-        } else if (isOver && !canDrop) {
-            className = "red";
-        }
+  render() {
+      const { isOver, canDrop, connectDropTarget, droppedItem } = this.props;
+      let className = "";
+      if (isOver && canDrop) {
+          className = "green";
+      } else if (!isOver && canDrop) {
+          className = "yellow";
+      } else if (isOver && !canDrop) {
+          className = "red";
+      }
 
-        return connectDropTarget(
-            <div id={this.props.position == 'Left' ? 'Left-Target' : 'Right-Target'} className={`target ${className}`} correct={droppedItem.correct}>
-                <img src={droppedItem.image} />
-            </div>
-        );
-    }
+      return connectDropTarget(
+          <div id={this.props.position == 'Left' ? 'Left-Target' : 'Right-Target'} className={`target ${className}`} correct={droppedItem.correct}>
+              <img src={droppedItem.image} />
+          </div>
+      );
+  }
 }
 
 const spec = {

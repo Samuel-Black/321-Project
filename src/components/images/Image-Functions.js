@@ -69,13 +69,17 @@ function sortThrowEyesImages(array) {
     let mediumArray = [];
     let hardArray = [];
 
+    let easy = 0;
+    let medium = 0;
+    let hard = 0;
+
     for(let i = 0; i < array.length; i++) {
         if(array[i].type == 'Character') {
             if (array[i].eyePosition == 'Left' || array[i].eyePosition == 'Right') 
-                easyArray[i] = array[i];
+                easyArray[easy++] = array[i];
             if (array[i].eyePosition == 'Left' || array[i].eyePosition == 'Right' || array[i].eyePosition == 'Center') 
-                mediumArray[i] = array[i];
-            hardArray[i] = array[i];
+                mediumArray[medium++] = array[i];
+            hardArray[hard++] = array[i];
         } else {
             sortedArray.target = array[i];
         }
@@ -98,6 +102,11 @@ function shuffleArray(array) {
         array[j] = temp;
     }
     return array;
+}
+
+function returnRandomThrowEyesChar(array) {
+    shuffleArray(array);
+    return array[0];
 }
 
 function sortMaMImages(array) {
@@ -129,5 +138,6 @@ export {
     shuffleArray,
     sortMaMImages,
     assignThrowEyesValues,
-    sortThrowEyesImages
+    sortThrowEyesImages,
+    returnRandomThrowEyesChar
 }

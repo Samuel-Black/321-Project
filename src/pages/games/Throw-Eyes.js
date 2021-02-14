@@ -2,13 +2,16 @@ import React from 'react'
 import Character from '../../components/throweyes/Character'
 import Target from '../../components/throweyes/Target'
 import { returnRandomThrowEyesChar } from '../../components/images/Image-Functions'
+import GamePopup from '../../components/Game-Popup'
 import './Throw-Eyes.scss'
+import 'reactjs-popup/dist/index.css';
 
 export default class ThrowEyes extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            levelCleared: false,
             character: this.setChar()
         };
     }
@@ -49,7 +52,7 @@ export default class ThrowEyes extends React.Component {
             {this.props.backButton}
                 {this.difficulty === 0 && 
                     <div id={'Throw-Eyes-Easy'} className="container-fluid">
-                        
+                        <GamePopup />
                         <Character image={this.state.character.default} />
 
                         <div className="row justify-content-center">

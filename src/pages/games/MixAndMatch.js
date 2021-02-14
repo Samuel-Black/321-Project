@@ -4,7 +4,6 @@ import Target from "../../components/mixandmatch/Target"
 import './MixAndMatch.scss'
 import { ItemTypes } from '../../components/DragItemTypes'
 import { shuffleArray } from '../../components/images/Image-Functions'
-import BackButton from '../../components/Back-Button'
 
 export default class MixAndMatch extends React.Component {
     constructor(props) {
@@ -46,7 +45,7 @@ export default class MixAndMatch extends React.Component {
     render() {
       return (
         <div className="game-background">
-          <BackButton />
+          {this.props.backButton}
           <div className="container">
             <div className="row align-items-center">
               <div className="col-lg">

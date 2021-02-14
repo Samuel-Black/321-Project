@@ -10,6 +10,7 @@ export default class Game1 extends React.Component {
     render() {
         return(
             <div>
+                {this.props.backButton}
             </div>
         )
     }

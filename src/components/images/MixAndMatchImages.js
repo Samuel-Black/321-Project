@@ -1,4 +1,4 @@
-import { shuffleArray, assignValues, sortImages } from './Image-Functions';
+import { shuffleArray, assignMaMValues, sortMaMImages } from './Image-Functions';
 
 const importAll = require =>
   require.keys().reduce((acc, next) => {
@@ -11,9 +11,9 @@ const imageModules = importAll(
 );
 
 let images = Object.values(imageModules);
-images = assignValues(images);
+images = assignMaMValues(images);
 let MaMBalanceArms = shuffleArray(images);
-MaMBalanceArms = sortImages(MaMBalanceArms);
+MaMBalanceArms = sortMaMImages(MaMBalanceArms);
 
 
 export {

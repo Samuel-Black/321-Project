@@ -4,6 +4,7 @@ import Target from "../../components/mixandmatch/Target"
 import './MixAndMatch.scss'
 import { ItemTypes } from '../../components/DragItemTypes'
 import { shuffleArray } from '../../components/images/Image-Functions'
+import GamePopup from '../../components/Game-Popup'
 
 export default class MixAndMatch extends React.Component {
     constructor(props) {
@@ -16,6 +17,10 @@ export default class MixAndMatch extends React.Component {
       this.onDropLeft = this.onDropLeft.bind(this);
       this.onDropRight = this.onDropRight.bind(this);
     }
+
+    gameTitle = 'Mix & Match';
+    difficulty = 0;
+    levels = 1;
   
     onDropLeft(item) {
       this.setState({
@@ -32,6 +37,7 @@ export default class MixAndMatch extends React.Component {
     }
     winCondition() {
       if(this.state.droppedItemLeft.correct && this.state.droppedItemRight.correct) {
+        this.difficulty++;
         this.setState({
           win: true
         });
@@ -46,6 +52,7 @@ export default class MixAndMatch extends React.Component {
       return (
         <div className="game-background">
           {this.props.backButton}
+          <GamePopup gameTitle={this.gameTitle} levelsCleared={this.difficulty} numLevels={this.levels} />
           <div className="container">
             <div className="row align-items-center">
               <div className="col-lg">
@@ -73,6 +80,12 @@ export default class MixAndMatch extends React.Component {
               </div>
             </div>
           </div>
+          {this.state.win === true &&
+              <div><GamePopup gameTitle={this.gameTitle} levelsCleared={this.difficulty} numLevels={this.levels} />
+              {console.log(this.difficulty)}
+              {console.log(this.levels)}
+              </div>
+          }
         </div>
       );
     }

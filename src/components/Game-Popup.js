@@ -6,25 +6,24 @@ import { TiHome, TiArrowBack } from 'react-icons/ti'
 import { FaPlay } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom';
 
-let stars = [];
 
 function returnStars(props) {
+    let stars = [];
     for(let i = 0; i < props.numLevels; i++) {
         if(i < props.levelsCleared) {
             stars[i] = <BsStarFill />
         }
         else if(i == props.levelsCleared) {
-            stars[i] = <BsStarFill activeStar={i == props.levelsCleared ? " activeStar" : ""} />
+            stars[i] = <BsStarFill activeStar=" activeStar" />
         }
         else {
             stars[i] = <BsStar />
         }
     }
-    console.log(stars)
     return stars;
 }
 
-function PopupExample(props) {
+export default function GamePopup(props) {
     
     let navigate = useNavigate();
 
@@ -76,5 +75,3 @@ function PopupExample(props) {
         </Popup>
     );
 }
-
-export default PopupExample;

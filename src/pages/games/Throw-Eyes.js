@@ -16,7 +16,6 @@ export default class ThrowEyes extends React.Component {
     }
 
     gameTitle = 'Throw Eyes';
-
     difficulty = 0;
     levels = 3;
     
@@ -97,7 +96,7 @@ export default class ThrowEyes extends React.Component {
                     </div>
                 }
 
-                {this.difficulty === 3 &&
+                {this.difficulty === this.levels &&
                     <GamePopup gameTitle={this.gameTitle} levelsCleared={this.difficulty} numLevels={this.levels} />
                 }
 

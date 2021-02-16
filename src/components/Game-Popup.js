@@ -42,23 +42,14 @@ const PopupExample = (props) => (
                     </div>
                     <h2 id="Level-Text" className="row justify-content-md-center">Level {props.levelsCleared + 1}</h2>
                 </div>
-                <div className="d-flex justify-content-start">
-                    <a
-                        id="Popup-Back-Button"
-                        onClick={() => {
-                            close();
-                        }}
-                    >
-                        <TiArrowBack />Back
-                    </a>
+                <div className="d-flex justify-content-center">
                     <a
                         id="Popup-Play-Button"
-                        className="ml-auto"
                         onClick={() => {
                             close();
                         }}
                     >
-                        Play<FaPlay />
+                        <span>Play</span><span id="Play-Icon"><FaPlay /></span>
                     </a>
                 </div>
             </div>

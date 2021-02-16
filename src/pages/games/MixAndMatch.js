@@ -64,9 +64,6 @@ export default class MixAndMatch extends React.Component {
               </div>
               
               <div className= "row">
-                <div className="col-lg-12">
-                  {this.state.win ? 'True' : 'False'}
-                </div>
                   <Target position={ItemTypes.CARDLEFT} droppedItem={this.state.droppedItemLeft} onDrop={this.onDropLeft} />
                   <Target position={ItemTypes.CARDRIGHT} droppedItem={this.state.droppedItemRight} onDrop={this.onDropRight} />
               </div>
@@ -81,10 +78,7 @@ export default class MixAndMatch extends React.Component {
             </div>
           </div>
           {this.state.win === true &&
-              <div><GamePopup gameTitle={this.gameTitle} levelsCleared={this.difficulty} numLevels={this.levels} />
-              {console.log(this.difficulty)}
-              {console.log(this.levels)}
-              </div>
+              <GamePopup gameTitle={this.gameTitle} levelsCleared={this.difficulty} numLevels={this.levels} />
           }
         </div>
       );

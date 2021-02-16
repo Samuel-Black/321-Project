@@ -1,0 +1,63 @@
+@import '../components/Colours.scss';
+
+.popup-content {
+    background-color: $vividTangelo !important;
+    border-radius: 20px;
+    width: 30vw !important;
+    border: 5px solid $maastrichtBlue !important;
+    & .game-popup {
+        & h1 {
+            font-size: 5rem;
+            -webkit-text-stroke-width: 3px;
+            -webkit-text-stroke-color: black;
+        }
+        #Level-Text {
+            font-size: 3rem;
+            -webkit-text-stroke-width: 2px;
+            -webkit-text-stroke-color: black;
+        }
+        font-size: 50px;
+        & svg {
+            width: 65px;
+            stroke: black;
+            stroke-width: 0.4px;
+            fill: $pastelYellow;
+        }
+        & .activeStar {
+            svg {
+                stroke: black;
+                stroke-width: 0.4px;
+                animation: breathe 0.6s infinite;
+                animation-direction: alternate;
+            }
+        }
+        & .header {
+        width: 100%;
+        font-size: 65px;
+        text-align: center;
+        padding: 5px;
+        }
+        & .content {
+            border: 2px ridge $maastrichtBlue !important;
+            border-style:ridge;
+        }
+        #Popup-Play-Button {
+            color: $secondaryWhite;
+            background: $mediumSeaGreen;
+            border-radius: 15px;
+            width: 33%;
+            -webkit-text-stroke: 1.5px black;
+            text-shadow: 2px 2px black;
+            svg {
+                fill: $secondaryWhite;
+                stroke: $rythmicBlue;
+                stroke-width: 1px;
+            }
+        }
+    }
+}
+
+@keyframes breathe {
+    0%      { stroke-width: 0.6px; transform: translate(0,  0px); }
+    100%    { stroke-width: 0.9px; transform: translate(0, -2px); }
+}

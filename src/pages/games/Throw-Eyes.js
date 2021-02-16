@@ -11,10 +11,11 @@ export default class ThrowEyes extends React.Component {
         super(props);
 
         this.state = {
-            levelCleared: false,
             character: this.setChar()
         };
     }
+
+    gameTitle = 'Throw Eyes';
 
     difficulty = 0;
     
@@ -52,7 +53,7 @@ export default class ThrowEyes extends React.Component {
             {this.props.backButton}
                 {this.difficulty === 0 && 
                     <div id={'Throw-Eyes-Easy'} className="container-fluid">
-                        <GamePopup />
+                    <GamePopup gameTitle={this.gameTitle} levelsCleared={this.difficulty} />
                         <Character image={this.state.character.default} />
 
                         <div className="row justify-content-center">
@@ -67,7 +68,7 @@ export default class ThrowEyes extends React.Component {
 
                 {this.difficulty === 1 &&
                     <div id={'Throw-Eyes-Medium'} className="container-fluid">
-                        
+                    <GamePopup gameTitle={this.gameTitle} levelsCleared={this.difficulty} />
                         <Character image={this.state.character.default} />
 
                         <div className="row justify-content-center">
@@ -82,7 +83,7 @@ export default class ThrowEyes extends React.Component {
 
                 {this.difficulty === 2 &&
                     <div id={'Throw-Eyes-Hard'} className="container-fluid">
-                        
+                    <GamePopup gameTitle={this.gameTitle} levelsCleared={this.difficulty} />
                         <Character image={this.state.character.default} />
 
                         <div className="row justify-content-center">

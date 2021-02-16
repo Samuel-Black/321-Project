@@ -3,14 +3,12 @@
 #Level-Nav-Background-Container {
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
 }
 
 #Level-Nav-Background {
   height: inherit;
   width: inherit;
   background-image: url('../assets/backgrounds/Jungle-Level-Background.svg');
-  white-space: nowrap;
   
   /*background-repeat: no-repeat;
   background-attachment: fixed;
@@ -20,8 +18,8 @@
 
 #Level-Nav {
     position: absolute;
-    bottom: 0;
-    left: 0;
+    top: 830px;
+    left: 40px;
     &:hover {
       a {
         text-decoration: none;
@@ -29,12 +27,52 @@
     }
 }
 
+#Game-2 {
+  top: 20px;
+}
+#Game-3 {
+  top: 10px;
+}
+#Game-4 {
+  bottom: 30px;
+}
+#Game-5 {
+  top: 30px;
+}
+#Game-6 {
+  bottom: 80px;
+}
+#Game-7 {
+  bottom: 110px;
+}
+#Game-8 {
+  bottom: 200px;
+}
+#Game-9 {
+  left: 1400px;
+  bottom: 450px;
+}
+#Game-10 {
+  left: 900px;
+  bottom: 400px;
+}
+#Game-11 {
+  left: 300px;
+  bottom: 500px;
+}
+#Game-12 {
+  right: 200px;
+  bottom: 600px;
+}
+
 .nav-item {
+  position: relative;
   border: 2px solid white;
   background: white;
   height: 70px;
   width: 70px;
   border-radius: 50%;
-  margin: 50px;
+  margin-left: 50px;
+  margin-right: 100px;
   color: black;
 }

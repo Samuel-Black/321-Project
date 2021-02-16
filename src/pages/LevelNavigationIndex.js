@@ -9,7 +9,7 @@ export default class LevelNavigationPage extends React.Component {
         return (
             <div id="Level-Nav-Background-Container">
                 <div id="Level-Nav-Background">
-                    <div id="Level-Nav" class="container">
+                    <div id="Level-Nav" class="container-fluid">
                         {Levels.map(level => {
                             return (
                                 <span>
@@ -22,7 +22,7 @@ export default class LevelNavigationPage extends React.Component {
                                     <Xarrow
                                         start={"Game-" + (level.id-1)} //can be react ref
                                         end={"Game-" + (level.id)} //or an id
-                                        headSize={0} strokeWidth={15} path={"smooth"} />
+                                        headSize={0} strokeWidth={18} path={"smooth"} curveness={0.9} />
                                     }
                                 </span>
                             );

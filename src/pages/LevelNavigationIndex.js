@@ -1,21 +1,24 @@
-import React from 'react';
-import { Levels } from '../components/Level-List';
-import { Link } from 'react-router-dom';
-import Xarrow from "react-xarrows";
+import React, { Component } from 'react'
+import { Levels } from '../components/Level-List'
+import { Link } from 'react-router-dom'
+import Xarrow from "react-xarrows"
+import ScrollDrag from '../components/ScrollDrag'
+import { MapInteractionCSS } from 'react-map-interaction';
 
-export default class LevelNavigationPage extends React.Component {
+export default function LevelNavigationPage() {
+//Design is not finalized, just trying different things, mainly positioning of level icons in regards to responsiveness
 
-    render() {
-        return (
+    return (
+        <MapInteractionCSS disableZoom={false} minScale={1} translationBounds={[0, 1920, 0, 1009]}>
             <div id="Level-Nav-Background-Container">
                 <div id="Level-Nav-Background">
-                    <div id="Level-Nav" class="container-fluid">
+                    <div id="Level-Nav" class="">
                         {Levels.map(level => {
                             return (
-                                <span>
+                                <div>
                                     <Link to={level.to}>
-                                        <div key={level.id} class="nav-item d-inline-flex align-items-center justify-content-center" id={"Game-"+level.id}>
-                                            <span class="Level-Number">{level.name}</span>
+                                        <div key={level.id} class="nav-item" id={"Game-"+level.id}>
+                                            <span class="level-number">{level.name}</span>
                                         </div>
                                     </Link>
                                     {level.id > 1 &&
@@ -24,13 +27,13 @@ export default class LevelNavigationPage extends React.Component {
                                         end={"Game-" + (level.id)} //or an id
                                         headSize={0} strokeWidth={18} path={"smooth"} curveness={0.9} />
                                     }
-                                </span>
+                                </div>
                             );
                         })}
                     </div>
                 </div>
             </div>
-        );
-    }
+        </MapInteractionCSS>
+    );
 
 }

@@ -1,8 +1,11 @@
 @import '../components/Colours.scss';
 
+html, body {margin: 0; height: 100%; overflow: hidden}
+
 #Level-Nav-Background-Container {
-  width: 100vw;
-  height: 100vh;
+  width: 1920px;
+  height: 1009px;
+  overflow: hidden;
 }
 
 #Level-Nav-Background {
@@ -18,7 +21,8 @@
 
 #Level-Nav {
     position: absolute;
-    top: 830px;
+    height: 0px;
+    top: 0px;
     left: 40px;
     &:hover {
       a {
@@ -27,52 +31,68 @@
     }
 }
 
+#Game-1 {
+  left: 100px;
+  top: 850px;
+}
 #Game-2 {
-  top: 20px;
+  left: 400px;
+  top: 830px;
 }
 #Game-3 {
-  top: 10px;
+  left: 700px;
+  top: 630px;
 }
 #Game-4 {
-  bottom: 30px;
+  left: 880px;
+  top: 630px;
 }
 #Game-5 {
-  top: 30px;
+  left: 1200px;
+  top: 630px;
 }
 #Game-6 {
-  bottom: 80px;
+  left: 1500px;
+  top: 380px;
 }
 #Game-7 {
-  bottom: 110px;
+  left: 1630px;
+  top: 200px;
 }
 #Game-8 {
-  bottom: 200px;
+  left: 1500px;
+  top: -70px;
 }
 #Game-9 {
-  left: 1400px;
-  bottom: 450px;
+  left: 1200px;
+  top: -20px;
 }
 #Game-10 {
-  left: 900px;
-  bottom: 400px;
+  left: 1000px;
+  top: -20px;
 }
 #Game-11 {
-  left: 300px;
-  bottom: 500px;
+  left: 700px;
+  top: -200px;
 }
 #Game-12 {
-  right: 200px;
-  bottom: 600px;
+  left: 400px;
+  top: -300px;
 }
 
 .nav-item {
   position: relative;
   border: 2px solid white;
   background: white;
+  margin: auto;
   height: 70px;
   width: 70px;
   border-radius: 50%;
-  margin-left: 50px;
-  margin-right: 100px;
   color: black;
+}
+.level-number {
+  margin: 0;
+  position: absolute;
+  top: 30%;
+  left: 20%;
 }

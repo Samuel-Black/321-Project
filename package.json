@@ -14,10 +14,12 @@
     "react-dnd-html5-backend": "^11.1.3",
     "react-dom": "^17.0.1",
     "react-icons": "^4.1.0",
+    "react-map-interaction": "^2.0.0",
     "react-router-dom": "^6.0.0-beta.0",
     "react-scripts": "4.0.1",
     "react-xarrows": "^1.5.2",
     "reactjs-popup": "^2.0.4",
+    "scrollbooster": "^3.0.2",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

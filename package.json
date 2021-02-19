@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aws-amplify/ui-react": "^1.0.2",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.0",
+    "aws-amplify": "^3.3.20",
     "bootstrap": "^4.6.0",
     "history": "^5.0.0",
+    "jwt-decode": "^3.1.2",
     "node-sass": "^4.14.1",
+    "password-validator": "^5.1.1",
     "react": "^17.0.1",
     "react-dnd": "^11.1.3",
     "react-dnd-html5-backend": "^11.1.3",
@@ -19,7 +23,6 @@
     "react-scripts": "4.0.1",
     "react-xarrows": "^1.5.2",
     "reactjs-popup": "^2.0.4",
-    "scrollbooster": "^3.0.2",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

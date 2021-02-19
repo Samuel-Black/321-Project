@@ -1,10 +1,12 @@
 import './App.scss';
 import { Link } from 'react-router-dom';
 import { FaPlay } from 'react-icons/fa';
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 
-export default function App() {
+function App() {
   return (
     <div className="App">
+      <AmplifySignOut />
       <div class="container">
 
         <div id="Home-Title" class="row justify-content-md-center title">
@@ -20,3 +22,5 @@ export default function App() {
     </div>
   );
 }
+
+export default withAuthenticator(App);

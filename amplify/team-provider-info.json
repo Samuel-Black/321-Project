@@ -1,0 +1,33 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-321project-dev-163113-authRole",
+      "UnauthRoleArn": "arn:aws:iam::933433070468:role/amplify-321project-dev-163113-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::933433070468:role/amplify-321project-dev-163113-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-321project-dev-163113-deployment",
+      "UnauthRoleName": "amplify-321project-dev-163113-unauthRole",
+      "StackName": "amplify-321project-dev-163113",
+      "StackId": "arn:aws:cloudformation:us-east-1:933433070468:stack/amplify-321project-dev-163113/b126fd20-7273-11eb-882a-12a7ac2a1bf1",
+      "AmplifyAppId": "dn3x2gkyg7rb4"
+    },
+    "categories": {
+      "function": {
+        "321projectccad16a8ccad16a8CustomMessage": {
+          "REDIRECTURL": "",
+          "EMAILSUBJECT": "JumpStart - Account Verification",
+          "EMAILMESSAGE": "Please click on the link in this email to verify your account. ",
+          "deploymentBucketName": "amplify-321project-dev-163113-deployment",
+          "s3Key": "amplify-builds/321projectccad16a8ccad16a8CustomMessage-30325a36776b727a544f-build.zip"
+        },
+        "AdminQueries374abb13": {
+          "deploymentBucketName": "amplify-321project-dev-163113-deployment",
+          "s3Key": "amplify-builds/AdminQueries374abb13-645232687a63376a6836-build.zip"
+        }
+      },
+      "auth": {
+        "321projectccad16a8ccad16a8": {}
+      }
+    }
+  }
+}

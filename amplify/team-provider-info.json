@@ -14,7 +14,7 @@
     "categories": {
       "function": {
         "321projectccad16a8ccad16a8CustomMessage": {
-          "REDIRECTURL": "",
+          "REDIRECTURL": "http://localhost:3000/",
           "EMAILSUBJECT": "JumpStart - Account Verification",
           "EMAILMESSAGE": "Please click on the link in this email to verify your account. ",
           "deploymentBucketName": "amplify-321project-dev-163113-deployment",

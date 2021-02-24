@@ -1,15 +1,26 @@
 import React, { Component } from "react";
 import { Routes, Route } from 'react-router-dom';
 
-import Home from "../../App";
+import HomePage from "../../pages/Home-Page";
 import LevelNav from "../../pages/LevelNavigationPage";
+import LoginPage from '../../pages/account/LogInPage'
+import App from '../../App'
+import AppRoute from './AuthenticatedRoute'
 
 export default class MyRoutes extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+
+        }
+    }
+
     render() {
         return (
             <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="LevelNavigation/*" element={<LevelNav />} />
+                <AppRoute path="/" component={HomePage} isPrivate={true} />
+                <AppRoute path="LevelNavigation/*" component={LevelNav} isPrivate={true} />
+                <AppRoute path="Login" component={LoginPage} isPrivate={false} />
             </Routes>
         )
     }

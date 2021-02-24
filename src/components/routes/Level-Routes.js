@@ -8,17 +8,18 @@ import { HotSpotThrowEyes } from '../../components/images/ThrowEyesImages'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import BackButton from '../../components/Back-Button'
+import AppRoute from './AuthenticatedRoute'
 
 export default function LevelRoutes() {
     
     return( 
         <Routes>
-            <Route path="/" element={<LevelNavIndex />} />
-            <Route path="/Game1" element={<Game1 backButton={<BackButton />} />} />
+            <AppRoute path="/" component={LevelNavIndex} isPrivate={true} />
+            <AppRoute path="/Game1" component={Game1} isPrivate={true} backButton={<BackButton />} />
             <DndProvider backend={HTML5Backend}>
-                <Route path="/Game2" element={<MixAndMatch backButton={<BackButton />} shuffledImages={MaMBalanceArms} />} />
+                <AppRoute path="/Game2" component={MixAndMatch} isPrivate={true} backButton={<BackButton />} shuffledImages={MaMBalanceArms} />
             </DndProvider>
-            <Route path="/Game3" element={<ThrowEyes backButton={<BackButton />} shuffledImages={HotSpotThrowEyes} />} /> 
+            <AppRoute path="/Game3" component={ThrowEyes} isPrivate={true} backButton={<BackButton />} shuffledImages={HotSpotThrowEyes} /> 
         </Routes>
     );
 

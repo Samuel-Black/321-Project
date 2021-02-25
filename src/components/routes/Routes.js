@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Routes, Route } from 'react-router-dom';
-
 import HomePage from "../../pages/Home-Page";
 import LevelNav from "../../pages/LevelNavigationPage";
 import LoginPage from '../../pages/account/LogInPage'
@@ -18,7 +17,7 @@ export default class MyRoutes extends Component {
     render() {
         return (
             <Routes>
-                <AppRoute path="/" component={HomePage} isPrivate={true} />
+                <AppRoute path="" component={HomePage} isPrivate={true} />
                 <AppRoute path="LevelNavigation/*" component={LevelNav} isPrivate={true} />
                 <AppRoute path="Login" component={LoginPage} isPrivate={false} />
             </Routes>

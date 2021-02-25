@@ -1,48 +1,57 @@
-import { loginUser, useAuthState, useAuthDispatch } from '../../libs'
+import { loginUser, useAuthState, useAuthDispatch, useAuthUser } from '../../libs'
 import React, { useState } from 'react'
 import { Auth } from 'aws-amplify';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export default function LoginPage(props) {
 
-    const navigate = useNavigate();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    const navigate = useNavigate()
     const dispatch = useAuthDispatch()
+    const userData = useAuthUser()
+    
     const { loading, errorMessage } = useAuthState() //read the values of loading and errorMessage from context
 
 const handleLogin = async (e) => {
     e.preventDefault()
     try {
         await loginUser(dispatch, { email, password })
-        navigate('../')
+        window.location.reload(false);
     } catch (error) {
         console.log(error)
+        return
     }
 }
 
     return (
-        <div>
-            <div className={{ width: 200 }}>
-                <h1>Login Page</h1>
-                {
-                    errorMessage ? <p>{errorMessage}</p> : null
-                }
-                <form >
-                    <div>
+        <>
+        {userData != false ?
+            <Navigate to={'../'} replace={true} />
+            :
+            <div>
+                <div className={{ width: 200 }}>
+                    <h1>Login Page</h1>
+                    {
+                        errorMessage ? <p>{errorMessage}</p> : null
+                    }
+                    <form >
                         <div>
-                            <label htmlFor="email">Username</label>
-                            <input type="text" id='email' value={email} onChange={(e) => setEmail(e.target.value)} disabled={loading} />
+                            <div>
+                                <label htmlFor="email">Username</label>
+                                <input type="text" id='email' value={email} onChange={(e) => setEmail(e.target.value)} disabled={loading} />
+                            </div>
+                            <div>
+                                <label htmlFor="password">Password</label>
+                                <input type="password" id='password' value={password} onChange={(e) => setPassword(e.target.value)} disabled={loading} />
+                            </div>
                         </div>
-                        <div>
-                            <label htmlFor="password">Password</label>
-                            <input type="password" id='password' value={password} onChange={(e) => setPassword(e.target.value)} disabled={loading} />
-                        </div>
-                    </div>
-                    <button onClick={handleLogin} disabled={loading}>login</button>
-                </form>
+                        <button onClick={handleLogin} disabled={loading}>login</button>
+                    </form>
+                </div>
             </div>
-        </div>
+        }
+        </>
     )
 }

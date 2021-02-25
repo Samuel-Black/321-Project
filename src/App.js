@@ -7,7 +7,6 @@ import Routes from './components/routes/Routes';
 //import { useUser } from "./libs/contextLib";
 import { useNavigate } from 'react-router-dom';
 import { render } from '@testing-library/react';
-import CurrentUser from './Current-User'
 
 import AuthenticatedApp from './Authenticated-App'
 import UnauthenticatedApp from './Unauthenticated-App'

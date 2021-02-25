@@ -1,21 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Navigate } from 'react-router-dom';
-import { useAuthState, getCurrentToken, isAuthenticated } from '../../libs';
+import { useAuthState, useAuthUser, AuthProvider } from '../../libs';
 import { Auth } from 'aws-amplify';
+import usePromise from 'react-promise';
 
 //&& !Boolean(userDetails.token === getCurrentToken())
 
 const Container = ({Component, isPrivate, ...props}) => {
-    const userDetails = useAuthState();
+    let userData = useAuthUser()
     
-    if(isPrivate === true && isAuthenticated().then() === false) {
-         return <Navigate to={'../Login'} replace={true} />;
-     }
-     
-     return <Component {...props} />
+    if((isPrivate && (userData === false))) {
+        return <Navigate to={'/Login'} replace={false} />
+    }
+    else {
+      return <Component {...props} />
+    }
   }
 
-const AppRoute = ({ component: Component, path, isPrivate, ...props }) => {   
+const AppRoute = ({ component: Component, path, isPrivate, ...props }) => {
+
     return (
       <Route
           path={path}

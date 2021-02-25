@@ -1,7 +1,7 @@
 import { Auth } from 'aws-amplify';
 
 export const isAuthenticated = async () => {
-  const cognitoUser = Auth.currentSession();
+  const cognitoUser = Auth.currentSession()
   return (await cognitoUser).isValid()
 };
 
@@ -27,21 +27,9 @@ export async function loginUser(dispatch, loginPayload) {
  
 export async function logout(dispatch) {
   dispatch({ type: 'LOGOUT' });
-  localStorage.removeItem('currentUser');
-  localStorage.removeItem('token');
-}
-
-/*
- 
-    if (data.user) {
-      dispatch({ type: 'LOGIN_SUCCESS', payload: data });
-      localStorage.setItem('currentUser', JSON.stringify(data));
-      return data
-    }
- 
-    dispatch({ type: 'LOGIN_ERROR', error: data.errors[0] });
-    return;
+  try {
+    await Auth.signOut()
   } catch (error) {
-    dispatch({ type: 'LOGIN_ERROR', error: error });
+    console.log('error signing out: ', error);
   }
-*/
+}

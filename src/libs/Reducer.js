@@ -1,6 +1,12 @@
-let user = localStorage.getItem("currentUser")
-  ? JSON.parse(localStorage.getItem("currentUser")).user
-  : "";
+import { Auth } from 'aws-amplify';
+import React, { useState, Component } from 'react';
+
+async function bootstrapAppData() {
+  let retrieveUser = await Auth.currentAuthenticatedUser()
+  return retrieveUser
+}
+let user = ''
+
 let token = localStorage.getItem("currentUser")
   ? JSON.parse(localStorage.getItem("currentUser")).auth_token
   : "";

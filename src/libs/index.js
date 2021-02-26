@@ -1,4 +1,4 @@
-import { isAuthenticated, getCurrentToken, loginUser, logout} from './Actions';
+import { isAuthenticated, getCurrentToken, loginUser, logout, changePassword} from './Actions';
 import { AuthProvider, useAuthUser, useAuthDispatch, useAuthState } from './contextLib';
  
-export { AuthProvider, useAuthUser, useAuthState, useAuthDispatch, isAuthenticated, getCurrentToken, loginUser, logout };
+export { AuthProvider, useAuthUser, useAuthState, useAuthDispatch, isAuthenticated, getCurrentToken, loginUser, logout, changePassword };

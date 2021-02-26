@@ -44,7 +44,7 @@ const AuthProvider = ({ children }) => {
 
     useEffect( () => {
         getUserData().then((result) => {
-            setUserData(result.attributes)
+            setUserData(result)
             setLoading(false)
         }).catch((error) => {
             console.log(error)

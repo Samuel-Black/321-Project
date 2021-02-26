@@ -1,52 +1,33 @@
-import { Auth } from 'aws-amplify';
-import React, { useState, Component } from 'react';
 
-async function bootstrapAppData() {
-  let retrieveUser = await Auth.currentAuthenticatedUser()
-  return retrieveUser
-}
-let user = ''
-
-let token = localStorage.getItem("currentUser")
-  ? JSON.parse(localStorage.getItem("currentUser")).auth_token
-  : "";
- 
 export const initialState = {
-  userDetails: "" || user,
-  token: "" || token,
   loading: false,
   errorMessage: null
 };
  
 export const AuthReducer = (initialState, action) => {
-  switch (action.type) {
-    case "REQUEST_LOGIN":
+    if (action.type == "REQUEST_LOGIN" || action.type == "CHANGE_PASSWORD")
       return {
         ...initialState,
         loading: true
-      };
-    case "LOGIN_SUCCESS":
+      }
+
+    if (action.type == "LOGIN_SUCCESS" || action.type == "CHANGE_PASSWORD_SUCCESS")
       return {
         ...initialState,
-        user: action.payload.username,
-        token: action.payload.signInUserSession.accessToken.jwtToken,
         loading: false
-      };
-    case "LOGOUT":
+      }
+
+    if (action.type == "LOGOUT")
       return {
-        ...initialState,
-        user: "",
-        token: ""
-      };
- 
-    case "LOGIN_ERROR":
+        ...initialState
+      }
+
+    if (action.type == "LOGIN_ERROR")
       return {
         ...initialState,
         loading: false,
         errorMessage: action.error
-      };
+      }
  
-    default:
-      throw new Error(`Unhandled action type: ${action.type}`);
-  }
+    throw new Error(`Unhandled action type: ${action.type}`);
 };

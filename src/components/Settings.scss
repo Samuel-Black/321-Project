@@ -1,5 +1,27 @@
 #Settings-Button {
-    position: absolute;
-    top: 1%;
-    left: 1%;
+  position: absolute;
+  top: 1%;
+  left: 1%;
+  svg {
+    fill: white;
   }
+}
+
+.popup-content {
+  text-align: center;
+  #Settings-Title {
+    h3 {
+      font-size: 4rem;
+    }
+  }
+  .settingsContent {
+    margin: 15px;
+    font-size: 2rem;
+    a {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+}

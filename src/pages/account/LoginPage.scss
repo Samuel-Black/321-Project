@@ -1,0 +1,37 @@
+@import '../../components/Colours.scss';
+
+#Login-Background {
+    min-height: 100vh;
+    min-width: 100vw;
+    background-color: $vividTangelo;
+}
+
+#Login-Title {
+    margin-top: 80px;
+    h1 {
+        font-size: 9rem;
+        -webkit-text-stroke-width: 4px;
+        -webkit-text-stroke-color: black;
+    }
+}
+
+h2 {
+    font-size: 3rem;
+}
+
+#Login-Content-Row {
+    margin-top: 150px;
+}
+
+#Login-Content {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    label {
+        font-size: 1.3rem;
+    }
+    form {
+        width: 380px;
+    }
+    a {
+        font-weight: bold;
+    }
+}

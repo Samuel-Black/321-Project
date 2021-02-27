@@ -2,7 +2,6 @@ import './Home-Page.scss'
 import React from "react";
 import { Link } from 'react-router-dom';
 import { FaPlay } from 'react-icons/fa';
-import Routes from '../components/routes/Routes'
 import Settings from '../components/Settings'
 
 export default function HomePage() {

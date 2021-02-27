@@ -10,7 +10,7 @@ const Container = ({Component, isPrivate, ...props}) => {
     let userData = useAuthUser()
     
     if((isPrivate && (userData === false))) {
-        return <Navigate to={'/Login'} replace={false} />
+        return <Navigate to={'/Login'} replace={true} />
     }
     else {
       return <Component {...props} />

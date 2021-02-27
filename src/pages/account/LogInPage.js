@@ -1,6 +1,7 @@
 import { loginUser, useAuthState, useAuthDispatch, useAuthUser } from '../../libs'
 import React, { useState } from 'react'
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
+import './LoginPage.scss'
 
 export default function LoginPage(props) {
 
@@ -10,16 +11,14 @@ export default function LoginPage(props) {
     const dispatch = useAuthDispatch()
     const userData = useAuthUser()
     
-    const { loading, errorMessage } = useAuthState() //read the values of loading and errorMessage from context
+    const { loading, errorMessage } = useAuthState()
 
     const handleLogin = async (e) => {
         e.preventDefault()
         try {
             await loginUser(dispatch, { email, password })
-            window.location.reload(false);
         } catch (error) {
             console.log(error)
-            return
         }
     }
 
@@ -28,25 +27,49 @@ export default function LoginPage(props) {
         {userData != false ?
             <Navigate to={'../'} replace={true} />
             :
-            <div>
-                <div className={{ width: 200 }}>
-                    <h1>Login Page</h1>
-                    {
-                        errorMessage ? <p>{errorMessage}</p> : null
-                    }
-                    <form >
-                        <div>
-                            <div>
-                                <label htmlFor="email">Username</label>
-                                <input type="text" id='email' value={email} onChange={(e) => setEmail(e.target.value)} disabled={loading} />
-                            </div>
-                            <div>
-                                <label htmlFor="password">Password</label>
-                                <input type="password" id='password' value={password} onChange={(e) => setPassword(e.target.value)} disabled={loading} />
+            <div id="Login-Background">
+                <div className="container">
+                    <div id="Title-Row" className="row">
+                        <div className="container">
+                            <div id="Login-Title" class="row justify-content-md-center">
+                                <h1>JumpStart</h1>
                             </div>
                         </div>
-                        <button onClick={handleLogin} disabled={loading}>login</button>
-                    </form>
+                    </div>
+                    <div id="Login-Content-Row" className="row">
+                        <div className="container">
+                            <div className="row justify-content-md-center">
+                                <h2>Sign In</h2>
+                            </div>
+                            <div className="row justify-content-md-center">
+                                <div id="Login-Content" className="d-inline-flex flex-column align-items-center justify-content-center">
+                                    <span>Don't have an account?&nbsp;
+                                        <Link to='../Signup'>
+                                            <a>Sign Up Here</a>
+                                        </Link>
+                                    </span>
+                                    <form>
+                                        <div className="d-flex">
+                                            <label htmlFor="email" className="mr-auto align-self-center">Email</label>
+                                            <div className="form-group">
+                                                <input type="text" id='email' className="form-control-lg" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled={loading} />
+                                            </div>
+                                        </div>
+                                        <div className="d-flex">
+                                            <label htmlFor="password" className="mr-auto align-self-center">Password</label>
+                                            <div className="form-group">
+                                                <input type="password" id='password' className="form-control-lg" placeholder="password" value={password} minLength={8} onChange={(e) => setPassword(e.target.value)} disabled={loading} />
+                                            </div>
+                                        </div>
+                                        <div className="d-flex justify-content-end">{errorMessage ? <p>{errorMessage}</p> : null}</div>
+                                        <div className="d-flex justify-content-end">
+                                            <button onClick={handleLogin} disabled={loading}>login</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         }

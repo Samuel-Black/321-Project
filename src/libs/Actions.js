@@ -5,24 +5,39 @@ export const isAuthenticated = async () => {
   return (await cognitoUser).isValid()
 };
 
-export const getCurrentToken = async () => {
-  const cognitoUser = await Auth.currentSession();
-
-  if (cognitoUser.accessToken.jwtToken !== null) {
-    return cognitoUser.accessToken.jwtToken
-  }
-};
-
 export async function loginUser(dispatch, loginPayload) {
  
   try {
     dispatch({ type: 'REQUEST_LOGIN' });
     const user = await Auth.signIn(loginPayload.email, loginPayload.password);
     dispatch({ type: 'LOGIN_SUCCESS' });
+    window.location.reload(false);
     return user
     } catch (error) {
       dispatch({ type: 'LOGIN_ERROR', error: error.message });
     }
+}
+
+export async function signupUser(dispatch, signupPayload) {
+ 
+  try {
+    dispatch({ type: 'REQUEST_SIGNUP' })
+    await Auth.signUp(signupPayload.email, signupPayload.password)
+    dispatch({ type: 'SIGNUP_SUCCESS' })
+  } catch (error) {
+    dispatch({ type: 'SIGNUP_ERROR', error: error.message })
+  }
+}
+
+export async function confirmUserSignUp(dispatch, confirmationPayload) {
+
+  try {
+    dispatch({ type: 'REQUEST_SIGNUP_CONFIRMATION' })
+    await Auth.confirmSignUp(confirmationPayload.email, confirmationPayload.authenticationCode)
+    dispatch({ type: 'SIGNUP_CONFIRMATION_SUCCESS' })
+  } catch (error) {
+    dispatch({ type: 'SIGNUP_CONFIRMATION_ERROR', error: error.message })
+  }
 }
  
 export async function logout(dispatch) {

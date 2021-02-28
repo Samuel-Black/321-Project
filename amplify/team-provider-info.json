@@ -14,11 +14,11 @@
     "categories": {
       "function": {
         "321projectccad16a8ccad16a8CustomMessage": {
-          "REDIRECTURL": "",
+          "REDIRECTURL": "http://localhost:3000/",
           "EMAILSUBJECT": "JumpStart - Account Verification",
-          "EMAILMESSAGE": "Please click on the link in this email to verify your account. ",
+          "EMAILMESSAGE": "Please the authentication code in this email to verify your account",
           "deploymentBucketName": "amplify-321project-dev-163113-deployment",
-          "s3Key": "amplify-builds/321projectccad16a8ccad16a8CustomMessage-30325a36776b727a544f-build.zip"
+          "s3Key": "amplify-builds/321projectccad16a8ccad16a8CustomMessage-466479593231376e6e6e-build.zip"
         },
         "AdminQueries374abb13": {
           "deploymentBucketName": "amplify-321project-dev-163113-deployment",

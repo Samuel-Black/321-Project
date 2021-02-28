@@ -1,0 +1,27 @@
+@import '../../components/Colours.scss';
+
+#Signup-Background {
+    min-height: 100vh;
+    min-width: 100vw;
+    background-color: $vividTangelo;
+}
+
+
+#Signup-Content {
+    form {
+        min-width: 450px;
+    }
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    label {
+        font-size: 1.3rem;
+    }
+    form {
+        width: 380px;
+    }
+    a {
+        font-weight: bold;
+    }
+    input {
+        width: 450px;
+    }
+}

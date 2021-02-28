@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
-import { BrowserRouter } from 'react-router-dom';
-import Routes from './components/routes/Routes';
 import reportWebVitals from './reportWebVitals';
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from './aws-exports';
+import { BrowserRouter } from 'react-router-dom';
+import Routes from './components/routes/Routes'
+import App from './App'
+import { AuthProvider } from './libs';
 Amplify.configure(awsconfig);
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes />
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <App />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -1,6 +1,7 @@
 import { loginUser, useAuthState, useAuthDispatch, useAuthUser } from '../../libs'
 import React, { useState } from 'react'
 import { Navigate, Link } from 'react-router-dom';
+import { Oval } from 'react-loading-icons'
 import './LoginPage.scss'
 
 export default function LoginPage(props) {
@@ -11,7 +12,9 @@ export default function LoginPage(props) {
     const dispatch = useAuthDispatch()
     const userData = useAuthUser()
     
-    const { loading, errorMessage } = useAuthState()
+    let { loading, errorMessage } = useAuthState()
+
+    errorMessage = null
 
     const handleLogin = async (e) => {
         e.preventDefault()
@@ -48,22 +51,26 @@ export default function LoginPage(props) {
                                             <a>Sign Up Here</a>
                                         </Link>
                                     </span>
-                                    <form>
+                                    <form className="mt-3">
                                         <div className="d-flex">
-                                            <label htmlFor="email" className="mr-auto align-self-center">Email</label>
+                                            <label htmlFor="email" className="align-self-center">Email</label>
+                                        </div>
+                                        <div className="d-flex">
                                             <div className="form-group">
                                                 <input type="text" id='email' className="form-control-lg" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled={loading} />
                                             </div>
                                         </div>
                                         <div className="d-flex">
-                                            <label htmlFor="password" className="mr-auto align-self-center">Password</label>
+                                            <label htmlFor="password" className="align-self-center">Password</label>
+                                        </div>
+                                        <div className="d-flex">
                                             <div className="form-group">
                                                 <input type="password" id='password' className="form-control-lg" placeholder="password" value={password} minLength={8} onChange={(e) => setPassword(e.target.value)} disabled={loading} />
                                             </div>
                                         </div>
                                         <div className="d-flex justify-content-end">{errorMessage ? <p>{errorMessage}</p> : null}</div>
                                         <div className="d-flex justify-content-end">
-                                            <button onClick={handleLogin} disabled={loading}>login</button>
+                                            {loading === true && <Oval />}<button id="Login-Button" onClick={handleLogin} disabled={loading}>login</button>
                                         </div>
                                     </form>
                                 </div>

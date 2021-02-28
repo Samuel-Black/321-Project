@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Route, Navigate } from 'react-router-dom';
 import { useAuthState, useAuthUser, AuthProvider } from '../../libs';
-import { Auth } from 'aws-amplify';
-import usePromise from 'react-promise';
 
 //&& !Boolean(userDetails.token === getCurrentToken())
 

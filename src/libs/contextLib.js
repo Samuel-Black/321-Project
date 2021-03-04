@@ -73,7 +73,7 @@ const AuthProvider = ({ children }) => {
             <div>LOADING</div> 
             :
             <AuthUserContext.Provider value={userData}>
-                <AuthPlayerContext.Provider value={player}>
+                <AuthPlayerContext.Provider value={{player, setPlayer}}>
                     <AuthStateContext.Provider value={user}>
                         <AuthDispatchContext.Provider value={dispatch}>
                             {children}

@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes } from 'react-router-dom';
 import LevelNavIndex from '../../pages/LevelNavigationIndex';
 import Game1 from '../../pages/games/Game1';
 import MixAndMatch from '../../pages/games/MixAndMatch';

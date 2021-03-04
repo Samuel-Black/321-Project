@@ -1,4 +1,16 @@
 import { isAuthenticated, loginUser, logout, signupUser, confirmUserSignUp, changePassword} from './Actions';
-import { AuthProvider, useAuthUser, useAuthDispatch, useAuthState } from './contextLib';
+import { AuthProvider, useAuthUser, useAuthPlayer, useAuthDispatch, useAuthState } from './contextLib';
  
-export { AuthProvider, useAuthUser, useAuthState, useAuthDispatch, isAuthenticated, loginUser, logout, signupUser, confirmUserSignUp, changePassword };
+export { 
+            AuthProvider, 
+            useAuthUser, 
+            useAuthPlayer, 
+            useAuthState, 
+            useAuthDispatch, 
+            isAuthenticated, 
+            loginUser,
+            logout, 
+            signupUser, 
+            confirmUserSignUp, 
+            changePassword 
+        };

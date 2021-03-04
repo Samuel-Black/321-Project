@@ -3,12 +3,20 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import { FaPlay } from 'react-icons/fa';
 import Settings from '../components/Settings'
+import { useAuthPlayer } from '../libs'
 
 export default function HomePage() {
+
+    const player = useAuthPlayer()
 
     return(
         <div className="App">
             <Settings />
+            {player === false ?
+            <>
+                No Player
+            </>
+            :
             <div className="container">
                 <div id="Home-Title" class="row justify-content-md-center title">
                     <h1>JumpStart</h1>
@@ -19,6 +27,7 @@ export default function HomePage() {
                     </Link>
                 </div>
             </div>
+            }
         </div>
     );
 

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FaPlay } from 'react-icons/fa';
 import { TiUserAdd } from 'react-icons/ti';
 import Settings from '../components/Settings'
+import PlayerSignout from '../components/Player-Signout'
 import { useAuthPlayer, useAuthUser } from '../libs'
 import Axios from 'axios'
 
@@ -115,6 +116,7 @@ export default function HomePage() {
                                     </div>
                                 </div>
                                 <div className="d-flex justify-content-end">
+                                    {errorMessage ? <p>{errorMessage}</p> : null}
                                    <button id="Login-Button" onClick={createPlayer}>Create</button>
                                 </div>
                             </form>
@@ -125,6 +127,7 @@ export default function HomePage() {
             </>
             :
             <div className="container">
+                <PlayerSignout />
                 <div id="Home-Title" class="row justify-content-md-center title">
                     <h1>JumpStart</h1>
                 </div>

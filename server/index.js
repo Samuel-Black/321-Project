@@ -23,7 +23,7 @@ app.post('/api/verifyuser', (req, res) => {
     const UserName = req.body.UserName      
     const sqlSelect = "INSERT INTO User (UserName) VALUES (?) ON DUPLICATE KEY UPDATE UserName = UserName;"
     connection.query(sqlSelect, [UserName], (err, result) => {
-        
+        res.send(result);
     })
 })
 
@@ -41,7 +41,7 @@ app.post('/api/createplayer', (req, res) => {
     const birthday = req.body.birthday
     const sqlInsert = "INSERT INTO Player(NickName, Birthday, UserName) VALUES(?, Date(?), ?);"
     connection.query(sqlInsert, [nickname, birthday, UserName], (err, result) => {
-        
+        res.send(result);
     })
 })
 

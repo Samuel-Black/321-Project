@@ -31,7 +31,7 @@ app.post('/api/getplayers', (req, res) => {
     const UserName = req.body.UserName
     const sqlSelect = "SELECT NickName FROM Player JOIN User ON Player.UserName = User.UserName WHERE ? = Player.UserName;"
     connection.query(sqlSelect, [UserName], (err, result) => {
-        
+        res.send(result);
     })
 })
 
@@ -48,7 +48,7 @@ app.post('/api/createplayer', (req, res) => {
 app.get("/api/get", (req, res) => {
     const sqlSelect = "SELECT Player FROM Player JOIN User ON Player.UserName = User.UserName WHERE User.UserName = Player.UserName;"
     connection.query(sqlSelect, (err, result) => {
-        
+        res.send(result);
     })
 })
 

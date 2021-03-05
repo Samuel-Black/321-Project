@@ -5,7 +5,7 @@ import { useAuthUser, useAuthPlayer } from '../../libs';
 //&& !Boolean(userDetails.token === getCurrentToken())
 
 const Container = ({Component, isPrivate, requiresPlayer, ...props}) => {
-    let userData = useAuthUser()
+    const userData = useAuthUser()
     const player = useAuthPlayer()
     console.log(player)
     

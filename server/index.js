@@ -16,11 +16,22 @@ const connection = mysql.createPool({
     port: 3306
 })
 
+// function to add Authenticated user to Database or do nothing if already present; 
+// UserName is unique and indexed in the Database to help speed up lookups however, 
+// there may still be a better way of doing this, such as a custom lambda trigger after a user completes authentication
+app.post('/api/verifyuser', (req, res) => { 
+    const UserName = req.body.UserName      
+    const sqlSelect = "INSERT INTO User (UserName) VALUES (?) ON DUPLICATE KEY UPDATE UserName = UserName;"
+    connection.query(sqlSelect, [UserName], (err, result) => {
+        
+    })
+})
+
 app.post('/api/getplayers', (req, res) => {
     const UserName = req.body.UserName
     const sqlSelect = "SELECT NickName FROM Player JOIN User ON Player.UserName = User.UserName WHERE ? = Player.UserName;"
     connection.query(sqlSelect, [UserName], (err, result) => {
-        res.send(result);
+        
     })
 })
 
@@ -29,13 +40,15 @@ app.post('/api/createplayer', (req, res) => {
     const nickname = req.body.nickname
     const birthday = req.body.birthday
     const sqlInsert = "INSERT INTO Player(NickName, Birthday, UserName) VALUES(?, Date(?), ?);"
-    connection.query(sqlInsert, [nickname, birthday, UserName], (err, result) => {})
+    connection.query(sqlInsert, [nickname, birthday, UserName], (err, result) => {
+        
+    })
 })
 
 app.get("/api/get", (req, res) => {
     const sqlSelect = "SELECT Player FROM Player JOIN User ON Player.UserName = User.UserName WHERE User.UserName = Player.UserName;"
     connection.query(sqlSelect, (err, result) => {
-        res.send(result);
+        
     })
 })
 

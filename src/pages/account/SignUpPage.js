@@ -27,7 +27,7 @@ export default function SignupPage(props) {
             await signupUser(dispatch, { email, password })
             setStep(1)
         } catch (error) {
-            console.log(error)
+            errorMessage = error
         }
     }
     
@@ -42,7 +42,7 @@ export default function SignupPage(props) {
             if(errorMessage === null)
                 navigate('../Login')
         } catch (error) {
-            console.log(error)
+            errorMessage = error
         }
     }
 

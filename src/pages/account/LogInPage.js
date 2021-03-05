@@ -4,13 +4,12 @@ import { Navigate, Link } from 'react-router-dom';
 import { Oval } from 'react-loading-icons'
 import './LoginPage.scss'
 
-export default function LoginPage(props) {
+export default function LoginPage() {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     const dispatch = useAuthDispatch()
-    const userData = useAuthUser()
     
     let { loading, errorMessage } = useAuthState()
 
@@ -21,7 +20,7 @@ export default function LoginPage(props) {
         try {
             await loginUser(dispatch, { email, password })
         } catch (error) {
-            console.log(error)
+            errorMessage = error
         }
     }
 

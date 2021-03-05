@@ -15,12 +15,26 @@ export default function HomePage() {
     const [createNewPlayer, setCreateNewPlayer] = useState(false)
     const [nickname, setNickname] = useState('')
     const [birthday, setBirthday] = useState('')
+    const [errorMessage, setErrorMessage] = useState(null)
 
     const GetPlayers = () => {
         Axios.post('http://localhost:3001/api/getplayers', {
             UserName: user.attributes.sub
         }).then((response) => {
             setPlayerList(response.data);
+        }).catch((error) => {
+            setErrorMessage(error)
+        })
+    }
+
+    
+    const verifyAuthentication = () => {
+        Axios.post('http://localhost:3001/api/verifyuser', {
+            UserName: user.attributes.sub
+        }).then(() => {
+            GetPlayers()
+        }).catch((error) => {
+            setErrorMessage(error)
         })
     }
 
@@ -29,14 +43,15 @@ export default function HomePage() {
             UserName: user.attributes.sub,
             nickname: nickname,
             birthday: birthday
-        }).then((response) => {
-            console.log(response)
+        }).then(() => {
             hideCreatePlayer()
+        }).catch((error) => {
+            setErrorMessage(error)
         })
     }
 
     useEffect(() => {
-        GetPlayers()
+        verifyAuthentication()
     }, [user])
 
     function showCreatePlayer() {

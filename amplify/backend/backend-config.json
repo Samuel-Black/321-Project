@@ -18,6 +18,26 @@
           ]
         }
       ]
+    },
+    "AdminQueries9ecaa67d": {
+      "service": "Lambda",
+      "providerPlugin": "awscloudformation",
+      "build": true,
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "321projectccad16a8ccad16a8",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ]
+    },
+    "PostConfirmationUserGroupAssignment": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": []
     }
   },
   "auth": {
@@ -54,5 +74,27 @@
       "customAuth": false
     }
   },
-  "api": {}
+  "api": {
+    "AdminQueries": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "321projectccad16a8ccad16a8",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "AdminQueries9ecaa67d",
+          "attributes": [
+            "Arn",
+            "Name"
+          ]
+        }
+      ]
+    }
+  }
 }

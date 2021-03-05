@@ -9,7 +9,7 @@ import Axios from 'axios'
 
 export default function HomePage() {
 
-    const currentPlayer = useAuthPlayer()
+    let currentPlayer = useAuthPlayer()
     const user = useAuthUser()
     const [playerList, setPlayerList] = useState([])
     const [createNewPlayer, setCreateNewPlayer] = useState(false)

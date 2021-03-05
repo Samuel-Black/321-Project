@@ -4,7 +4,7 @@ import { useAuthUser, useAuthPlayer } from '../../libs';
 
 //&& !Boolean(userDetails.token === getCurrentToken())
 
-const Container = ({Component, isPrivate, ...props}) => {
+const Container = ({Component, isPrivate, requiresPlayer, ...props}) => {
     let userData = useAuthUser()
     const player = useAuthPlayer()
     console.log(player)
@@ -15,15 +15,18 @@ const Container = ({Component, isPrivate, ...props}) => {
     if(!isPrivate && userData !== false) { // If attempting to access Sign Up or Log In page while currently logged in/authenticated
       return <Navigate to={'../'} replace={true} />
     }
+    if(requiresPlayer === true && player.player === false) { // If attempting to access Application while logged in/authenticated but without selecting their player account
+      return <Navigate to={'../'} replace={true} />
+    }
     return <Component {...props} />
   }
 
-const AppRoute = ({ component: Component, path, isPrivate, ...props }) => {
+const AppRoute = ({ component: Component, path, isPrivate, requiresPlayer, ...props }) => {
 
     return (
       <Route
           path={path}
-          element={<Container Component={Component} isPrivate={isPrivate} {...props} />}
+          element={<Container Component={Component} isPrivate={isPrivate} requiresPlayer={requiresPlayer} {...props} />}
       />
   )
 }

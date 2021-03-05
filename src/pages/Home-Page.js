@@ -7,6 +7,7 @@ import Settings from '../components/Settings'
 import PlayerSignout from '../components/Player-Signout'
 import { useAuthPlayer, useAuthUser } from '../libs'
 import Axios from 'axios'
+import { ProfilePictureImages } from '../components/images/ProfilePictureImages'
 
 export default function HomePage() {
 
@@ -17,6 +18,8 @@ export default function HomePage() {
     const [nickname, setNickname] = useState('')
     const [birthday, setBirthday] = useState('')
     const [errorMessage, setErrorMessage] = useState(null)
+
+    console.log(ProfilePictureImages)
 
     const GetPlayers = () => {
         Axios.post('http://localhost:3001/api/getplayers', {
@@ -53,7 +56,7 @@ export default function HomePage() {
 
     useEffect(() => {
         verifyAuthentication()
-    }, [user])
+    }, [])
 
     function showCreatePlayer() {
         setCreateNewPlayer(true)
@@ -75,8 +78,8 @@ export default function HomePage() {
                             {playerList.map(player => {
                                 return (
                                     <div className="Player-Container card">
-                                        <a onClick={() => currentPlayer.setPlayer(player.NickName)}>
-                                            <img class="card-img-top" src="..." alt="Player Profile Picture" />
+                                        <a onClick={() => currentPlayer.setPlayer(player)}>
+                                            <img class="card-img-top" src={ProfilePictureImages[player.ProfilePicture].default} alt="Player Profile Picture" />
                                             <div class="card-footer">{player.NickName}</div>
                                         </a>
                                     </div>

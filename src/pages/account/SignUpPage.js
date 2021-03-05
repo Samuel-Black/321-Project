@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { signupUser, confirmUserSignUp, useAuthState, useAuthDispatch } from '../../libs'
 import { Link } from 'react-router-dom';
 import { Oval } from 'react-loading-icons'
@@ -13,13 +13,16 @@ export default function SignupPage(props) {
     const [phoneNumber, setPhoneNumber] = useState('')
     const [authenticationCode, setAuthenticationCode] = useState('')
     const [step, setStep] = useState(0)
+    const [errors, setErrors] = useState(false)
 
     const navigate = useNavigate();
 
     const dispatch = useAuthDispatch()
     let { loading, errorMessage } = useAuthState()
 
-    errorMessage = null
+    useEffect(() => {
+        errorMessage = null
+    }, [])
 
     const handleSignUp = async (e) => {
         e.preventDefault()
@@ -39,8 +42,7 @@ export default function SignupPage(props) {
         e.preventDefault()
         try {
             await confirmUserSignUp(dispatch, { email, authenticationCode })
-            if(errorMessage === null)
-                navigate('../Login')
+            navigate('../Login')
         } catch (error) {
             errorMessage = error
         }

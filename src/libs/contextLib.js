@@ -1,6 +1,7 @@
 import React, { useContext, createContext, useReducer, useState, useEffect } from "react";
 import { initialState, AuthReducer } from './Reducer';
 import { Auth } from 'aws-amplify'
+import { Grid } from 'react-loading-icons'
 
 const AuthUserContext = createContext();
 const AuthPlayerContext = createContext();
@@ -70,7 +71,7 @@ const AuthProvider = ({ children }) => {
     return (
         <>
         {loading ?
-            <div>LOADING</div> 
+            <div><Grid /></div> 
             :
             <AuthUserContext.Provider value={userData}>
                 <AuthPlayerContext.Provider value={{player, setPlayer}}>

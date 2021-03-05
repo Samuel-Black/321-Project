@@ -29,7 +29,7 @@ app.post('/api/verifyuser', (req, res) => {
 
 app.post('/api/getplayers', (req, res) => {
     const UserName = req.body.UserName
-    const sqlSelect = "SELECT NickName FROM Player JOIN User ON Player.UserName = User.UserName WHERE ? = Player.UserName;"
+    const sqlSelect = "SELECT NickName, ProfilePicture FROM Player JOIN User ON Player.UserName = User.UserName WHERE ? = Player.UserName;"
     connection.query(sqlSelect, [UserName], (err, result) => {
         res.send(result);
     })

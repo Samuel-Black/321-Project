@@ -1,6 +1,6 @@
-import { loginUser, useAuthState, useAuthDispatch, useAuthUser } from '../../libs'
-import React, { useState } from 'react'
-import { Navigate, Link } from 'react-router-dom';
+import { loginUser, useAuthState, useAuthDispatch } from '../../libs'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 import { Oval } from 'react-loading-icons'
 import './LoginPage.scss'
 
@@ -13,7 +13,9 @@ export default function LoginPage() {
     
     let { loading, errorMessage } = useAuthState()
 
-    errorMessage = null
+    useEffect(() => {
+        errorMessage = null
+    }, [])
 
     const handleLogin = async (e) => {
         e.preventDefault()

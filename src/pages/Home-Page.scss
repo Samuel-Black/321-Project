@@ -42,6 +42,9 @@
 .Player-Container {
   margin-bottom: 50px !important;
   width: 18rem; 
+  &.card {
+    background-color: rgba(white, 0.75);
+  }
   .card-img-top {
     min-height: 10rem;
     max-height: 10rem;

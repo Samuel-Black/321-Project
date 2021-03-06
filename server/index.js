@@ -38,9 +38,10 @@ app.post('/api/getplayers', (req, res) => {
 app.post('/api/createplayer', (req, res) => {
     const UserName = req.body.UserName
     const nickname = req.body.nickname
-    const birthday = req.body.birthday
-    const sqlInsert = "INSERT INTO Player(NickName, Birthday, UserName) VALUES(?, Date(?), ?);"
-    connection.query(sqlInsert, [nickname, birthday, UserName], (err, result) => {
+    const birthday = new Date(req.body.birthday).toISOString().slice(0,10)
+    const profilepicture = req.body.profileImage
+    const sqlInsert = "INSERT INTO Player(NickName, Birthday, UserName, ProfilePicture) VALUES(?, Date(?), ?, ?);"
+    connection.query(sqlInsert, [nickname, birthday, UserName, profilepicture], (err, result) => {
         res.send(result);
     })
 })

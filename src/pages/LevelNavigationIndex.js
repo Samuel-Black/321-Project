@@ -32,9 +32,9 @@ export default class LevelNavigationPage extends Component {
                         <div id="Level-Nav">
                             {Levels.map(level => {
                                 return (
-                                    <div>
+                                    <div key={level.id}>
                                         <Link to={level.to}>
-                                            <div key={level.id} class="nav-item" id={"Game-"+level.id}>
+                                            <div class="nav-item" id={"Game-"+level.id}>
                                                 <span class="level-number">{level.name}</span>
                                             </div>
                                         </Link>

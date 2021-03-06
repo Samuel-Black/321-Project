@@ -22,7 +22,7 @@ export default function HomePage() {
     const [birthday, setBirthday] = useState('')
     const [errorMessage, setErrorMessage] = useState(null)
     const [profileImage, setProfileImage] = useState(0)
-    const [activeProfileImage, setActiveProfileImage] = useState(0)
+    //const [activeProfileImage, setActiveProfileImage] = useState(0)
 
     const GetPlayers = () => {
         Axios.post('http://localhost:3001/api/getplayers', {
@@ -81,7 +81,7 @@ export default function HomePage() {
                         <div class="card-deck">
                             {playerList.map(player => {
                                 return (
-                                    <div className="Player-Container card">
+                                    <div key={player.NickName} className="Player-Container card">
                                         <a onClick={() => currentPlayer.setPlayer(player)}>
                                             <img class="card-img-top" src={ProfilePictureImages[player.ProfilePicture].default} alt="Player Profile Picture" />
                                             <div class="card-footer">{player.NickName}</div>

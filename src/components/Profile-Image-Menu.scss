@@ -1,0 +1,16 @@
+#Profile-Image-Menu-Container {
+    
+    .card {
+        min-width: 18rem; 
+        .card-img-top {
+            min-height: 10rem;
+            max-height: 10rem;
+        }
+        img {
+            max-width: 6rem;
+        }
+    }
+}
+.simplebar-scrollbar::before {
+    
+}

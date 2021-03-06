@@ -15,8 +15,6 @@ export default function Settings(props) {
   const [newPassword, setNewPassword] = useState('')
   const { loading, errorMessage } = useAuthState()
 
-  console.log(userData)
-  
   const closeModal = () => {
     setOpen(false)
     setpopupState(0)

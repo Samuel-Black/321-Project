@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react'
+import React, { Component } from 'react'
 import { Levels } from '../components/Level-List'
 import { Link } from 'react-router-dom'
 import Xarrow from "react-xarrows"
@@ -32,9 +32,9 @@ export default class LevelNavigationPage extends Component {
                         <div id="Level-Nav">
                             {Levels.map(level => {
                                 return (
-                                    <div>
+                                    <div key={level.id}>
                                         <Link to={level.to}>
-                                            <div key={level.id} class="nav-item" id={"Game-"+level.id}>
+                                            <div class="nav-item" id={"Game-"+level.id}>
                                                 <span class="level-number">{level.name}</span>
                                             </div>
                                         </Link>

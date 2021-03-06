@@ -8,6 +8,8 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
+  display: flex;
+  align-items: center;
 }
 
 #Home-Title {
@@ -21,6 +23,36 @@
 
 #Home-Button {
   padding-top: 10%;
+}
+
+.card {
+  border-radius: 10%;
+  font-size: 1.6em;
+}
+
+#Create-Player {
+  svg {
+    color: $secondaryWhite;
+  }
+  &.card {
+    background-color: rgba(white, 0.35);
+  }
+}
+
+.Player-Container {
+  margin-bottom: 50px !important;
+  width: 18rem; 
+  &.card {
+    background-color: rgba(white, 0.75);
+  }
+  .card-img-top {
+    min-height: 10rem;
+    max-height: 10rem;
+  }
+  img {
+    max-width: 6rem;
+  }
+  color: black;
 }
 
 .btn-primary {

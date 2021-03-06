@@ -18,6 +18,26 @@
           ]
         }
       ]
+    },
+    "AdminQueries9ecaa67d": {
+      "service": "Lambda",
+      "providerPlugin": "awscloudformation",
+      "build": true,
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "321projectccad16a8ccad16a8",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ]
+    },
+    "PostConfirmationUserGroupAssignment": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": []
     }
   },
   "auth": {
@@ -68,7 +88,7 @@
         },
         {
           "category": "function",
-          "resourceName": "AdminQueries374abb13",
+          "resourceName": "AdminQueries9ecaa67d",
           "attributes": [
             "Arn",
             "Name"

@@ -72,7 +72,37 @@ export const Levels = [
         name: "Game12",
         to: "Game12", // used as the link for routes
         className: gameClassName
-    }  
+    },   
+    {
+        id: 13,
+        name: "Game13",
+        to: "Game13", // used as the link for routes
+        className: gameClassName
+    },   
+    {
+        id: 14,
+        name: "Game14",
+        to: "Game14", // used as the link for routes
+        className: gameClassName
+    },   
+    {
+        id: 15,
+        name: "Game15",
+        to: "Game15", // used as the link for routes
+        className: gameClassName
+    },   
+    {
+        id: 16,
+        name: "Game16",
+        to: "Game16", // used as the link for routes
+        className: gameClassName
+    },   
+    {
+        id: 17,
+        name: "Game17",
+        to: "Game17", // used as the link for routes
+        className: gameClassName
+    }
 ];
 
 export default {

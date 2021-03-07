@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Levels } from '../components/Level-List'
 import { Link } from 'react-router-dom'
 import Xarrow from "react-xarrows"
+import { TiHome } from 'react-icons/ti'
 import { MapInteractionCSS } from 'react-map-interaction';
 
 export default class LevelNavigationPage extends Component {
@@ -28,11 +29,14 @@ export default class LevelNavigationPage extends Component {
             >
                 
                 <div id="Level-Nav-Background-Container">
+                <Link to={'../'}>
+                    <TiHome id="Level-Navigation-Home-Button" size={85} />
+                </Link>
                     <div id="Level-Nav-Background">
                         <div id="Level-Nav">
                             {Levels.map(level => {
                                 return (
-                                    <div key={level.id}>
+                                    <div key={level.id} id={"Level-Container-"+level.id} className="Level-Container">
                                         <Link to={level.to}>
                                             <div class="nav-item" id={"Game-"+level.id}>
                                                 <span class="level-number">{level.name}</span>

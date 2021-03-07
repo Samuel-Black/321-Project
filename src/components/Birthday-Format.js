@@ -1,8 +1,7 @@
 
 export default function FormatBirthday(date) {
     let formattedBirthday = date.slice(11,15) + '-' + returnMonth(date) + '-' + date.slice(8,10)
-
-    return formattedBirthday;
+    return formattedBirthday
 }
 
 function returnMonth(date) {

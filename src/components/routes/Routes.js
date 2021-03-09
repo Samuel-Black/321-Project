@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Routes } from 'react-router-dom';
 import LevelNav from "../../pages/LevelNavigationPage";
-import SignupPage from '../../pages/account/SignupPage'
+import SignupPage from '../../pages/account/SignUpPage'
 import LoginPage from '../../pages/account/LogInPage'
 import App from '../../App'
 import AppRoute from './AuthenticatedRoute'

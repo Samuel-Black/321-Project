@@ -1,97 +1,73 @@
 @import '../components/Colours.scss';
 
-html, body {margin: 0; height: 100%; overflow: hidden}
-
 #Level-Nav-Background-Container {
-  width: 1920px;
-  height: 1016px;
+  width: 100vw;
+  height: 100vh;
+}
+
+#Level-Navigation-Title {
+  font-size: 6rem;
+  -webkit-text-stroke-width: 3px;
+  -webkit-text-stroke-color: black;
 }
 
 #Level-Nav-Background {
-  height: inherit;
-  width: inherit;
-  background-image: url('../assets/backgrounds/Jungle-Level-Background.svg');
-  
-  /*background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
+  background-image: url('../assets/backgrounds/Space-Level-Background.svg');
   background-attachment: fixed;
   background-position: center;
-  background-size: cover;*/
 }
 
-#Level-Nav {
-    position: absolute;
-    height: 0px;
-    top: 0px;
-    left: 40px;
-    &:hover {
-      a {
-        text-decoration: none;
-      }
-    }
-}
-
-#Game-1 {
-  left: 100px;
-  top: 850px;
-}
-#Game-2 {
-  left: 400px;
-  top: 830px;
-}
-#Game-3 {
-  left: 700px;
-  top: 630px;
-}
-#Game-4 {
-  left: 880px;
-  top: 630px;
-}
-#Game-5 {
-  left: 1200px;
-  top: 630px;
-}
-#Game-6 {
-  left: 1500px;
-  top: 380px;
-}
-#Game-7 {
-  left: 1630px;
-  top: 200px;
-}
-#Game-8 {
-  left: 1500px;
-  top: -70px;
-}
-#Game-9 {
-  left: 1200px;
-  top: -20px;
-}
-#Game-10 {
-  left: 1000px;
-  top: -20px;
-}
-#Game-11 {
-  left: 700px;
-  top: -200px;
-}
-#Game-12 {
-  left: 400px;
-  top: -300px;
+#Current-Player {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 2rem;
 }
 
 .nav-item {
+  width:100%;
+}
+
+#Level-Nav {
+  max-width: 80vw;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 1.2rem;
+  .level-progress {
+    font-weight: bold;
+  }
+  img {
+    max-height:150px
+  }
+  .orange {
+    background: orange;
+    fill: orange;
+  }
+  .green {
+    background: green;
+    fill: green;
+  }
+}
+
+#Level-Navbar {
+  background-color: white;
+  border-radius: 5%;
+  height: 40px;
+}
+
+.Game-Container {
+  width: 45%;
   position: relative;
   border: 2px solid white;
   background: white;
-  margin: auto;
-  height: 70px;
-  width: 70px;
-  border-radius: 50%;
+  height: 250px;
+  border-radius: 4%;
   color: black;
-}
-.level-number {
-  margin: 0;
-  position: absolute;
-  top: 30%;
-  left: 20%;
+  .nav-item-svg {
+    border: 1px solid white;
+    border-radius: 50%;
+    background: white;
+    svg {
+      fill: inherit;
+    }
+  }
 }

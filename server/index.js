@@ -16,21 +16,74 @@ const connection = mysql.createPool({
     port: 3306
 })
 
+/*
 // function to add Authenticated user to Database or do nothing if already present; 
 // UserName is unique and indexed in the Database to help speed up lookups however, 
 // there may still be a better way of doing this, such as a custom lambda trigger after a user completes authentication
 app.post('/api/verifyuser', (req, res) => { 
     const UserName = req.body.UserName      
-    const sqlSelect = "INSERT INTO User (UserName) VALUES (?) ON DUPLICATE KEY UPDATE UserName = UserName;"
+    const sqlSelect = "INSERT INTO Player (UserName) VALUES (?) ON DUPLICATE KEY UPDATE UserName = UserName;"
     connection.query(sqlSelect, [UserName], (err, result) => {
         res.send(result);
+    })
+})
+*/
+
+app.post('/api/insertlevel', (req, res) => {
+    const SkillName = req.body.SkillName   
+    const LevelNumber = req.body.LevelNumber   
+    const UserName = req.body.UserName  
+    const NickName = req.body.NickName       
+    const sqlSelect = "INSERT INTO Level (SkillName, LevelNumber, UserName, NickName) VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE SkillName = SkillName;"
+    connection.query(sqlSelect, [SkillName, LevelNumber, UserName, NickName], (err, result) => {
+        res.send(result);
+        if(err !== null) {
+            console.log(err);
+        }
+    })
+})
+
+app.post('/api/incrementattempt', (req, res) => {
+    const SkillName = req.body.SkillName   
+    const LevelNumber = req.body.LevelNumber   
+    const UserName = req.body.UserName  
+    const NickName = req.body.NickName       
+    const sqlSelect = "UPDATE Level SET TimesAttempted = TimesAttempted + 1 WHERE UserName = ? AND NickName = ? AND SkillName = ? AND LevelNumber = ?;"
+    connection.query(sqlSelect, [UserName, NickName, SkillName, LevelNumber], (err, result) => {
+        res.send(result);
+        if(err !== null) {
+            console.log(err);
+        }
+    })
+})
+
+app.post('/api/levelcomplete', (req, res) => {
+    const SkillName = req.body.SkillName   
+    const LevelNumber = req.body.LevelNumber   
+    const UserName = req.body.UserName  
+    const NickName = req.body.NickName       
+    const sqlSelect = "UPDATE Level SET completed = 'True' WHERE UserName = ? AND NickName = ? AND SkillName = ? AND LevelNumber = ?;"
+    connection.query(sqlSelect, [UserName, NickName, SkillName, LevelNumber], (err, result) => {
+        res.send(result);
+        if(err !== null) {
+            console.log(err);
+        }
     })
 })
 
 app.post('/api/getplayers', (req, res) => {
     const UserName = req.body.UserName
-    const sqlSelect = "SELECT NickName, ProfilePicture FROM Player JOIN User ON Player.UserName = User.UserName WHERE ? = Player.UserName;"
+    const sqlSelect = "SELECT NickName, ProfilePicture FROM Player WHERE ? = Player.UserName;"
     connection.query(sqlSelect, [UserName], (err, result) => {
+        res.send(result);
+    })
+})
+
+app.post('/api/getprogress', (req, res) => {
+    const UserName = req.body.UserName
+    const NickName = req.body.NickName
+    const sqlSelect = "SELECT SkillName, COUNT(*) AS Progress FROM Level WHERE UserName = ? AND NickName = ? AND Completed = 'True' GROUP BY SkillName;"
+    connection.query(sqlSelect, [UserName, NickName], (err, result) => {
         res.send(result);
     })
 })
@@ -40,14 +93,14 @@ app.post('/api/createplayer', (req, res) => {
     const nickname = req.body.nickname
     const birthday = req.body.birthday
     const profilepicture = req.body.profileImage
-    const sqlInsert = "INSERT INTO Player(NickName, Birthday, UserName, ProfilePicture) VALUES(?, Date(?), ?, ?);"
-    connection.query(sqlInsert, [nickname, birthday, UserName, profilepicture], (err, result) => {
+    const sqlInsert = "INSERT INTO Player(UserName, NickName, ProfilePicture, BirthDay) VALUES(?, ?, ?, Date(?));"
+    connection.query(sqlInsert, [UserName, nickname, profilepicture, birthday], (err, result) => {
         res.send(result);
     })
 })
 
 app.get("/api/get", (req, res) => {
-    const sqlSelect = "SELECT Player FROM Player JOIN User ON Player.UserName = User.UserName WHERE User.UserName = Player.UserName;"
+    const sqlSelect = "SELECT Player FROM Player WHERE User.UserName = Player.UserName;"
     connection.query(sqlSelect, (err, result) => {
         res.send(result);
     })

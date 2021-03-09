@@ -1,76 +1,102 @@
+import { MonsterImages } from '../components/images/Monster-Images'
+
 let gameClassName = "game";
 
 export const Levels = [
     {
         id: 1,
-        name: "Game1",
-        to: "Game1", // used as the link for routes
+        name: "Kick",
+        to: "Kick", // used as the link for routes
+        numLevels: 3,
+        monster: MonsterImages[0].default,
         className: gameClassName
     },     
     {
         id: 2,
-        name: "Game2",
-        to: "Game2", // used as the link for routes
+        name: "Jump",
+        to: "Jump", // used as the link for routes
+        numLevels: 3,
+        monster: MonsterImages[1].default,
         className: gameClassName
     },   
     {
         id: 3,
-        name: "Game3",
-        to: "Game3", // used as the link for routes
+        name: "Balance",
+        to: "Balance", // used as the link for routes
+        numLevels: 3,
+        monster: MonsterImages[2].default,
         className: gameClassName
     },   
     {
         id: 4,
-        name: "Game4",
-        to: "Game4", // used as the link for routes
+        name: "Run",
+        to: "Run", // used as the link for routes
+        numLevels: 3,
+        monster: MonsterImages[3].default,
         className: gameClassName
     },   
     {
         id: 5,
-        name: "Game5",
-        to: "Game5", // used as the link for routes
+        name: "Throw",
+        to: "Throw", // used as the link for routes
+        numLevels: 3,
+        monster: MonsterImages[4].default,
         className: gameClassName
     },   
     {
         id: 6,
-        name: "Game6",
-        to: "Game6", // used as the link for routes
+        name: "Hop",
+        to: "Hop", // used as the link for routes
+        numLevels: 3,
+        monster: MonsterImages[5].default,
         className: gameClassName
     },   
     {
         id: 7,
-        name: "Game7",
-        to: "Game7", // used as the link for routes
+        name: "Catch",
+        to: "Catch", // used as the link for routes
+        numLevels: 3,
+        monster: MonsterImages[6].default,
         className: gameClassName
     },   
     {
         id: 8,
-        name: "Game8",
-        to: "Game8", // used as the link for routes
+        name: "Slide",
+        to: "Slide", // used as the link for routes
+        numLevels: 3,
+        monster: MonsterImages[7].default,
         className: gameClassName
     },   
     {
         id: 9,
-        name: "Game9",
-        to: "Game9", // used as the link for routes
+        name: "Underhand-Roll",
+        to: "Underhand-Roll", // used as the link for routes
+        numLevels: 3,
+        monster: MonsterImages[0].default,
         className: gameClassName
     },   
     {
         id: 10,
-        name: "Game10",
-        to: "Game10", // used as the link for routes
+        name: "Leap",
+        to: "Leap", // used as the link for routes
+        numLevels: 3,
+        monster: MonsterImages[1].default,
         className: gameClassName
     },   
     {
         id: 11,
-        name: "Game11",
-        to: "Game11", // used as the link for routes
+        name: "Strike",
+        to: "Strike", // used as the link for routes
+        numLevels: 3,
+        monster: MonsterImages[2].default,
         className: gameClassName
     },   
     {
         id: 12,
-        name: "Game12",
-        to: "Game12", // used as the link for routes
+        name: "Gallop",
+        to: "Gallop", // used as the link for routes
+        numLevels: 3,
+        monster: MonsterImages[3].default,
         className: gameClassName
     }  
 ];

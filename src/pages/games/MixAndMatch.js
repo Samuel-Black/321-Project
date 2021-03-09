@@ -3,7 +3,6 @@ import Source from "../../components/mixandmatch/Source"
 import Target from "../../components/mixandmatch/Target"
 import './MixAndMatch.scss'
 import { ItemTypes } from '../../components/DragItemTypes'
-import { shuffleArray } from '../../components/images/Image-Functions'
 import GamePopup from '../../components/Game-Popup'
 
 export default class MixAndMatch extends React.Component {
@@ -19,7 +18,7 @@ export default class MixAndMatch extends React.Component {
     }
 
     gameTitle = 'Mix & Match';
-    difficulty = 0;
+    difficulty = 1;
     levels = 1;
   
     onDropLeft(item) {

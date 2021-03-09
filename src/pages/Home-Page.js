@@ -14,7 +14,7 @@ import FormatBirthday from '../components/Birthday-Format'
 
 export default function HomePage() {
 
-    let currentPlayer = useAuthPlayer()
+    const currentPlayer = useAuthPlayer()
     const user = useAuthUser()
     const [playerList, setPlayerList] = useState([])
     const [createNewPlayer, setCreateNewPlayer] = useState(false)
@@ -34,17 +34,6 @@ export default function HomePage() {
         })
     }
 
-    
-    const verifyAuthentication = () => {
-        Axios.post('http://localhost:3001/api/verifyuser', {
-            UserName: user.attributes.sub
-        }).then(() => {
-            GetPlayers()
-        }).catch((error) => {
-            setErrorMessage(error)
-        })
-    }
-
     const createPlayer = () => {
         Axios.post('http://localhost:3001/api/createplayer', {
             UserName: user.attributes.sub,
@@ -59,7 +48,7 @@ export default function HomePage() {
     }
 
     useEffect(() => {
-        verifyAuthentication()
+        GetPlayers()
     }, [])
 
     function showCreatePlayer() {

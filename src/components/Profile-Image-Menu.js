@@ -1,8 +1,8 @@
 import { ProfilePictureImages } from './images/ProfilePictureImages'
 import { RiLock2Fill } from 'react-icons/ri'
 import SimpleBar from 'simplebar-react';
-import './Profile-Image-Menu.scss'
 import 'simplebar/dist/simplebar.min.css';
+import './Profile-Image-Menu.scss'
 
 export default function ProfileImageMenu(props) {
 

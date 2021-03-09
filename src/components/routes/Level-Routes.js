@@ -17,9 +17,9 @@ export default function LevelRoutes() {
             <AppRoute path="/" component={LevelNavIndex} isPrivate={true} requiresPlayer={true} />
             <AppRoute path="/Game1" component={Game1} isPrivate={true} requiresPlayer={true}  backButton={<BackButton />} />
             <DndProvider backend={HTML5Backend}>
-                <AppRoute path="/Game2" component={MixAndMatch} isPrivate={true} requiresPlayer={true}  backButton={<BackButton />} shuffledImages={MaMBalanceArms} />
+                <AppRoute path="/Balance" component={MixAndMatch} isPrivate={true} requiresPlayer={true}  backButton={<BackButton />} shuffledImages={MaMBalanceArms} />
             </DndProvider>
-            <AppRoute path="/Game3" component={ThrowEyes} isPrivate={true} requiresPlayer={true}  backButton={<BackButton />} shuffledImages={HotSpotThrowEyes} /> 
+            <AppRoute path="/Throw" component={ThrowEyes} isPrivate={true} requiresPlayer={true}  backButton={<BackButton />} shuffledImages={HotSpotThrowEyes} SkillName="Throw" /> 
         </Routes>
     );
 

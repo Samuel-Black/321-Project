@@ -11,15 +11,15 @@ function splitMaMString(string, object) {
     string = string[3].split(".");
     string = string[0].split("_");
 
-    if(string[4] == 'Left') {
+    if(string[3] == 'Left') {
         object.position = 'Left';
-    } else if(string[4] == 'Right') {
+    } else if(string[3] == 'Right') {
         object.position = 'Right';
     }
-    if(string[5].substr(0, string[5].length - 1) == 'Correct') {
-        object.correct = true;
+    if(string[4].substr(0, string[4].length - 1) == 'Correct') {
+        object.correct = 'true';
     } else {
-        object.correct = false;
+        object.correct = 'false';
     }
 
     return object;

@@ -1,6 +1,6 @@
 import { MonsterImages } from '../components/images/Monster-Images'
 
-let gameClassName = "game";
+let gameClassName = "game"
 
 export const Levels = [
     {
@@ -24,7 +24,7 @@ export const Levels = [
         name: "Balance",
         to: "Balance", // used as the link for routes
         numLevels: 3,
-        monster: MonsterImages[2].default,
+        monster: MonsterImages[5].default,
         className: gameClassName
     },   
     {
@@ -32,7 +32,7 @@ export const Levels = [
         name: "Run",
         to: "Run", // used as the link for routes
         numLevels: 3,
-        monster: MonsterImages[3].default,
+        monster: MonsterImages[2].default,
         className: gameClassName
     },   
     {
@@ -48,7 +48,7 @@ export const Levels = [
         name: "Hop",
         to: "Hop", // used as the link for routes
         numLevels: 3,
-        monster: MonsterImages[5].default,
+        monster: MonsterImages[0].default,
         className: gameClassName
     },   
     {
@@ -56,7 +56,7 @@ export const Levels = [
         name: "Catch",
         to: "Catch", // used as the link for routes
         numLevels: 3,
-        monster: MonsterImages[6].default,
+        monster: MonsterImages[3].default,
         className: gameClassName
     },   
     {
@@ -64,7 +64,7 @@ export const Levels = [
         name: "Slide",
         to: "Slide", // used as the link for routes
         numLevels: 3,
-        monster: MonsterImages[7].default,
+        monster: MonsterImages[6].default,
         className: gameClassName
     },   
     {
@@ -72,7 +72,7 @@ export const Levels = [
         name: "Underhand-Roll",
         to: "Underhand-Roll", // used as the link for routes
         numLevels: 3,
-        monster: MonsterImages[0].default,
+        monster: MonsterImages[8].default,
         className: gameClassName
     },   
     {
@@ -80,7 +80,7 @@ export const Levels = [
         name: "Leap",
         to: "Leap", // used as the link for routes
         numLevels: 3,
-        monster: MonsterImages[1].default,
+        monster: MonsterImages[9].default,
         className: gameClassName
     },   
     {
@@ -88,7 +88,7 @@ export const Levels = [
         name: "Strike",
         to: "Strike", // used as the link for routes
         numLevels: 3,
-        monster: MonsterImages[2].default,
+        monster: MonsterImages[10].default,
         className: gameClassName
     },   
     {
@@ -96,7 +96,7 @@ export const Levels = [
         name: "Gallop",
         to: "Gallop", // used as the link for routes
         numLevels: 3,
-        monster: MonsterImages[3].default,
+        monster: MonsterImages[0].default,
         className: gameClassName
     }  
 ];

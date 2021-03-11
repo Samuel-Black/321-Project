@@ -43,13 +43,16 @@ app.post('/api/insertlevel', (req, res) => {
     })
 })
 
-app.post('/api/incrementattempt', (req, res) => {
-    const SkillName = req.body.SkillName   
+app.post('/api/createattempt', (req, res) => {
+    const GameName = req.body.GameName   
     const LevelNumber = req.body.LevelNumber   
     const UserName = req.body.UserName  
-    const NickName = req.body.NickName       
-    const sqlSelect = "UPDATE Level SET TimesAttempted = TimesAttempted + 1 WHERE UserName = ? AND NickName = ? AND SkillName = ? AND LevelNumber = ?;"
-    connection.query(sqlSelect, [UserName, NickName, SkillName, LevelNumber], (err, result) => {
+    const NickName = req.body.NickName
+    const Succesful = req.body.Succesful  
+    const TimeTaken = req.body.TimeTaken      
+    console.log(TimeTaken)
+    const sqlSelect = "INSERT INTO Attempt (UserName, NickName, LevelNumber, GameName, Succesful, TimeTaken) VALUES (?,?,?,?,?,?);"
+    connection.query(sqlSelect, [UserName, NickName, LevelNumber, GameName, Succesful, TimeTaken], (err, result) => {
         res.send(result);
         if(err !== null) {
             console.log(err);

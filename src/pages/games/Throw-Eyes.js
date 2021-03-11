@@ -12,9 +12,14 @@ export default function ThrowEyes(props) {
     
     const [difficulty , setDifficulty] = useState(1)
     const [character, setCharacter] = useState(setChar)
-    const [errorMessage, setErrorMessage] = useState(null)
+    const [levelCompleted, setLevelCompleted] = useState('False')
     const [attemptNumber, setAttemptNumber] = useState(0)
     const [popupState, setPopupState] = useState(true)
+    const [startTime, setStartTime] = useState(null)
+    const [finishTime, setFinishTime] = useState(null)
+    const [timeTaken, setTimeTaken] = useState(null)
+    const [errorMessage, setErrorMessage] = useState(null)
+
     const currentPlayer = useAuthPlayer()
     const user = useAuthUser()
 
@@ -25,48 +30,40 @@ export default function ThrowEyes(props) {
     const mediumTargets = [false,true,true,true,false];
     const hardTargets = [true,true,true,true,true];
 
-    const InsertLevel = () => {
-        Axios.post('http://localhost:3001/api/insertlevel', {
-            SkillName: props.SkillName,
+    const CreateAttempt = () => {
+        Axios.post('http://localhost:3001/api/createattempt', {
+            GameName: props.GameName,
             LevelNumber: difficulty,
             UserName: user.attributes.sub,
-            NickName: currentPlayer.player.NickName
+            NickName: currentPlayer.player.NickName,
+            Succesful: levelCompleted,
+            TimeTaken: timeTaken
         }).then((response) => {
             
         }).catch((error) => {
             setErrorMessage(error)
+            console.log(error)
         })
-    }
-
-    const IncrementAttempt = () => {
-        Axios.post('http://localhost:3001/api/incrementattempt', {
-            SkillName: props.SkillName,
-            LevelNumber: difficulty,
-            UserName: user.attributes.sub,
-            NickName: currentPlayer.player.NickName
-        }).then((response) => {
-            
-        }).catch((error) => {
-            setErrorMessage(error)
-        })
-    }
-
-    const LevelComplete = () => {
-        Axios.post('http://localhost:3001/api/levelcomplete', {
-            SkillName: props.SkillName,
-            LevelNumber: difficulty,
-            UserName: user.attributes.sub,
-            NickName: currentPlayer.player.NickName
-        }).then((response) => {
-            
-        }).catch((error) => {
-            setErrorMessage(error)
-        })
-    }
+    }   
 
     useEffect(() => {
-        InsertLevel()
-    }, [difficulty])
+        if(popupState === false) 
+            setStartTime(new Date().getTime())
+    }, [popupState])
+
+    useEffect(() => {
+        setTimeTaken(Math.round( ( ( (finishTime - startTime) / 1000) + Number.EPSILON) * 100) / 100 )
+    }, [finishTime])
+    
+    useEffect(() => {
+        if( (difficulty <= levels  && timeTaken !== null && timeTaken !== 0 ) ) { // Don't create attempt when all levels have been cleared or when timer is being initialized
+            CreateAttempt()
+            if(levelCompleted === 'True') { // If level was completed set it back to false for next level
+                setDifficulty(difficulty + 1)
+                setLevelCompleted('False')
+            }
+        }
+    }, [timeTaken])
 
     function setChar() {
         if(difficulty === 1) {
@@ -81,18 +78,19 @@ export default function ThrowEyes(props) {
     }
 
     function winCondition(targetID) {
+        setFinishTime(new Date().getTime())
+        
         if(targetID === character.id) {
-            LevelComplete()
-            setDifficulty(difficulty + 1);
-            setCharacter(setChar())
+            setLevelCompleted('True')
+            setPopupState(true)
             setAttemptNumber(0)
+            setCharacter(setChar())
         }
         else {
             setCharacter(setChar())
             setAttemptNumber(attemptNumber + 1)
-            IncrementAttempt()
+            setPopupState(true)
         }
-        setPopupState(true)
     }
 
     return (
@@ -129,11 +127,6 @@ export default function ThrowEyes(props) {
                 </div>
             }
             </div>
-
-            {difficulty > levels &&
-                <GamePopup open={true} open={true} gameTitle={gameTitle} levelsCleared={difficulty} numLevels={levels} levelPassed={true} />
-            }
-
         </div>
     )
 }

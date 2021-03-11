@@ -14,7 +14,7 @@ function returnStars(props) {
             stars[i] = <BsStarFill />
         }
         else if(i + 1 === props.levelsCleared) {
-            stars[i] = <BsStarFill activeStar=" activeStar" />
+            stars[i] = <BsStarFill activestar=" activestar" />
         }
         else {
             stars[i] = <BsStar />
@@ -38,8 +38,8 @@ export default function GamePopup(props) {
                         </div>
                         <div className="content col-lg-12">
                             <div className="row justify-content-md-center">
-                                {returnStars(props).map((star) =>
-                                    <div className={star.props.activeStar}>
+                                {returnStars(props).map((star,i) =>
+                                    <div key={i} className={star.props.activestar}>
                                         {star}
                                     </div>
                                 )
@@ -83,8 +83,8 @@ export default function GamePopup(props) {
                         </div>
                         <div className="content col-lg-12">
                             <div className="row justify-content-md-center">
-                                {returnStars(props).map((star) =>
-                                    <div className={star.props.activeStar}>
+                                {returnStars(props).map((star, i) =>
+                                    <div key={i} className={star.props.activestar}>
                                         {star}
                                     </div>
                                 )

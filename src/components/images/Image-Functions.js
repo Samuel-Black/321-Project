@@ -1,19 +1,20 @@
 
-function assignMaMValues(array) {
+function assignMaMValues(keys, array) {
+    console.log(keys)
     for (let i = 0; i < array.length; i++) {
-        array[i] = splitMaMString(array[i].default, array[i]);
+        array[i] = splitMaMString(keys[i], array[i]);
     }
     return array;
 }
 
 function splitMaMString(string, object) {
-    string = string.split("/");
-    string = string[3].split(".");
+    //string = string.split("/");
+    string = string.split(".");
     string = string[0].split("_");
 
-    if(string[3] == 'Left') {
+    if(string[3] == 'Left' || string[3] == 'panel1') {
         object.position = 'Left';
-    } else if(string[3] == 'Right') {
+    } else if(string[3] == 'Right' || string[3] == 'panel2') {
         object.position = 'Right';
     }
     if(string[4].substr(0, string[4].length - 1) == 'Correct') {

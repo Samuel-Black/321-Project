@@ -5,17 +5,15 @@ import SkillNavigationPage from '../../pages/SkillNavigationPage';
 import Game1 from '../../pages/games/Game1';
 import MixAndMatch from '../../pages/games/MixAndMatch';
 import ThrowEyes from '../../pages/games/Throw-Eyes';
-import { MaMBalanceArms, MaMJumpArms, MaMLeapLegs, MaMRunArms } from '../../components/images/MixAndMatchImages'
+import { MaMBalanceArms, MaMJumpArms, MaMLeapLegs, MaMRunArms, MaMRunKnees } from '../../components/images/MixAndMatchImages'
 import { HotSpotThrowEyes } from '../../components/images/ThrowEyesImages'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import BackButton from '../../components/Back-Button'
 import AppRoute from './AuthenticatedRoute'
 
-//SkillName ENUM('Kick', 'Jump', 'Balance', 'Run', 'Throw', 'Hop', 'Catch', 'Slide', 'Underhand-Roll', 'Leap', 'Strike', 'Gallop'),
-
 export default function LevelRoutes() {
-    
+    //vertical
     return( 
         <Routes>
             <AppRoute path="/" component={LevelNavIndex} isPrivate={true} requiresPlayer={true} />
@@ -40,6 +38,9 @@ export default function LevelRoutes() {
                     <DndProvider backend={HTML5Backend}>
                         <AppRoute path="Run/Run-Arms" component={MixAndMatch} isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={MaMRunArms} />
                     </DndProvider>
+                    <DndProvider backend={HTML5Backend}>
+                        <AppRoute path="Run/Run-Knees" component={MixAndMatch} vertical isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={MaMRunKnees} />
+                    </DndProvider>
                     
             <AppRoute path="/Throw" component={Game1} isPrivate={true} requiresPlayer={true}  backButton={<BackButton />} />
                 <AppRoute path="Throw/" component={SkillNavigationPage} Levels={ThrowLevels} SkillName={'Throw'} isPrivate={true} requiresPlayer={true} backButton={<BackButton />} />
@@ -47,6 +48,7 @@ export default function LevelRoutes() {
             
             <AppRoute path="/Hop" component={Game1} isPrivate={true} requiresPlayer={true}  backButton={<BackButton />} />
                 <AppRoute path="Hop/" component={SkillNavigationPage} Levels={HopLevels} SkillName={'Hop'} isPrivate={true} requiresPlayer={true} backButton={<BackButton />} />
+                    
 
             <AppRoute path="/Catch" component={Game1} isPrivate={true} requiresPlayer={true}  backButton={<BackButton />} />
                 <AppRoute path="Catch/" component={SkillNavigationPage} Levels={KickLevels} SkillName={'Catch'} isPrivate={true} requiresPlayer={true} backButton={<BackButton />} />
@@ -72,11 +74,9 @@ export default function LevelRoutes() {
     );
 
 }
-/*
 
-            
-
-
-
-            
-*/
+/*  bug with importing these images for some reason
+    <DndProvider backend={HTML5Backend}>
+        <AppRoute path="Hop/Hop-Legs" component={MixAndMatch} vertical isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={MaMHopLegs} />
+    </DndProvider>
+    */

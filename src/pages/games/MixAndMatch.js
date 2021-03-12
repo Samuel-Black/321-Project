@@ -5,6 +5,8 @@ import { shuffleArray } from '../../components/images/Image-Functions'
 import './MixAndMatch.scss'
 import { ItemTypes } from '../../components/DragItemTypes'
 import GamePopup from '../../components/Game-Popup'
+import SimpleBar from 'simplebar-react';
+import 'simplebar/dist/simplebar.min.css';
 
 //Known issue with Mix and Match, problem with drag and drop component when you drag the correct right card and then the correct left card if using {difficulty === 1 && } logic, find fix later
 export default function MixAndMatch(props) {
@@ -69,31 +71,70 @@ export default function MixAndMatch(props) {
         <GamePopup open={popupState} setOpen={setPopupState} gameTitle={gameTitle} levelsCleared={difficulty} numLevels={levels} levelPassed={attemptNumber < 1} />
         <div className="container">
           
-          
+          {/* Uncomment when Card component is completed (First level of mix and match is select the correct image, no mixing or matching)
+            {difficulty <= 1 &&
+            <>
+            </>
+            }
+          */}
+
           <div className="row align-items-center">
-            <div className="col-lg">
-              {props.shuffledImages.left.map((image) => (
-              <div className="row justify-content-center">
-                <Source image={image.default} correct={image.correct} position={image.position} />
-              </div>
-              ))}
-            </div>
+
+         
             
-            <div className= "row">
-                <Target position={ItemTypes.CARDLEFT} droppedItem={droppedItemLeft} onDrop={onDropLeft} />
-                <Target position={ItemTypes.CARDRIGHT} droppedItem={droppedItemRight} onDrop={onDropRight} />
+            <div className="col-lg align-self-center">
+              {props.vertical ? 
+                <>
+                  <div className= "row justify-content-center">
+                    <Target position={ItemTypes.CARDLEFT} droppedItem={droppedItemLeft} onDrop={onDropLeft} />
+                  </div>
+                  <div className= "row justify-content-center">
+                    <Target position={ItemTypes.CARDRIGHT} droppedItem={droppedItemRight} onDrop={onDropRight} />
+                  </div>
+                </>
+                :
+                <div className= "row justify-content-center">
+                  <Target position={ItemTypes.CARDLEFT} droppedItem={droppedItemLeft} onDrop={onDropLeft} />
+                  <Target position={ItemTypes.CARDRIGHT} droppedItem={droppedItemRight} onDrop={onDropRight} />
+                </div>
+              }
             </div>
 
-            <div className="col-lg">
-              {props.shuffledImages.right.map((image) => (
+            {props.vertical ? 
+            <>
+              <div className="row">
+                {props.shuffledImages.left.map((image) => (
+                  <Source image={image.default} correct={image.correct} position={image.position} />
+                ))}
+              </div>
+              <div className="row">
+                {props.shuffledImages.right.map((image) => (
+                  <Source image={image.default} correct={image.correct} position={image.position} />
+                ))}
+              </div>
+            </>
+            :
+            <>
+              <div className="col-lg-3">
+                {props.shuffledImages.left.map((image) => (
                 <div className="row justify-content-center">
                   <Source image={image.default} correct={image.correct} position={image.position} />
                 </div>
-              ))}
-            </div>
+                ))}
+              </div>
+
+              <div className="col-lg-3">
+                {props.shuffledImages.right.map((image) => (
+                  <div className="row justify-content-center">
+                    <Source image={image.default} correct={image.correct} position={image.position} />
+                  </div>
+                ))}
+              </div>
+            </>
+          }
+
           </div>
           
-
         </div>
       </div>
     );

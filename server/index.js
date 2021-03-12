@@ -81,10 +81,16 @@ app.post('/api/getplayers', (req, res) => {
     })
 })
 
-app.post('/api/getprogress', (req, res) => {
+app.post('/api/gettotalprogress', (req, res) => {
     const UserName = req.body.UserName
     const NickName = req.body.NickName
-    const sqlSelect = "SELECT SkillName, COUNT(*) AS Progress FROM Level WHERE UserName = ? AND NickName = ? AND Completed = 'True' GROUP BY SkillName;"
+    const sqlSelect =   `SELECT Game.SkillName, COUNT(distinct LevelNumber) AS LevelsCompleted
+                        FROM Attempt 
+                        JOIN Game ON Attempt.GameName = Game.GameName
+                        WHERE Attempt.UserName = ?
+                        AND Attempt.NickName = ?
+                        AND Attempt.Succesful = 'True'
+                        GROUP BY Attempt.GameName, Game.SkillName;`
     connection.query(sqlSelect, [UserName, NickName], (err, result) => {
         res.send(result);
     })

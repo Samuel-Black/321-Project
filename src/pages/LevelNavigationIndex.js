@@ -9,7 +9,7 @@ import { TiTick } from 'react-icons/ti'
 import { BsArrowRightShort } from 'react-icons/bs'
 import 'simplebar/dist/simplebar.min.css';
 
-export default function LevelNavigationPage() {
+export default function LevelNavigationPage(props) {
 
     const currentPlayer = useAuthPlayer()
     const user = useAuthUser()
@@ -27,8 +27,20 @@ export default function LevelNavigationPage() {
         return index;
     }
 
+    function getSkillProgress(SkillName) {
+        let total = 0
+        for (let i = 0; i < progress.length; i++) {
+            if (progress[i].SkillName === SkillName) {
+                total += progress[i].LevelsCompleted
+            }
+        }
+        return total
+    }
+
+    getSkillProgress('Throw')
+
     const GetProgress = () => {
-        Axios.post('http://localhost:3001/api/getprogress', {
+        Axios.post('http://localhost:3001/api/gettotalprogress', {
             UserName: user.attributes.sub,
             NickName: currentPlayer.player.NickName
         }).then((response) => {
@@ -63,16 +75,16 @@ export default function LevelNavigationPage() {
                         {Levels.map((level,i) => {
                             return (    
                                 <Link to={level.to} key={i}>
-                                    <div className={`d-inline-flex justify-content-center align-items-center mr-4 mb-5 Game-Container ${(getSkillIndex(level.name) !== -1 && progress[getSkillIndex(level.name)].Progress === level.numLevels) ? 'green' : 'orange' }`}>
+                                    <div className={`d-inline-flex justify-content-center align-items-center mr-4 mb-5 Game-Container ${getSkillProgress(level.name) >= level.numLevels ? 'green' : 'orange' }`}>
                                         <div className="nav-item" id={"Game-"+level.id}>
                                             <div className="d-flex justify-content-end">
                                                 <div className="d-inline-flex nav-item-svg">
-                                                    {(getSkillIndex(level.name) !== -1 && progress[getSkillIndex(level.name)].Progress === level.numLevels) ? <TiTick size={40} /> : <BsArrowRightShort size={40} /> }
+                                                    {getSkillProgress(level.name) >= level.numLevels ? <TiTick size={40} /> : <BsArrowRightShort size={40} /> }
                                                 </div>
                                             </div>
                                             <div className="d-flex justify-content-center"><img src={level.monster} /></div>
                                             <div className="d-flex justify-content-center level-name">{level.name}</div>
-                                            <div className="d-flex justify-content-center level-progress">{`${getSkillIndex(level.name) === -1 ? '0' : progress[getSkillIndex(level.name)].Progress} of ${level.numLevels} completed`}</div>
+                                            <div className="d-flex justify-content-center level-progress">{`${getSkillProgress(level.name)} of ${level.numLevels} completed`}</div>
                                         </div>
                                     </div>
                                 </Link>

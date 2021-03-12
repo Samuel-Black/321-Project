@@ -47,18 +47,18 @@ export default function ThrowEyes(props) {
     }   
 
     useEffect(() => {
-        if(popupState === false) 
+        if(popupState === false) // If the game popupscreen is set to false (closed) start the "timer"
             setStartTime(new Date().getTime())
     }, [popupState])
 
-    useEffect(() => {
+    useEffect(() => { // Once the finishTime state is updated calculate the total time
         setTimeTaken(Math.round( ( ( (finishTime - startTime) / 1000) + Number.EPSILON) * 100) / 100 )
     }, [finishTime])
     
-    useEffect(() => {
+    useEffect(() => { // 
         if( (difficulty <= levels  && timeTaken !== null && timeTaken !== 0 ) ) { // Don't create attempt when all levels have been cleared or when timer is being initialized
             CreateAttempt()
-            if(levelCompleted === 'True') { // If level was completed set it back to false for next level
+            if(levelCompleted === 'True') { // If level was completed set it back to false for next level and increment the difficulty
                 setDifficulty(difficulty + 1)
                 setLevelCompleted('False')
             }
@@ -78,7 +78,7 @@ export default function ThrowEyes(props) {
     }
 
     function winCondition(targetID) {
-        setFinishTime(new Date().getTime())
+        setFinishTime(new Date().getTime()) // When user clicks an option set the finish time
         
         if(targetID === character.id) {
             setLevelCompleted('True')

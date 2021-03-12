@@ -1,16 +1,9 @@
 import { Routes } from 'react-router-dom';
-import LevelNavIndex from '../../pages/LevelNavigationIndex';
-import Game1 from '../../pages/games/Game1';
-import MixAndMatch from '../../pages/games/MixAndMatch';
-import ThrowEyes from '../../pages/games/Throw-Eyes';
-import { MaMBalanceArms, MaMJumpArms, MaMLeapLegs, MaMRunArms } from '../../components/images/MixAndMatchImages'
-import { HotSpotThrowEyes } from '../../components/images/ThrowEyesImages'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
 import BackButton from '../../components/Back-Button'
 import AppRoute from './AuthenticatedRoute'
 
-//SkillName ENUM('Kick', 'Jump', 'Balance', 'Run', 'Throw', 'Hop', 'Catch', 'Slide', 'Underhand-Roll', 'Leap', 'Strike', 'Gallop'),
+//('Balance-Eyes', 'Balance-Legs','Hop-Eyes','Jump-Feet','Jump-Knees','Kick-Eyes','Kick-Foot','Kick-Legs','Leap-Eyes','Run-Eyes','Slide-Feet',
+//'Hop-Arms','Leap-Legs','Slide-Eyes','Throw-Eyes','Balance-Arms','Hop-Legs','Jump-Arms','Run-Arms','Run-Knees','Slide-Hips&Shoulders'),
 
 export default function LevelRoutes() {
     

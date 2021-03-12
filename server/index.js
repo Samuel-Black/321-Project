@@ -50,7 +50,6 @@ app.post('/api/createattempt', (req, res) => {
     const NickName = req.body.NickName
     const Succesful = req.body.Succesful  
     const TimeTaken = req.body.TimeTaken      
-    console.log(TimeTaken)
     const sqlSelect = "INSERT INTO Attempt (UserName, NickName, LevelNumber, GameName, Succesful, TimeTaken) VALUES (?,?,?,?,?,?);"
     connection.query(sqlSelect, [UserName, NickName, LevelNumber, GameName, Succesful, TimeTaken], (err, result) => {
         res.send(result);

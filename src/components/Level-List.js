@@ -276,7 +276,12 @@ export const RunLevels = [
 
 export const ThrowLevels = [
     {
-        
+        id: 1,
+        name: "Throw-Eyes",
+        to: "Throw-Eyes", // used as the link for routes
+        numLevels: 3,
+        monster: MonsterImages[0].default,
+        className: gameClassName    
     }
 ];
 

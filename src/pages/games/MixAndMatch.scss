@@ -9,24 +9,22 @@
   background-position: center;
 }
 
-.square {
-  img {
-    height: auto;
-    width: 100%;
-  }
-}
-
-.target {
-  height: 630px;
-  img {
-    height: auto;
-    width: 100%;
-  }
-}
-
 .horizontal-match {
+  .target {
+    height: 630px;
+  }
   img {
     height: 100%;
     width: auto;
+  }
+}
+
+.vertical-match {
+  .target {
+    width: 215px;
+  }
+  img {
+    height: auto;
+    width: 100%;
   }
 }

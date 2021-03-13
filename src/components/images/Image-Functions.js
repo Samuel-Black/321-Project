@@ -8,13 +8,14 @@ function assignMaMValues(keys, array) {
 }
 
 function splitMaMString(string, object) {
-    //string = string.split("/");
     string = string.split(".");
     string = string[0].split("_");
 
-    if(string[3] == 'Left' || string[3] == 'panel1') {
+    if(string[3] == 'panel1') {
         object.position = 'Left';
-    } else if(string[3] == 'Right' || string[3] == 'panel2') {
+    } else if(string[3] == 'panel2') {
+        object.position = 'Right';
+    } else if(string[3] == 'panel3') {
         object.position = 'Right';
     }
     if(string[4].substr(0, string[4].length - 1) == 'Correct') {

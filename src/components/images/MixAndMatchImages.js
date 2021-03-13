@@ -26,11 +26,11 @@ const imageModulesRunKnees = importAll(
   require.context('../../assets/games/mix&match/Run_Knees/Difficulty 2/', false, /\.(png|jpe?g|svg)$/)
 );
 
-/*
 const imageModulesHopLegs = importAll(
   require.context('../../assets/games/mix&match/Hop_Legs/Difficulty 2/', false, /\.(png|jpe?g|svg)$/)
 );
-*/
+
+//Slide_Hips&Shoulders\Difficulty 2
 
 let balanceArmsImages = Object.values(imageModulesBalanceArms);
 balanceArmsImages = assignMaMValues(Object.keys(imageModulesBalanceArms), balanceArmsImages);
@@ -56,8 +56,11 @@ let runKneesImages = Object.values(imageModulesRunKnees);
 runKneesImages = assignMaMValues(Object.keys(imageModulesRunKnees), runKneesImages);
 let MaMRunKnees = shuffleArray(runKneesImages);
 MaMRunKnees = sortMaMImages(MaMRunKnees);
-console.log(MaMRunKnees)
 
+let hopLegsImages = Object.values(imageModulesHopLegs);
+hopLegsImages = assignMaMValues(Object.keys(imageModulesHopLegs), hopLegsImages);
+let MaMHopLegs = shuffleArray(hopLegsImages);
+MaMHopLegs = sortMaMImages(MaMHopLegs);
 /*
 console.log(imageModulesHopLegs)
 let hopLegsImages = Object.values(imageModulesHopLegs);
@@ -71,5 +74,5 @@ export {
     MaMLeapLegs,
     MaMRunArms,
     MaMRunKnees,
-    //MaMHopLegs,
+    MaMHopLegs,
 }

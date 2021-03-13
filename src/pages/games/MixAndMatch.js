@@ -82,10 +82,10 @@ export default function MixAndMatch(props) {
            <div className="row align-items-center">
               <div className="col-lg align-self-center">
 
-                <div className= "row justify-content-center">
+                <div className= "row justify-content-center vertical-match">
                   <Target position={ItemTypes.CARDLEFT} droppedItem={droppedItemLeft} onDrop={onDropLeft} />
                 </div>
-                <div className= "row justify-content-center">
+                <div className= "row justify-content-center vertical-match">
                   <Target position={ItemTypes.CARDRIGHT} droppedItem={droppedItemRight} onDrop={onDropRight} />
                 </div>
 
@@ -93,12 +93,12 @@ export default function MixAndMatch(props) {
             </div>
             <div className="row justify-content-center">
               
-            <div className="row">
+              <div className="row vertical-match">
                 {props.shuffledImages.left.map((image) => (
                   <Source image={image.default} correct={image.correct} position={image.position} />
                 ))}
               </div>
-              <div className="row">
+              <div className="row vertical-match">
                 {props.shuffledImages.right.map((image) => (
                   <Source image={image.default} correct={image.correct} position={image.position} />
                 ))}
@@ -118,7 +118,7 @@ export default function MixAndMatch(props) {
                 ))}
               </div>
 
-              <div className= "row justify-content-center">
+              <div className= "row justify-content-center horizontal-match">
                 <Target position={ItemTypes.CARDLEFT} droppedItem={droppedItemLeft} onDrop={onDropLeft} />
                 <Target position={ItemTypes.CARDRIGHT} droppedItem={droppedItemRight} onDrop={onDropRight} />
               </div>

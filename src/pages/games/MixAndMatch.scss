@@ -8,3 +8,23 @@
   background-attachment: fixed;
   background-position: center;
 }
+
+.horizontal-match {
+  .target {
+    height: 630px;
+  }
+  img {
+    height: 100%;
+    width: auto;
+  }
+}
+
+.vertical-match {
+  .target {
+    width: 215px;
+  }
+  img {
+    height: auto;
+    width: 100%;
+  }
+}

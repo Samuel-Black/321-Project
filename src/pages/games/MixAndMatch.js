@@ -1,86 +1,141 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import Source from "../../components/mixandmatch/Source"
 import Target from "../../components/mixandmatch/Target"
+import { shuffleArray } from '../../components/images/Image-Functions'
 import './MixAndMatch.scss'
 import { ItemTypes } from '../../components/DragItemTypes'
-import { shuffleArray } from '../../components/images/Image-Functions'
 import GamePopup from '../../components/Game-Popup'
+import SimpleBar from 'simplebar-react';
+import 'simplebar/dist/simplebar.min.css';
 
-export default class MixAndMatch extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        droppedItemLeft: {},
-        droppedItemRight: {},
-        win: false,
-      };
-      this.onDropLeft = this.onDropLeft.bind(this);
-      this.onDropRight = this.onDropRight.bind(this);
+//Known issue with Mix and Match, problem with drag and drop component when you drag the correct right card and then the correct left card if using {difficulty === 1 && } logic, find fix later
+export default function MixAndMatch(props) {
+
+    const [popupState, setPopupState] = useState(true)
+    const [difficulty, setDifficulty] = useState(1);
+    const [droppedItemLeft, setDroppedItemLeft] = useState({})
+    const [droppedItemRight, setDroppedItemRight] = useState({})
+    const [attemptNumber, setAttemptNumber] = useState(0)
+
+    const gameTitle = 'Mix & Match';
+    const levels = 1;
+
+    onDropLeft = onDropLeft.bind(this)
+    onDropRight = onDropRight.bind(this)
+
+    useEffect(() => {
+      randomizeImages()
+    }, [difficulty, attemptNumber])
+
+    useEffect(() => {
+      winCondition()
+    }, [droppedItemLeft, droppedItemRight])
+  
+    function onDropLeft(item) {
+      setDroppedItemLeft(item)
+    }
+  
+    function onDropRight(item) {
+      setDroppedItemRight(item)
     }
 
-    gameTitle = 'Mix & Match';
-    difficulty = 0;
-    levels = 1;
-  
-    onDropLeft(item) {
-      this.setState({
-        droppedItemLeft: item
-      });
-      this.winCondition();
+    function randomizeImages() {
+      props.shuffledImages.left = shuffleArray(props.shuffledImages.left)
+      props.shuffledImages.right = shuffleArray(props.shuffledImages.right)
     }
-  
-    onDropRight(item) {
-      this.setState({
-        droppedItemRight: item
-      });
-      this.winCondition();
+
+    function clearDroppedCards() {
+      setDroppedItemLeft({})
+      setDroppedItemRight({})
     }
-    winCondition() {
-      if(this.state.droppedItemLeft.correct && this.state.droppedItemRight.correct) {
-        this.difficulty++;
-        this.setState({
-          win: true
-        });
-      } else {
-        this.setState({
-          win: false
-        });
+
+    function winCondition() {
+      if( ((Object.keys(droppedItemLeft).length !== 0 && droppedItemLeft.constructor === Object) && (Object.keys(droppedItemRight).length !== 0 && droppedItemRight.constructor === Object))) {
+        if(droppedItemLeft.correct === 'true' && droppedItemRight.correct === 'true') {
+          setDifficulty(difficulty + 1)
+          clearDroppedCards()
+          setAttemptNumber(0)
+          setPopupState(true)
+        } 
+        else if( (droppedItemLeft.correct === 'false' || droppedItemRight.correct === 'false') ) {
+          setAttemptNumber(attemptNumber + 1)
+          clearDroppedCards()
+          setPopupState(true)
+        }
       }
     }
 
-    render() {
-      return (
-        <div className="game-background">
-          {this.props.backButton}
-          <GamePopup gameTitle={this.gameTitle} levelsCleared={this.difficulty} numLevels={this.levels} />
-          <div className="container">
+    return (
+      <div className="game-background">
+        {props.backButton}
+        <GamePopup open={popupState} setOpen={setPopupState} gameTitle={gameTitle} levelsCleared={difficulty} numLevels={levels} levelPassed={attemptNumber < 1} />
+        <div className="container">
+          
+          {/* Uncomment when Card component is completed (First level of mix and match is select the correct image, no mixing or matching)
+            {difficulty <= 1 &&
+            <>
+            </>
+            }
+          */}
+        {props.vertical ? 
+        <>
+           <div className="row align-items-center">
+              <div className="col-lg align-self-center">
+
+                <div className= "row justify-content-center vertical-match">
+                  <Target position={ItemTypes.CARDLEFT} droppedItem={droppedItemLeft} onDrop={onDropLeft} />
+                </div>
+                <div className= "row justify-content-center vertical-match">
+                  <Target position={ItemTypes.CARDRIGHT} droppedItem={droppedItemRight} onDrop={onDropRight} />
+                </div>
+
+              </div>
+            </div>
+            <div className="row justify-content-center">
+              
+              <div className="row vertical-match">
+                {props.shuffledImages.left.map((image) => (
+                  <Source image={image.default} correct={image.correct} position={image.position} />
+                ))}
+              </div>
+              <div className="row vertical-match">
+                {props.shuffledImages.right.map((image) => (
+                  <Source image={image.default} correct={image.correct} position={image.position} />
+                ))}
+              </div>
+
+            </div>
+            </>
+            :
+            <>
             <div className="row align-items-center">
-              <div className="col-lg">
-                {this.props.shuffledImages.left.map((image) => (
+
+              <div className="col-lg-4 align-self-center horizontal-match">
+                {props.shuffledImages.left.map((image) => (
                 <div className="row justify-content-center">
                   <Source image={image.default} correct={image.correct} position={image.position} />
                 </div>
                 ))}
               </div>
-              
-              <div className= "row">
-                  <Target position={ItemTypes.CARDLEFT} droppedItem={this.state.droppedItemLeft} onDrop={this.onDropLeft} />
-                  <Target position={ItemTypes.CARDRIGHT} droppedItem={this.state.droppedItemRight} onDrop={this.onDropRight} />
+
+              <div className= "row justify-content-center horizontal-match">
+                <Target position={ItemTypes.CARDLEFT} droppedItem={droppedItemLeft} onDrop={onDropLeft} />
+                <Target position={ItemTypes.CARDRIGHT} droppedItem={droppedItemRight} onDrop={onDropRight} />
               </div>
 
-              <div className="col-lg">
-                {this.props.shuffledImages.right.map((image) => (
+              <div className="col-lg-4 align-self-center horizontal-match">
+                {props.shuffledImages.right.map((image) => (
                   <div className="row justify-content-center">
                     <Source image={image.default} correct={image.correct} position={image.position} />
                   </div>
                 ))}
               </div>
+
             </div>
-          </div>
-          {this.state.win === true &&
-              <GamePopup gameTitle={this.gameTitle} levelsCleared={this.difficulty} numLevels={this.levels} />
-          }
+            </>
+        }
+          
         </div>
-      );
-    }
+      </div>
+    );
 }

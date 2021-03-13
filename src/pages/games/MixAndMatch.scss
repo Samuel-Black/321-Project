@@ -17,8 +17,16 @@
 }
 
 .target {
+  height: 630px;
   img {
     height: auto;
     width: 100%;
+  }
+}
+
+.horizontal-match {
+  img {
+    height: 100%;
+    width: auto;
   }
 }

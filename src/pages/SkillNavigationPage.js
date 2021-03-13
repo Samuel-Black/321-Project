@@ -6,7 +6,6 @@ import LevelNavComponent from '../components/LevelNavComponent'
 export default function SkillNavigationPage(props) {
 
     const levelList = props.Levels;
-    const skillName = props.SkillName;
     const currentPlayer = useAuthPlayer()
     const user = useAuthUser()
 

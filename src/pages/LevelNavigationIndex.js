@@ -7,10 +7,11 @@ import SimpleBar from 'simplebar-react';
 import { RiUserFill } from 'react-icons/ri'
 import { TiTick } from 'react-icons/ti'
 import { BsArrowRightShort } from 'react-icons/bs'
+import LevelNavbar from '../components/LevelNavbar'
 import 'simplebar/dist/simplebar.min.css';
 
 export default function LevelNavigationPage(props) {
-
+    
     const currentPlayer = useAuthPlayer()
     const user = useAuthUser()
 
@@ -53,9 +54,9 @@ export default function LevelNavigationPage(props) {
                         <RiUserFill />{currentPlayer.player.NickName}
                     </div>
                 </div>
-                <div id="Level-Navbar" className="d-flex">
 
-                </div>
+                <LevelNavbar />
+                
             </div>
             <div className="container mt-5">
                 <SimpleBar style={{ height: '70vh' }} autoHide={false}>

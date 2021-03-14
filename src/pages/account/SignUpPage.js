@@ -3,6 +3,7 @@ import { signupUser, confirmUserSignUp, useAuthState, useAuthDispatch } from '..
 import { Link } from 'react-router-dom';
 import { Oval } from 'react-loading-icons'
 import { useNavigate } from 'react-router-dom'
+import ReactCodeInput from 'react-verification-code-input';
 import PasswordStrengthBar from 'react-password-strength-bar';
 import './SignupPage.scss'
 const passwordValidator = require('password-validator');
@@ -33,6 +34,7 @@ export default function SignupPage() {
     const [emailError, setEmailError] = useState(null)
     const [passwordError, setPasswordError] = useState(null)
     const [confirmPasswordError, setConfirmPasswordError] = useState(null)
+    const [autoCompleteSignUp, setAutoCompleteSignUp] = useState(false)
 
     useEffect(() => {
         if (email.length > 0 && !emailFocused && !isEmail(email)) // If there is something in the email input field, and It's not focused, and the address Isn't valid, set error message
@@ -58,17 +60,20 @@ export default function SignupPage() {
         switch(val) {
             case 'min':
                 return 'be at least 8 characters';
+            case 'spaces':
+                return 'not contain spaces';
             case 'uppercase':
                 return 'have at least 1 uppercase letter';
             case 'lowercase':
                 return 'have at least 1 uppercase letter';
             case 'digits':
                 return 'have at least 2 numbers';
+            case 'oneOf':
+                return ` not be a common password: ${password}`;
         }
     }
 
     useEffect(() => {
-        console.log(schema.validate(password, {list: true}))
         if (!confirmPasswordFocused && confirmPassword.length > 0 && password.length > 0 && password !== confirmPassword) {
             setConfirmPasswordError('Passwords do not match.')
         }
@@ -87,18 +92,16 @@ export default function SignupPage() {
         e.preventDefault()
         try {
             await signupUser(dispatch, { email, password })
-            setStep(1)
         } catch (error) {
             errorMessage = error
-        }
+        } 
     }
     
     const goBack = () => {
         setStep(0)
     }
     
-    const confirmSignUp = async (e) => {
-        e.preventDefault()
+    const confirmSignUp = async () => {
         try {
             await confirmUserSignUp(dispatch, { email, authenticationCode })
             navigate('../Login')
@@ -106,6 +109,13 @@ export default function SignupPage() {
             errorMessage = error
         }
     }
+
+    useEffect(() => {
+        if(authenticationCode.length === 6 && autoCompleteSignUp === true) {
+            confirmSignUp()
+            setAutoCompleteSignUp(false)
+        }
+    }, [autoCompleteSignUp])
 
     return (
         <div id="Signup-Background">
@@ -147,7 +157,7 @@ export default function SignupPage() {
                                             <div className="d-flex">
                                                 <div className="form-group mb-0">
                                                     <input type="password" id="password" className="form-control-lg" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required disabled={loading} onFocus={() => setPasswordFocused(true)} onBlur={() => setPasswordFocused(false)} />
-                                                    <PasswordStrengthBar className="pt-1" password={password} minLength={8} />
+                                                    <PasswordStrengthBar className="pt-1 password-strength-bar" password={password} minLength={8} />
                                                     {passwordError}
                                                 </div>
                                             </div>
@@ -183,7 +193,7 @@ export default function SignupPage() {
                                             </div>
                                             <div className="d-flex">
                                                 <div className="form-group">
-                                                    <input type="text" value={authenticationCode} className="form-control-lg" onChange={(e) => setAuthenticationCode(e.target.value)} name="authenticationCode" required />
+                                                    <ReactCodeInput type={'number'} fields={6} fieldWidth={75} autoFocus loading={loading} onChange={(code) => setAuthenticationCode(code)} onComplete={() => setAutoCompleteSignUp(true)} />
                                                 </div>
                                             </div>
                                             <div className="d-flex justify-content-end">{errorMessage ? <p>{errorMessage}</p> : null}</div>

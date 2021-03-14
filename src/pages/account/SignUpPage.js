@@ -3,19 +3,78 @@ import { signupUser, confirmUserSignUp, useAuthState, useAuthDispatch } from '..
 import { Link } from 'react-router-dom';
 import { Oval } from 'react-loading-icons'
 import { useNavigate } from 'react-router-dom'
+import PasswordStrengthBar from 'react-password-strength-bar';
 import './SignupPage.scss'
+const passwordValidator = require('password-validator');
+const isEmail = require('sane-email-validation')
 
-export default function SignupPage(props) {
+export default function SignupPage() {
+    
+    const schema = new passwordValidator()
+    const navigate = useNavigate();
+
+    schema
+    .is().min(8)                                    // Minimum length 8
+    .is().max(16)                                  // Maximum length 100
+    .has().uppercase(1)                              // Must have uppercase letters
+    .has().lowercase()                              // Must have lowercase letters
+    .has().digits(1)                                // Must have at least 1 digit
+    .has().not().spaces()                           // Should not have spaces
+    .is().not().oneOf(['Passw0rd', 'Password123', 'Spacebar123']);
 
     const [email, setEmail] = useState('')
+    const [emailFocused, setEmailFocused] = useState(false)
     const [password, setPassword] = useState('')
+    const [passwordFocused, setPasswordFocused] = useState(false)
     const [confirmPassword, setConfirmPassword] = useState('')
-    const [phoneNumber, setPhoneNumber] = useState('')
+    const [confirmPasswordFocused, setConfirmPasswordFocused] = useState(false)
     const [authenticationCode, setAuthenticationCode] = useState('')
     const [step, setStep] = useState(0)
-    const [errors, setErrors] = useState(false)
+    const [emailError, setEmailError] = useState(null)
+    const [passwordError, setPasswordError] = useState(null)
+    const [confirmPasswordError, setConfirmPasswordError] = useState(null)
 
-    const navigate = useNavigate();
+    useEffect(() => {
+        if (email.length > 0 && !emailFocused && !isEmail(email)) // If there is something in the email input field, and It's not focused, and the address Isn't valid, set error message
+            setEmailError(`${email} is not a valid email address.`)
+        else if (isEmail(email) || email.length === 0) 
+            setEmailError(null)
+    }, [emailFocused])
+
+    useEffect(() => {
+        if (!passwordFocused && !schema.validate(password) && password.length > 0) {
+            const errors = schema.validate(password, {list: true})
+            let errorMessageString = 'Password must '
+            for (let i = 0; i < errors.length; i++) {
+                errorMessageString += `${PasswordErrorMessage(errors[i])}${(i === errors.length - 1) ? '.' : ', '}`
+            }
+            setPasswordError(errorMessageString)
+        }
+        else if (schema.validate(password) || password.length === 0)
+            setPasswordError(null)
+    }, [passwordFocused])
+
+    function PasswordErrorMessage(val) {
+        switch(val) {
+            case 'min':
+                return 'be at least 8 characters';
+            case 'uppercase':
+                return 'have at least 1 uppercase letter';
+            case 'lowercase':
+                return 'have at least 1 uppercase letter';
+            case 'digits':
+                return 'have at least 2 numbers';
+        }
+    }
+
+    useEffect(() => {
+        console.log(schema.validate(password, {list: true}))
+        if (!confirmPasswordFocused && confirmPassword.length > 0 && password.length > 0 && password !== confirmPassword) {
+            setConfirmPasswordError('Passwords do not match.')
+        }
+        else if (password == confirmPassword || confirmPassword.length === 0)
+            setConfirmPasswordError(null)
+    }, [confirmPasswordFocused])
 
     const dispatch = useAuthDispatch()
     let { loading, errorMessage } = useAuthState()
@@ -78,15 +137,18 @@ export default function SignupPage(props) {
                                             </div>
                                             <div className="d-flex">
                                                 <div className="form-group">
-                                                    <input type="text" id="email" className="form-control-lg" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} name="email" required disabled={loading} />
+                                                    <input type="text" id="email" className="form-control-lg" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} name="email" required disabled={loading} onFocus={() => setEmailFocused(true)} onBlur={() => setEmailFocused(false)} />
+                                                    {emailError}
                                                 </div>
                                             </div>
                                             <div className="d-flex">
                                                 <label htmlFor="password" className="align-self-center">Password</label>
                                             </div>
                                             <div className="d-flex">
-                                                <div className="form-group">
-                                                    <input type="password" id="password" className="form-control-lg" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required disabled={loading} />
+                                                <div className="form-group mb-0">
+                                                    <input type="password" id="password" className="form-control-lg" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required disabled={loading} onFocus={() => setPasswordFocused(true)} onBlur={() => setPasswordFocused(false)} />
+                                                    <PasswordStrengthBar className="pt-1" password={password} minLength={8} />
+                                                    {passwordError}
                                                 </div>
                                             </div>
                                             <div className="d-flex">
@@ -94,15 +156,8 @@ export default function SignupPage(props) {
                                             </div>
                                             <div className="d-flex">
                                                 <div className="form-group">
-                                                    <input type="password" id="confirmPassword" className="form-control-lg" placeholder="confirm password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} name="confirmPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required disabled={loading} />
-                                                </div>
-                                            </div>
-                                            <div className="d-flex">
-                                                <label htmlFor="email" className="align-self-center">Phone Number</label>
-                                            </div>
-                                            <div className="d-flex">
-                                                <div className="form-group">
-                                                    <input type="tel" id="phoneNumber" className="form-control-lg" placeholder="phone number (optional)" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} name="phoneNumber" disabled={loading} />
+                                                    <input type="password" id="confirmPassword" className="form-control-lg" placeholder="confirm password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} name="confirmPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required disabled={loading} onFocus={() => setConfirmPasswordFocused(true)} onBlur={() => setConfirmPasswordFocused(false)} />
+                                                    {confirmPasswordError}
                                                 </div>
                                             </div>
                                             <div className="d-flex justify-content-end">{errorMessage ? <p>{errorMessage}</p> : null}</div>

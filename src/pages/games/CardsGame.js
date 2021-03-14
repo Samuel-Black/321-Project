@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { shuffleArray } from '../../components/images/Image-Functions'
 import GamePopup from '../../components/Game-Popup'
+import { useAuthPlayer, useAuthUser } from '../../libs'
+import Axios from 'axios'
+import './CardsGame.scss'
 
 export default function CardsGame(props) {
+
     const [popupState, setPopupState] = useState(true)
     const [difficulty, setDifficulty] = useState(1);
     const [attemptNumber, setAttemptNumber] = useState(0)
@@ -11,11 +15,29 @@ export default function CardsGame(props) {
     const [timeTaken, setTimeTaken] = useState(null)
     const [currentCards, setCurrentCards] = useState([])
     const [levelCompleted, setLevelCompleted] = useState(false)
+    const [errorMessage, setErrorMessage] = useState(null)
+
+    const currentPlayer = useAuthPlayer()
+    const user = useAuthUser()
 
     const gameTitle = 'Cards';
     const levels = props.numLevels;
 
-    console.log(difficulty)
+    const CreateAttempt = () => {
+        Axios.post('http://localhost:3001/api/createattempt', {
+            GameName: props.GameName,
+            LevelNumber: difficulty,
+            UserName: user.attributes.sub,
+            NickName: currentPlayer.player.NickName,
+            Succesful: levelCompleted,
+            TimeTaken: timeTaken
+        }).then((response) => {
+            
+        }).catch((error) => {
+            setErrorMessage(error)
+            console.log(error)
+        })
+    }   
 
     useEffect(() => {
         shuffleArray(props.shuffledImages.incorrect)
@@ -83,20 +105,22 @@ export default function CardsGame(props) {
         <div className="game-background">
         {props.backButton}
         <GamePopup open={popupState} setOpen={setPopupState} gameTitle={gameTitle} levelsCleared={difficulty} numLevels={levels} levelPassed={attemptNumber < 1} />
-            <div className="d-flex">
-                {difficulty <= levels &&
-                <>
-                    {currentCards.map((image, i) => {
-                        return(
-                            <div key={i} className="d-inline-flex">
-                                <a onClick={() => WinCondition(image.correct)} >
-                                    <img src={image.default} />
-                                </a>
-                            </div>
-                        )
-                    })}
-                </>
-                }
+            <div className="container-fluid">
+                <div className="d-flex align-items-center justify-content-center">
+                    {difficulty <= levels &&
+                    <>
+                        {currentCards.map((image, i) => {
+                            return(
+                                <div key={i} className="d-inline-flex card-option mr-2">
+                                    <a onClick={() => WinCondition(image.correct)} >
+                                        <img src={image.default} />
+                                    </a>
+                                </div>
+                            )
+                        })}
+                    </>
+                    }
+                </div>
             </div>
         </div>
     )

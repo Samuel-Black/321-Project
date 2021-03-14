@@ -1,11 +1,9 @@
 import React from 'react'
-import { useLocation, useNavigate, Link } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { FaLongArrowAltRight } from 'react-icons/fa'
 import { TiHome } from 'react-icons/ti'
 
 export default function LevelNavbar() {
-
-    let navigate = useNavigate()
 
     const paths = useLocation().pathname.split('/')
 

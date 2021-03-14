@@ -21,7 +21,7 @@ export default function SignupPage() {
     .has().lowercase()                              // Must have lowercase letters
     .has().digits(1)                                // Must have at least 1 digit
     .has().not().spaces()                           // Should not have spaces
-    .is().not().oneOf(['Passw0rd', 'Password123', 'Spacebar123']);
+    .is().not().oneOf(['Passw0rd', 'Password123', 'Spacebar123', 'Qwerty123', 'Asdf123']);
 
     const [email, setEmail] = useState('')
     const [emailFocused, setEmailFocused] = useState(false)

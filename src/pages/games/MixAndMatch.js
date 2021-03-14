@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react"
 import Source from "../../components/mixandmatch/Source"
 import Target from "../../components/mixandmatch/Target"
 import { shuffleArray } from '../../components/images/Image-Functions'
-import './MixAndMatch.scss'
-import { ItemTypes } from '../../components/DragItemTypes'
 import GamePopup from '../../components/Game-Popup'
-import SimpleBar from 'simplebar-react';
+import { ItemTypes } from '../../components/DragItemTypes'
+//import SimpleBar from 'simplebar-react';
+import './MixAndMatch.scss'
 import 'simplebar/dist/simplebar.min.css';
 
 //Known issue with Mix and Match, problem with drag and drop component when you drag the correct right card and then the correct left card if using {difficulty === 1 && } logic, find fix later

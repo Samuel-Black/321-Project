@@ -1,6 +1,5 @@
 
 function assignMaMValues(keys, array) {
-    console.log(keys)
     for (let i = 0; i < array.length; i++) {
         array[i] = splitMaMString(keys[i], array[i]);
     }
@@ -19,6 +18,27 @@ function splitMaMString(string, object) {
         object.position = 'Right';
     }
     if(string[4].substr(0, string[4].length - 1) == 'Correct') {
+        object.correct = 'true';
+    } else {
+        object.correct = 'false';
+    }
+
+    return object;
+}
+
+function assignCardsValues(keys, array) {
+    for (let i = 0; i < array.length; i++) {
+        splitCardsString(keys[i], array[i]);
+    }
+    
+    return array;
+}
+
+function splitCardsString(string, object) {
+    string = string.split(".");
+    string = string[0].split("_");
+    
+    if(string[2].substr(0, string[2].length - 1) == 'Correct') {
         object.correct = 'true';
     } else {
         object.correct = 'false';
@@ -135,8 +155,35 @@ function sortMaMImages(array) {
     return sortedArray;
 }
 
+
+function sortCardsArray(array) {
+    let sortedArray = [];
+    let correctArray = []; //correct and incorrect refer to the card options
+    let incorrectArray = [];
+    
+    let correct = 0;
+    let incorrect = 0;
+
+    for(let i = 0; i < array.length; i++) {
+        if(array[i].correct == 'true') {
+            correctArray[correct] = array[i];
+            correct++;
+        } else {
+            incorrectArray[incorrect] = array[i];
+            incorrect++;
+        }
+    }
+
+    sortedArray.correct = correctArray;
+    sortedArray.incorrect = incorrectArray;
+
+    return sortedArray;
+}
+
 export {
     assignMaMValues,
+    assignCardsValues,
+    sortCardsArray,
     shuffleArray,
     sortMaMImages,
     assignThrowEyesValues,

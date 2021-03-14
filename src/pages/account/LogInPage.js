@@ -66,6 +66,11 @@ export default function LoginPage() {
                                         </div>
                                     </div>
                                     <div className="d-flex justify-content-end">{errorMessage ? <p>{errorMessage}</p> : null}</div>
+                                    <span>
+                                        <Link to='./'>
+                                            <a>Forgot your password?</a>
+                                        </Link>
+                                    </span>
                                     <div className="d-flex justify-content-end">
                                         {loading === true && <Oval />}<button id="Login-Button" onClick={handleLogin} disabled={loading}>login</button>
                                     </div>

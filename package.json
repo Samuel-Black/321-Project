@@ -20,10 +20,13 @@
     "react-dom": "^17.0.1",
     "react-icons": "^4.1.0",
     "react-loading-icons": "^1.0.4",
+    "react-password-strength-bar": "^0.3.3",
     "react-pinch-and-zoom": "^1.2.5",
     "react-router-dom": "^6.0.0-beta.0",
     "react-scripts": "4.0.1",
+    "react-verification-code-input": "^1.2.9",
     "reactjs-popup": "^2.0.4",
+    "sane-email-validation": "^3.0.1",
     "sass": "^1.32.8",
     "simplebar-react": "^2.3.0",
     "web-vitals": "^0.2.4"

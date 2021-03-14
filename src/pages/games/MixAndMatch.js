@@ -24,12 +24,15 @@ export default function MixAndMatch(props) {
     onDropRight = onDropRight.bind(this)
 
     useEffect(() => {
-      randomizeImages()
-    }, [difficulty, attemptNumber])
-
-    useEffect(() => {
       winCondition()
     }, [droppedItemLeft, droppedItemRight])
+
+    useEffect(() => {
+      if(popupState === false) {
+        clearDroppedCards()
+        randomizeImages()
+      }
+    }, [popupState])
   
     function onDropLeft(item) {
       setDroppedItemLeft(item)
@@ -53,13 +56,11 @@ export default function MixAndMatch(props) {
       if( ((Object.keys(droppedItemLeft).length !== 0 && droppedItemLeft.constructor === Object) && (Object.keys(droppedItemRight).length !== 0 && droppedItemRight.constructor === Object))) {
         if(droppedItemLeft.correct === 'true' && droppedItemRight.correct === 'true') {
           setDifficulty(difficulty + 1)
-          clearDroppedCards()
           setAttemptNumber(0)
           setPopupState(true)
         } 
         else if( (droppedItemLeft.correct === 'false' || droppedItemRight.correct === 'false') ) {
           setAttemptNumber(attemptNumber + 1)
-          clearDroppedCards()
           setPopupState(true)
         }
       }

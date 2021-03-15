@@ -34,22 +34,22 @@ export default function LevelRoutes() {
 
                 <AppRoute path="Balance/" component={SkillNavigationPage} Levels={BalanceLevels} SkillName={'Balance'} isPrivate={true} requiresPlayer={true} />
                     <DndProvider backend={HTML5Backend}>
-                        <AppRoute path={`Balance/${BalanceLevels[2].to}`} component={MixAndMatch} isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={MaMBalanceArms} SkillName="Balance" GameName={BalanceLevels[2].name} />
+                        <AppRoute path={`Balance/${BalanceLevels[2].to}`} component={MixAndMatch} isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={MaMBalanceArms} numLevels={BalanceLevels[2].numLevels} SkillName="Balance" GameName={BalanceLevels[2].name} />
                     </DndProvider>
                     <AppRoute path={`Balance/${BalanceLevels[0].to}`} component={CardsGame} isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={CardsBalanceEyes} numLevels={BalanceLevels[0].numLevels} SkillName="Balance" GameName={BalanceLevels[0].name} />
                     <AppRoute path={`Balance/${BalanceLevels[1].to}`} component={CardsGame} isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={CardsBalanceLegs} numLevels={BalanceLevels[1].numLevels} SkillName="Balance" GameName={BalanceLevels[1].name} />
 
                 <AppRoute path="Run/" component={SkillNavigationPage} Levels={RunLevels} SkillName={'Run'} isPrivate={true} requiresPlayer={true} />
                     <DndProvider backend={HTML5Backend}>
-                        <AppRoute path={`Run/${RunLevels[1].to}`} component={MixAndMatch} isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={MaMRunArms} SkillName="Run" GameName={RunLevels[1].name} />
+                        <AppRoute path={`Run/${RunLevels[1].to}`} component={MixAndMatch} isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={MaMRunArms} numLevels={RunLevels[1].numLevels} SkillName="Run" GameName={RunLevels[1].name} />
                     </DndProvider>
                     <DndProvider backend={HTML5Backend}>
-                        <AppRoute path={`Run/${RunLevels[2].to}`} component={MixAndMatch} vertical isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={MaMRunKnees} SkillName="Run" GameName={RunLevels[2].name} />
+                        <AppRoute path={`Run/${RunLevels[2].to}`} component={MixAndMatch} vertical isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={MaMRunKnees} numLevels={RunLevels[2].numLevels} SkillName="Run" GameName={RunLevels[2].name} />
                     </DndProvider>
                     <AppRoute path={`Run/${RunLevels[0].to}`} component={CardsGame} isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={CardsRunEyes} numLevels={RunLevels[0].numLevels} SkillName="Run" GameName={RunLevels[0].name} />
                     
                 <AppRoute path="Throw/" component={SkillNavigationPage} Levels={ThrowLevels} SkillName={'Throw'} isPrivate={true} requiresPlayer={true} />
-                    <AppRoute path={`Throw/${ThrowLevels[0].to}`} component={ThrowEyes} isPrivate={true} requiresPlayer={true}  backButton={<BackButton />} shuffledImages={HotSpotThrowEyes} SkillName="Throw" GameName={ThrowLevels[0].name} /> 
+                    <AppRoute path={`Throw/${ThrowLevels[0].to}`} component={ThrowEyes} isPrivate={true} requiresPlayer={true}  backButton={<BackButton />} shuffledImages={HotSpotThrowEyes} numLevels={ThrowLevels[0].numLevels} SkillName="Throw" GameName={ThrowLevels[0].name} /> 
             
                 <AppRoute path="Hop/" component={SkillNavigationPage} Levels={HopLevels} SkillName={'Hop'} isPrivate={true} requiresPlayer={true} />
                     <DndProvider backend={HTML5Backend}>

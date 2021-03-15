@@ -10,17 +10,28 @@ function splitMaMString(string, object) {
     string = string.split(".");
     string = string[0].split("_");
 
-    if(string[3] == 'panel1') {
-        object.position = 'Left';
-    } else if(string[3] == 'panel2') {
-        object.position = 'Right';
-    } else if(string[3] == 'panel3') {
-        object.position = 'Right';
-    }
-    if(string[4].substr(0, string[4].length - 1) == 'Correct') {
-        object.correct = 'true';
-    } else {
-        object.correct = 'false';
+    const level = string[2].substr(string[2].length - 1, string[2].length)
+    object.difficulty = parseInt(level)
+
+    if(level == 1) {
+        if(string[3].substr(0, string[3].length - 1) === 'Correct') {
+            object.correct = 'true';
+        } else 
+            object.correct = 'false';
+    } 
+    else if (level > 1) {
+        if(string[3] === 'panel1') {
+            object.position = 'Panel1';
+        } else if(string[3] === 'panel2') {
+            object.position = 'Panel2';
+        } else if(string[3] === 'panel3') {
+            object.position = 'Panel3';
+        }
+        if(string[4].substr(0, string[4].length - 1) === 'Correct') {
+            object.correct = 'true';
+        } else {
+            object.correct = 'false';
+        }
     }
 
     return object;
@@ -133,24 +144,58 @@ function returnRandomThrowEyesChar(array) {
 
 function sortMaMImages(array) {
     let sortedArray = [];
-    let leftArray = [];
-    let rightArray = [];
+    let difficulty1Array = [];
+    let difficulty2Array = [];
+    let difficulty3Array = [];
+
+    let panel1Array = new Array(2);
+    let panel2Array = new Array(2);
+    let panel3Array = new Array(2);
+
+    for(let i = 0; i < 2; i++) {
+        panel1Array[i] = new Array(0);
+        panel2Array[i] = new Array(0);
+        panel3Array[i] = new Array(0);
+    }
     
-    let left = 0;
-    let right = 0;
+    let difficulty1Count = 0;
 
     for(let i = 0; i < array.length; i++) {
-        if(array[i].position == 'Left') {
-            leftArray[left] = array[i];
-            left++;
-        } else {
-            rightArray[right] = array[i];
-            right++;
+        const difficulty = array[i].difficulty
+        if(difficulty === 1) {
+            difficulty1Array[difficulty1Count] = array[i];
+            difficulty1Count++;
+        }
+        if(difficulty === 2) {
+            if(array[i].position == 'Panel1') {
+                panel1Array[0].push(array[i]);
+            } else if(array[i].position == 'Panel2') {
+                panel2Array[0].push(array[i]);
+            }
+        }
+        if(difficulty === 3) {
+            if(array[i].position == 'Panel1') {
+                panel1Array[1].push(array[i]);
+            } else if(array[i].position == 'Panel2') {
+                panel2Array[1].push(array[i]);
+            } else if(array[i].position == 'Panel3') {
+                panel3Array[1].push(array[i]);
+            }
         }
     }
 
-    sortedArray.left = leftArray;
-    sortedArray.right = rightArray;
+    difficulty2Array.Panel1 = panel1Array[0];
+    difficulty2Array.Panel2 = panel2Array[0];
+
+    difficulty3Array.Panel1 = panel1Array[1];
+    difficulty3Array.Panel2 = panel2Array[1];
+    difficulty3Array.Panel3 = panel3Array[1];
+
+    sortedArray.easy = difficulty1Array;
+    sortedArray.medium = difficulty2Array;
+    sortedArray.hard = difficulty3Array;
+
+    console.log(sortedArray)
 
     return sortedArray;
 }

@@ -7,7 +7,7 @@ export const Levels = [
         id: 1,
         name: "Kick",
         to: "Kick", // used as the link for routes
-        numLevels: 3,
+        numLevels: 6,
         monster: MonsterImages[0].default,
         className: gameClassName
     },     
@@ -15,7 +15,7 @@ export const Levels = [
         id: 2,
         name: "Jump",
         to: "Jump", // used as the link for routes
-        numLevels: 3,
+        numLevels: 7,
         monster: MonsterImages[1].default,
         className: gameClassName
     },   
@@ -31,7 +31,7 @@ export const Levels = [
         id: 4,
         name: "Run",
         to: "Run", // used as the link for routes
-        numLevels: 3,
+        numLevels: 7,
         monster: MonsterImages[2].default,
         className: gameClassName
     },   
@@ -47,7 +47,7 @@ export const Levels = [
         id: 6,
         name: "Hop",
         to: "Hop", // used as the link for routes
-        numLevels: 3,
+        numLevels: 10,
         monster: MonsterImages[0].default,
         className: gameClassName
     },   
@@ -63,7 +63,7 @@ export const Levels = [
         id: 8,
         name: "Slide",
         to: "Slide", // used as the link for routes
-        numLevels: 3,
+        numLevels: 7,
         monster: MonsterImages[6].default,
         className: gameClassName
     },   
@@ -79,7 +79,7 @@ export const Levels = [
         id: 10,
         name: "Leap",
         to: "Leap", // used as the link for routes
-        numLevels: 3,
+        numLevels: 4,
         monster: MonsterImages[9].default,
         className: gameClassName
     },   
@@ -222,7 +222,7 @@ export const LeapLevels = [
         id: 2,
         name: "Leap-Legs",
         to: "Leap-Legs", // used as the link for routes
-        numLevels: 4,
+        numLevels: 2,
         monster: MonsterImages[1].default,
         className: gameClassName
     }

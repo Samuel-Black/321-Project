@@ -14,7 +14,7 @@ export default function CardsGame(props) {
     const [finishTime, setFinishTime] = useState(null)
     const [timeTaken, setTimeTaken] = useState(null)
     const [currentCards, setCurrentCards] = useState([])
-    const [levelCompleted, setLevelCompleted] = useState(false)
+    const [levelCompleted, setLevelCompleted] = useState('False')
     const [errorMessage, setErrorMessage] = useState(null)
 
     const currentPlayer = useAuthPlayer()
@@ -77,10 +77,10 @@ export default function CardsGame(props) {
     
     useEffect(() => {
         if( (difficulty <= levels  && timeTaken !== null && timeTaken !== 0 ) ) { // Don't create attempt when all levels have been cleared or when timer is being initialized
-            //CreateAttempt()
-            if(levelCompleted === true) { // If level was completed set it back to false for next level and increment the difficulty
+            CreateAttempt()
+            if(levelCompleted === 'True') { // If level was completed set it back to false for next level and increment the difficulty
                 setDifficulty(difficulty + 1)
-                setLevelCompleted(false)
+                setLevelCompleted('False')
             }
         }
     }, [timeTaken])
@@ -89,7 +89,7 @@ export default function CardsGame(props) {
         setFinishTime(new Date().getTime()) // When user clicks an option set the finish time
         
         if(selection === 'true') {
-            setLevelCompleted(true)
+            setLevelCompleted('True')
             setPopupState(true)
             setAttemptNumber(0)
             ShuffleCards()

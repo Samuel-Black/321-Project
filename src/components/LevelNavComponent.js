@@ -19,7 +19,7 @@ export default function LevelNavigationPage(props) {
                     <div className="mr-auto">
                         <h1 id="Level-Navigation-Title">JumpStart</h1>
                     </div>
-                    <div id="Current-Player" className="align-self-center">
+                    <div id="Current-Player" className="align-self-center"> 
                         <RiUserFill />{currentPlayer.player.NickName}
                     </div>
                 </div>

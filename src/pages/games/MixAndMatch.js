@@ -4,6 +4,8 @@ import Target from "../../components/mixandmatch/Target"
 import { shuffleArray } from '../../components/images/Image-Functions'
 import GamePopup from '../../components/Game-Popup'
 import { ItemTypes } from '../../components/DragItemTypes'
+import { useAuthPlayer, useAuthUser } from '../../libs'
+import Axios from 'axios'
 //import SimpleBar from 'simplebar-react';
 import './MixAndMatch.scss'
 import 'simplebar/dist/simplebar.min.css';
@@ -11,15 +13,20 @@ import 'simplebar/dist/simplebar.min.css';
 //Known issue with Mix and Match, problem with drag and drop component when you drag the correct right card and then the correct left card if using {difficulty === 1 && } logic, find fix later
 export default function MixAndMatch(props) {
 
-  console.log(props.shuffledImages)
-
     const [popupState, setPopupState] = useState(true)
-    const [difficulty, setDifficulty] = useState(1);
+    const [difficulty, setDifficulty] = useState(1)
+    const [startTime, setStartTime] = useState(null)
+    const [finishTime, setFinishTime] = useState(null)
+    const [timeTaken, setTimeTaken] = useState(null)
     const [droppedItemPanel1, setDroppedItemPanel1] = useState({})
     const [droppedItemPanel2, setDroppedItemPanel2] = useState({})
     const [droppedItemPanel3, setDroppedItemPanel3] = useState({})
     const [attemptNumber, setAttemptNumber] = useState(0)
     const [levelCompleted, setLevelCompleted] = useState('False')
+    const [errorMessage, setErrorMessage] = useState(null)
+    
+    const currentPlayer = useAuthPlayer()
+    const user = useAuthUser()
 
     const gameTitle = 'Mix & Match';
     const levels = props.numLevels;
@@ -28,14 +35,37 @@ export default function MixAndMatch(props) {
     onDropPanel2 = onDropPanel2.bind(this)
     onDropPanel3 = onDropPanel3.bind(this)
 
+    const CreateAttempt = () => {
+      Axios.post('http://localhost:3001/api/createattempt', {
+          GameName: props.GameName,
+          LevelNumber: difficulty,
+          UserName: user.attributes.sub,
+          NickName: currentPlayer.player.NickName,
+          Succesful: levelCompleted,
+          TimeTaken: timeTaken
+      }).then((response) => {
+          
+      }).catch((error) => {
+          setErrorMessage(error)
+          console.log(error)
+      })
+    }   
+
+    useEffect(() => { // Once the finishTime state is updated calculate the total time
+        setTimeTaken(Math.round( ( ( (finishTime - startTime) / 1000) + Number.EPSILON) * 100) / 100 )
+    }, [finishTime])
+
     useEffect(() => {
-      winCondition()
+      if(difficulty >= 2 ) {
+        winCondition()
+      }
     }, [droppedItemPanel1, droppedItemPanel2, droppedItemPanel3])
 
     useEffect(() => {
       if(popupState === false) {
         clearDroppedCards()
         randomizeImages()
+        setStartTime(new Date().getTime())
       }
     }, [popupState])
   
@@ -48,9 +78,6 @@ export default function MixAndMatch(props) {
     function onDropPanel3(item) {
       setDroppedItemPanel3(item)
     }
-
-    console.log(props.shuffledImages.easy)
-    console.log(props.shuffledImages.medium)
 
     function randomizeImages() {
       props.shuffledImages.easy = shuffleArray(props.shuffledImages.easy)
@@ -69,15 +96,24 @@ export default function MixAndMatch(props) {
       }
     }
 
+    useEffect(() => {
+      if( (difficulty <= levels  && timeTaken !== null && timeTaken !== 0 ) ) { // Don't create attempt when all levels have been cleared or when timer is being initialized
+          CreateAttempt()
+          if(levelCompleted === 'True') { // If level was completed set it back to false for next level and increment the difficulty
+              setDifficulty(difficulty + 1)
+              setLevelCompleted('False')
+          }
+      }
+    }, [timeTaken])
+  
     function winCondition(selection) {
-
+      
       if(difficulty === 1) {
+        setFinishTime(new Date().getTime()) // When user clicks an option set the finish time
           if(selection === 'true') {
             setLevelCompleted('True')
             setPopupState(true)
             setAttemptNumber(0)
-            setDifficulty(difficulty + 1)
-            //ShuffleCards()
         }
         else if(selection === 'false') {
           setAttemptNumber(attemptNumber + 1)
@@ -88,10 +124,11 @@ export default function MixAndMatch(props) {
       else {
         if(difficulty === 2) {
           if( ((Object.keys(droppedItemPanel1).length !== 0 && droppedItemPanel1.constructor === Object) && (Object.keys(droppedItemPanel2).length !== 0 && droppedItemPanel2.constructor === Object))) {
+            setFinishTime(new Date().getTime()) // When user clicks an option set the finish time
             if(droppedItemPanel1.correct === 'true' && droppedItemPanel2.correct === 'true') {
-              setDifficulty(difficulty + 1)
-              setAttemptNumber(0)
+              setLevelCompleted('True')
               setPopupState(true)
+              setAttemptNumber(0)
             } 
             else if( (droppedItemPanel1.correct === 'false' || droppedItemPanel2.correct === 'false') ) {
               setAttemptNumber(attemptNumber + 1)
@@ -101,10 +138,11 @@ export default function MixAndMatch(props) {
         }
         if(difficulty === 3) {
           if( ((Object.keys(droppedItemPanel1).length !== 0 && droppedItemPanel1.constructor === Object) && (Object.keys(droppedItemPanel2).length !== 0 && droppedItemPanel2.constructor === Object) && (Object.keys(droppedItemPanel3).length !== 0 && droppedItemPanel3.constructor === Object))) {
+            setFinishTime(new Date().getTime()) // When user clicks an option set the finish time
             if(droppedItemPanel1.correct === 'true' && droppedItemPanel2.correct === 'true' && droppedItemPanel3.correct === 'true') {
-              setDifficulty(difficulty + 1)
-              setAttemptNumber(0)
+              setLevelCompleted('True')
               setPopupState(true)
+              setAttemptNumber(0)
             } 
             else if( (droppedItemPanel1.correct === 'false' || droppedItemPanel2.correct === 'false' || droppedItemPanel3.correct === 'false') ) {
               setAttemptNumber(attemptNumber + 1)
@@ -119,23 +157,24 @@ export default function MixAndMatch(props) {
       <div className="game-background">
         {props.backButton}
         <GamePopup open={popupState} setOpen={setPopupState} gameTitle={gameTitle} levelsCleared={difficulty} numLevels={levels} levelPassed={attemptNumber < 1} />
-        <div className="container">
-          
+        
         {difficulty === 1 &&
-          <>
-              {props.shuffledImages.easy.map((image, i) => {
-                  return(
-                      <div key={i} className="d-inline-flex card-option mr-2">
-                          <a onClick={() => winCondition(image.correct)} >
-                              <img src={image.default} />
-                          </a>
-                      </div>
-                  )
-              })}
-          </>
+          <div className="container-fluid">
+            <div className="d-flex align-items-center justify-content-center">
+                {props.shuffledImages.easy.map((image, i) => {
+                    return(
+                        <div key={i} className="d-inline-flex card-option mr-2">
+                            <a onClick={() => winCondition(image.correct)} >
+                                <img src={image.default} />
+                            </a>
+                        </div>
+                    )
+                })}
+            </div>
+          </div>
         }
         {difficulty > 1 &&
-        <>
+        <div className="container">
           {props.vertical ? 
           <>
             <div className="row align-items-center">
@@ -234,10 +273,9 @@ export default function MixAndMatch(props) {
               </div>
               </>
           }
-        </>
+        </div>
         }
           
-        </div>
       </div>
     );
 }

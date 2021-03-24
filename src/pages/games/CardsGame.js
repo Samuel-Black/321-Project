@@ -1,43 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { shuffleArray } from '../../components/images/Image-Functions'
-import GamePopup from '../../components/Game-Popup'
-import { useAuthPlayer, useAuthUser } from '../../libs'
-import Axios from 'axios'
 import './CardsGame.scss'
 
 export default function CardsGame(props) {
 
-    const [popupState, setPopupState] = useState(true)
-    const [difficulty, setDifficulty] = useState(1);
-    const [attemptNumber, setAttemptNumber] = useState(0)
-    const [startTime, setStartTime] = useState(null)
-    const [finishTime, setFinishTime] = useState(null)
-    const [timeTaken, setTimeTaken] = useState(null)
     const [currentCards, setCurrentCards] = useState([])
-    const [levelCompleted, setLevelCompleted] = useState('False')
     const [errorMessage, setErrorMessage] = useState(null)
 
-    const currentPlayer = useAuthPlayer()
-    const user = useAuthUser()
-
-    const gameTitle = 'Cards';
-    const levels = props.numLevels;
-
-    const CreateAttempt = () => {
-        Axios.post('http://localhost:3001/api/createattempt', {
-            GameName: props.GameName,
-            LevelNumber: difficulty,
-            UserName: user.attributes.sub,
-            NickName: currentPlayer.player.NickName,
-            Succesful: levelCompleted,
-            TimeTaken: timeTaken
-        }).then((response) => {
-            
-        }).catch((error) => {
-            setErrorMessage(error)
-            console.log(error)
-        })
-    }   
+    const difficulty = props.difficulty
+    const levels = props.numLevels
 
     useEffect(() => {
         shuffleArray(props.shuffledImages.incorrect)
@@ -66,45 +37,24 @@ export default function CardsGame(props) {
         }
     }
 
-    useEffect(() => {
-        if(popupState === false) // If the game popupscreen is set to false (closed) start the "timer"
-            setStartTime(new Date().getTime())
-    }, [popupState])
-
-    useEffect(() => { // Once the finishTime state is updated calculate the total time
-        setTimeTaken(Math.round( ( ( (finishTime - startTime) / 1000) + Number.EPSILON) * 100) / 100 )
-    }, [finishTime])
-    
-    useEffect(() => {
-        if( (difficulty <= levels  && timeTaken !== null && timeTaken !== 0 ) ) { // Don't create attempt when all levels have been cleared or when timer is being initialized
-            CreateAttempt()
-            if(levelCompleted === 'True') { // If level was completed set it back to false for next level and increment the difficulty
-                setDifficulty(difficulty + 1)
-                setLevelCompleted('False')
-            }
-        }
-    }, [timeTaken])
-
     const WinCondition = (selection) => {
-        setFinishTime(new Date().getTime()) // When user clicks an option set the finish time
+        props.setFinishTime(new Date().getTime()) // When user clicks an option set the finish time
         
         if(selection === 'true') {
-            setLevelCompleted('True')
-            setPopupState(true)
-            setAttemptNumber(0)
+            props.setLevelCompleted('True')
+            props.setPopupState(true)
+            props.setAttemptNumber(0)
             ShuffleCards()
         }
         else {
             ShuffleCards()
-            setAttemptNumber(attemptNumber + 1)
-            setPopupState(true)
+            props.setAttemptNumber(props.attemptNumber + 1)
+            props.setPopupState(true)
         }
     }
 
     return (
-        <div className="game-background">
-        {props.backButton}
-        <GamePopup open={popupState} setOpen={setPopupState} gameTitle={gameTitle} levelsCleared={difficulty} numLevels={levels} levelPassed={attemptNumber < 1} />
+        <>
             <div className="container-fluid">
                 <div className="d-flex align-items-center justify-content-center">
                     {difficulty <= levels &&
@@ -122,6 +72,6 @@ export default function CardsGame(props) {
                     }
                 </div>
             </div>
-        </div>
+        </>
     )
 }

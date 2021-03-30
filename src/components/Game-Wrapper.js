@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useAuthPlayer, useAuthUser } from '../libs'
 import GamePopup from './Game-Popup'
 import Axios from 'axios'
+import { CreateAttemptURL } from './Request-URL'
 
 export default function GameWrapper(props) {
 
@@ -21,7 +22,7 @@ export default function GameWrapper(props) {
     const levels = props.numLevels;
 
     const CreateAttempt = () => {
-        Axios.post('http://localhost:3001/api/createattempt', {
+        Axios.post(CreateAttemptURL, {
             GameName: props.GameName,
             LevelNumber: difficulty,
             UserName: user.attributes.sub,

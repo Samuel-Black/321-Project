@@ -29,20 +29,6 @@ app.post('/api/verifyuser', (req, res) => {
 })
 */
 
-app.post('/api/insertlevel', (req, res) => {
-    const SkillName = req.body.SkillName   
-    const LevelNumber = req.body.LevelNumber   
-    const UserName = req.body.UserName  
-    const NickName = req.body.NickName       
-    const sqlSelect = "INSERT INTO Level (SkillName, LevelNumber, UserName, NickName) VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE SkillName = SkillName;"
-    connection.query(sqlSelect, [SkillName, LevelNumber, UserName, NickName], (err, result) => {
-        res.send(result);
-        if(err !== null) {
-            console.log(err);
-        }
-    })
-})
-
 app.post('/api/createattempt', (req, res) => {
     const GameName = req.body.GameName   
     const LevelNumber = req.body.LevelNumber   
@@ -52,20 +38,6 @@ app.post('/api/createattempt', (req, res) => {
     const TimeTaken = req.body.TimeTaken      
     const sqlSelect = "INSERT INTO Attempt (UserName, NickName, LevelNumber, GameName, Succesful, TimeTaken) VALUES (?,?,?,?,?,?);"
     connection.query(sqlSelect, [UserName, NickName, LevelNumber, GameName, Succesful, TimeTaken], (err, result) => {
-        res.send(result);
-        if(err !== null) {
-            console.log(err);
-        }
-    })
-})
-
-app.post('/api/levelcomplete', (req, res) => {
-    const SkillName = req.body.SkillName   
-    const LevelNumber = req.body.LevelNumber   
-    const UserName = req.body.UserName  
-    const NickName = req.body.NickName       
-    const sqlSelect = "UPDATE Level SET completed = 'True' WHERE UserName = ? AND NickName = ? AND SkillName = ? AND LevelNumber = ?;"
-    connection.query(sqlSelect, [UserName, NickName, SkillName, LevelNumber], (err, result) => {
         res.send(result);
         if(err !== null) {
             console.log(err);
@@ -120,13 +92,6 @@ app.post('/api/createplayer', (req, res) => {
     const profilepicture = req.body.profileImage
     const sqlInsert = "INSERT INTO Player(UserName, NickName, ProfilePicture, BirthDay) VALUES(?, ?, ?, Date(?));"
     connection.query(sqlInsert, [UserName, nickname, profilepicture, birthday], (err, result) => {
-        res.send(result);
-    })
-})
-
-app.get("/api/get", (req, res) => {
-    const sqlSelect = "SELECT Player FROM Player WHERE User.UserName = Player.UserName;"
-    connection.query(sqlSelect, (err, result) => {
         res.send(result);
     })
 })

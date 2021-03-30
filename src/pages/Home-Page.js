@@ -11,6 +11,7 @@ import { ProfilePictureImages } from '../components/images/ProfilePictureImages'
 import DatePicker from 'react-date-picker';
 import ProfileImageMenu from '../components/Profile-Image-Menu'
 import FormatBirthday from '../components/Birthday-Format'
+import { GetPlayersURL, CreatePlayerURL } from '../components/Request-URL'
 
 export default function HomePage() {
 
@@ -25,7 +26,7 @@ export default function HomePage() {
     //const [activeProfileImage, setActiveProfileImage] = useState(0)
 
     const GetPlayers = () => {
-        Axios.post('http://localhost:3001/api/getplayers', {
+        Axios.post(GetPlayersURL, {
             UserName: user.attributes.sub
         }).then((response) => {
             setPlayerList(response.data);
@@ -35,7 +36,7 @@ export default function HomePage() {
     }
 
     const createPlayer = () => {
-        Axios.post('http://localhost:3001/api/createplayer', {
+        Axios.post(CreatePlayerURL, {
             UserName: user.attributes.sub,
             nickname: nickname,
             birthday: FormatBirthday(birthday.toString()),

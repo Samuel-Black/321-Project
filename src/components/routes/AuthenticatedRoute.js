@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Navigate, useNavigate } from 'react-router-dom';
+import { Route, Navigate } from 'react-router-dom';
 import { useAuthUser, useAuthPlayer } from '../../libs';
 
 //&& !Boolean(userDetails.token === getCurrentToken())
@@ -7,7 +7,6 @@ import { useAuthUser, useAuthPlayer } from '../../libs';
 const Container = ({Component, isPrivate, requiresPlayer, ...props}) => {
     const userData = useAuthUser()
     const player = useAuthPlayer()
-    const navigate = useNavigate()
     
     if(isPrivate && userData === false) { // If attempting to access private routes while not logged in/authenticated
       return <Navigate to={'../../Login'} replace={true} />
@@ -23,13 +22,12 @@ const Container = ({Component, isPrivate, requiresPlayer, ...props}) => {
   }
 
 const AppRoute = ({ component: Component, path, isPrivate, requiresPlayer, ...props }) => {
-
     return (
       <Route
           path={path}
           element={<Container Component={Component} isPrivate={isPrivate} requiresPlayer={requiresPlayer} {...props} />}
       />
-  )
+    )
 }
   
 export default AppRoute

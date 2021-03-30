@@ -3,6 +3,7 @@ import { Levels } from '../components/Level-List'
 import { Link } from 'react-router-dom'
 import { useAuthPlayer, useAuthUser } from '../libs'
 import Axios from 'axios'
+import { GetTotalProgressURL } from '../components/Request-URL'
 import SimpleBar from 'simplebar-react';
 import { RiUserFill } from 'react-icons/ri'
 import { TiTick } from 'react-icons/ti'
@@ -29,7 +30,7 @@ export default function LevelNavigationPage(props) {
     }
 
     const GetProgress = () => {
-        Axios.post('http://localhost:3001/api/gettotalprogress', {
+        Axios.post(GetTotalProgressURL, {
             UserName: user.attributes.sub,
             NickName: currentPlayer.player.NickName
         }).then((response) => {

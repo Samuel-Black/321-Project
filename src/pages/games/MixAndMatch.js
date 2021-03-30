@@ -2,10 +2,7 @@ import React, { useState, useEffect } from "react"
 import Source from "../../components/mixandmatch/Source"
 import Target from "../../components/mixandmatch/Target"
 import { shuffleArray } from '../../components/images/Image-Functions'
-import GamePopup from '../../components/Game-Popup'
 import { ItemTypes } from '../../components/DragItemTypes'
-import { useAuthPlayer, useAuthUser } from '../../libs'
-import Axios from 'axios'
 //import SimpleBar from 'simplebar-react';
 import './MixAndMatch.scss'
 import 'simplebar/dist/simplebar.min.css';

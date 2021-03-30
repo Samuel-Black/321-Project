@@ -1,0 +1,30 @@
+type User {
+  UserName: ID!
+  Players: [Player]
+}
+
+type Player {
+  PlayerName: String!
+}
+
+input UserInput {
+  UserName: ID
+  Players: [PlayerInput]
+}
+
+input PlayerInput {
+  PlayerName: String!
+}
+
+type Mutation {
+  mysql_createUser(input: UserInput!): User
+}
+
+type Query {
+  mysql_getUser(UserName: ID!): User
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}

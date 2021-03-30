@@ -16,7 +16,7 @@
         "321projectccad16a8ccad16a8CustomMessage": {
           "REDIRECTURL": "http://localhost:3000/",
           "EMAILSUBJECT": "JumpStart - Account Verification",
-          "EMAILMESSAGE": "Please the authentication code in this email to verify your account",
+          "EMAILMESSAGE": "Please use the authentication code in this email to verify your account",
           "deploymentBucketName": "amplify-321project-dev-163113-deployment",
           "s3Key": "amplify-builds/321projectccad16a8ccad16a8CustomMessage-73746364792f387a494f-build.zip"
         },
@@ -26,7 +26,8 @@
         }
       },
       "auth": {
-        "321projectccad16a8ccad16a8": {}
+        "321projectccad16a8ccad16a8": {},
+        "userPoolGroups": {}
       }
     }
   }

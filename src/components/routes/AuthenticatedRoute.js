@@ -12,13 +12,14 @@ const Container = ({Component, isPrivate, requiresPlayer, ...props}) => {
     if(isPrivate && userData === false) { // If attempting to access private routes while not logged in/authenticated
       return <Navigate to={'../../Login'} replace={true} />
     }
-    if(!isPrivate && userData !== false) { // If attempting to access Sign Up or Log In page while currently logged in/authenticated
+    else if(!isPrivate && userData !== false) { // If attempting to access Sign Up or Log In page while currently logged in/authenticated
       return <Navigate to={'../../'} replace={true} />
     }
-    if(requiresPlayer === true && player.player === false) { // If attempting to access Application while logged in/authenticated but without selecting their player account
+    else if(requiresPlayer === true && player.player === false) { // If attempting to access Application while logged in/authenticated but without selecting their player account
       return <Navigate to={'../../'} replace={true} />
     }
-    return <Component {...props} />
+    else 
+      return <Component {...props} />
   }
 
 const AppRoute = ({ component: Component, path, isPrivate, requiresPlayer, ...props }) => {

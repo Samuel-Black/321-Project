@@ -19,10 +19,6 @@
           "EMAILMESSAGE": "Please use the authentication code in this email to verify your account",
           "deploymentBucketName": "amplify-321project-dev-163113-deployment",
           "s3Key": "amplify-builds/321projectccad16a8ccad16a8CustomMessage-73746364792f387a494f-build.zip"
-        },
-        "AdminQueries374abb13": {
-          "deploymentBucketName": "amplify-321project-dev-163113-deployment",
-          "s3Key": "amplify-builds/AdminQueries374abb13-523768486c6576436571-build.zip"
         }
       },
       "auth": {

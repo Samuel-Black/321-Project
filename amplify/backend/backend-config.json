@@ -4,20 +4,6 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
-    },
-    "AdminQueries374abb13": {
-      "service": "Lambda",
-      "providerPlugin": "awscloudformation",
-      "build": true,
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "321projectccad16a8ccad16a8",
-          "attributes": [
-            "UserPoolId"
-          ]
-        }
-      ]
     }
   },
   "auth": {
@@ -54,43 +40,5 @@
       "customAuth": false
     }
   },
-  "api": {
-    "AdminQueries": {
-      "service": "API Gateway",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "321projectccad16a8ccad16a8",
-          "attributes": [
-            "UserPoolId"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "AdminQueries374abb13",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
-        }
-      ]
-    },
-    "321project": {
-      "service": "AppSync",
-      "providerPlugin": "awscloudformation",
-      "output": {
-        "authConfig": {
-          "defaultAuthentication": {
-            "authenticationType": "API_KEY",
-            "apiKeyConfig": {
-              "apiKeyExpirationDays": 7,
-              "description": "JumpStart API Key"
-            }
-          },
-          "additionalAuthenticationProviders": []
-        }
-      }
-    }
-  }
+  "api": {}
 }

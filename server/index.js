@@ -36,8 +36,35 @@ app.post('/api/createattempt', (req, res) => {
     const NickName = req.body.NickName
     const Succesful = req.body.Succesful  
     const TimeTaken = req.body.TimeTaken      
-    const sqlSelect = "INSERT INTO Attempt (UserName, NickName, LevelNumber, GameName, Succesful, TimeTaken) VALUES (?,?,?,?,?,?);"
-    connection.query(sqlSelect, [UserName, NickName, LevelNumber, GameName, Succesful, TimeTaken], (err, result) => {
+    const sqlInsert = `INSERT INTO Attempt (UserName, NickName, BirthDay, LevelNumber, GameName, Succesful, TimeTaken)
+                                            VALUES(
+                                                    ?, 
+                                                    ?, 
+                                                    (SELECT BirthDay
+                                                    FROM Player
+                                                    WHERE Player.UserName = ?
+                                                    AND Player.NickName = ?), 
+                                                    ?, 
+                                                    ?, 
+                                                    ?, 
+                                                    ?);`
+    connection.query(sqlInsert, [UserName, NickName, UserName, NickName, LevelNumber, GameName, Succesful, TimeTaken], (err, result) => {
+        res.send(result);
+        if(err !== null) {
+            console.log(err);
+        }
+    })
+})
+
+app.post('/api/createlocalattempt', (req, res) => {
+    const GameName = req.body.GameName   
+    const LevelNumber = req.body.LevelNumber   
+    const NickName = req.body.NickName
+    const BirthDay = req.body.BirthDay
+    const Succesful = req.body.Succesful  
+    const TimeTaken = req.body.TimeTaken      
+    const sqlInsert = 'INSERT INTO Attempt (NickName, BirthDay, LevelNumber, GameName, Succesful, TimeTaken) VALUES(?, Date(?), ?, ?, ?, ?);'
+    connection.query(sqlInsert, [NickName, BirthDay, LevelNumber, GameName, Succesful, TimeTaken], (err, result) => {
         res.send(result);
         if(err !== null) {
             console.log(err);
@@ -93,6 +120,9 @@ app.post('/api/createplayer', (req, res) => {
     const sqlInsert = "INSERT INTO Player(UserName, NickName, ProfilePicture, BirthDay) VALUES(?, ?, ?, Date(?));"
     connection.query(sqlInsert, [UserName, nickname, profilepicture, birthday], (err, result) => {
         res.send(result);
+        if(err !== null) {
+            console.log(err);
+        }
     })
 })
 

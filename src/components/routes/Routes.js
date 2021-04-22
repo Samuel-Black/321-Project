@@ -11,7 +11,7 @@ export default class MyRoutes extends Component {
     render() {
         return (
             <Routes>
-                <AppRoute path="" component={App} isPrivate={true} requiresPlayer={false} />
+                <AppRoute path="/" component={App} isPrivate={true} requiresPlayer={false} />
                 <AppRoute path="LevelNavigation/*" component={LevelNav} isPrivate={true} requiresPlayer={true} />
                 <AppRoute path="Login" component={LoginPage} isPrivate={false} requiresPlayer={false} />
                 <AppRoute path="Signup" component={SignupPage} isPrivate={false} requiresPlayer={false} />

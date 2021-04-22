@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useAuthPlayer, useAuthUser } from '../libs'
 import GamePopup from './Game-Popup'
 import Axios from 'axios'
+import { CreateAttemptURL, CreateLocalAttemptURL } from './Request-URL'
 
 export default function GameWrapper(props) {
 
@@ -19,21 +20,41 @@ export default function GameWrapper(props) {
 
     const gameTitle = props.gameTitle;
     const levels = props.numLevels;
-
+    
     const CreateAttempt = () => {
-        Axios.post('http://localhost:3001/api/createattempt', {
-            GameName: props.GameName,
-            LevelNumber: difficulty,
-            UserName: user.attributes.sub,
-            NickName: currentPlayer.player.NickName,
-            Succesful: levelCompleted,
-            TimeTaken: timeTaken
-        }).then((response) => {
-            
-        }).catch((error) => {
-            setErrorMessage(error)
-            console.log(error)
-        })
+        if(user !== false) { // If using a logged in account, store player in DB
+            Axios.post(CreateAttemptURL, {
+                GameName: props.GameName,
+                LevelNumber: difficulty,
+                UserName: user.attributes.sub,
+                NickName: currentPlayer.player.NickName,
+                Succesful: levelCompleted,
+                TimeTaken: timeTaken
+            }).then((response) => {
+                
+            }).catch((error) => {
+                setErrorMessage(error)
+                console.log(error)
+            })
+        }
+        else if(user === false) { // If not using an account and not logged in, store player in local storage
+            const localPlayer = JSON.parse(localStorage.getItem(currentPlayer.player.NickName+'-34CUH8sLCXUZTA79X748'))
+            const localPlayerBirthDay = localPlayer.Birthday
+            console.log(localPlayer)
+            Axios.post(CreateLocalAttemptURL, {
+                GameName: props.GameName,
+                LevelNumber: difficulty,
+                NickName: currentPlayer.player.NickName,
+                BirthDay: localPlayerBirthDay,
+                Succesful: levelCompleted,
+                TimeTaken: timeTaken
+            }).then((response) => {
+                
+            }).catch((error) => {
+                setErrorMessage(error)
+                console.log(error)
+            })
+        }
     }   
 
     useEffect(() => {
@@ -49,6 +70,13 @@ export default function GameWrapper(props) {
         if( (difficulty <= levels  && timeTaken !== null && timeTaken !== 0 ) ) { // Don't create attempt when all levels have been cleared or when timer is being initialized
             CreateAttempt()
             if(levelCompleted === 'True') { // If level was completed set it back to false for next level and increment the difficulty
+                if(user === false) { // If no user is logged in, store progress in local storage
+                    var localPlayer = JSON.parse(localStorage.getItem(currentPlayer.player.NickName+'-34CUH8sLCXUZTA79X748'))
+                    if(difficulty > parseInt(localPlayer['Progress'][props.SkillName][props.GameName])) {
+                        localPlayer['Progress'][props.SkillName][props.GameName] = difficulty
+                        localStorage.setItem(currentPlayer.player.NickName+'-34CUH8sLCXUZTA79X748', JSON.stringify(localPlayer))
+                    }
+                }
                 setDifficulty(difficulty + 1)
                 setLevelCompleted('False')
             }

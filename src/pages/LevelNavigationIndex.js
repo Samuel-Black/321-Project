@@ -3,6 +3,7 @@ import { Levels } from '../components/Level-List'
 import { Link } from 'react-router-dom'
 import { useAuthPlayer, useAuthUser } from '../libs'
 import Axios from 'axios'
+import { GetTotalProgressURL } from '../components/Request-URL'
 import SimpleBar from 'simplebar-react';
 import { RiUserFill } from 'react-icons/ri'
 import { TiTick } from 'react-icons/ti'
@@ -29,14 +30,32 @@ export default function LevelNavigationPage(props) {
     }
 
     const GetProgress = () => {
-        Axios.post('http://localhost:3001/api/gettotalprogress', {
-            UserName: user.attributes.sub,
-            NickName: currentPlayer.player.NickName
-        }).then((response) => {
-            setProgress(response.data);
-        }).catch((error) => {
-            setErrorMessage(error)
-        })
+        if(user !== false) { // If using a logged in account, get progress from DB
+            Axios.post(GetTotalProgressURL, {
+                UserName: user.attributes.sub,
+                NickName: currentPlayer.player.NickName
+            }).then((response) => {
+                setProgress(response.data);
+            }).catch((error) => {
+                setErrorMessage(error)
+            })
+        }
+        else if(user === false) { // If not using an account and not logged in, get progress from local storage
+            let localPlayer = JSON.parse(localStorage.getItem(currentPlayer.player.NickName+'-34CUH8sLCXUZTA79X748'))
+            let localPlayerProgress = localPlayer.Progress;
+            let localProgress = []
+
+            for(let skillKey in localPlayerProgress) {
+                if(localPlayerProgress.hasOwnProperty(skillKey)) {
+                    for(let gameKey in localPlayerProgress[skillKey]) {
+                        let localLevelsCompleted = parseInt(localPlayerProgress[skillKey][gameKey])
+                        localProgress.push({ 'SkillName': skillKey, 'LevelsCompleted': localLevelsCompleted })
+                    }
+                }
+            }
+
+            setProgress(localProgress)
+        }
     }
 
     useEffect(() => {

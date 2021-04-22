@@ -195,8 +195,6 @@ function sortMaMImages(array) {
     sortedArray.medium = difficulty2Array;
     sortedArray.hard = difficulty3Array;
 
-    console.log(sortedArray)
-
     return sortedArray;
 }
 

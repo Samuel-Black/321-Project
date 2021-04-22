@@ -92,6 +92,7 @@ export default function SignupPage() {
         e.preventDefault()
         try {
             await signupUser(dispatch, { email, password })
+            setStep(1)
         } catch (error) {
             errorMessage = error
         } 

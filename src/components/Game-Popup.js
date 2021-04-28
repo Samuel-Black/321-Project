@@ -34,10 +34,10 @@ export default function GamePopup(props) {
                 {props.levelPassed ?
                     <div className="game-popup container">
                         <div className="header col-lg-12">
-                            <h1 className="row justify-content-md-center">{props.gameTitle}</h1>
+                            <h1 className="row justify-content-center">{props.gameTitle}</h1>
                         </div>
                         <div className="content col-lg-12">
-                            <div className="row justify-content-md-center">
+                            <div className="row justify-content-center">
                                 {returnStars(props).map((star,i) =>
                                     <div key={i} className={star.props.activestar}>
                                         {star}
@@ -45,7 +45,7 @@ export default function GamePopup(props) {
                                 )
                                 }
                             </div>
-                            {props.levelsCleared > props.numLevels ? <h2 id="Level-Text" className="row justify-content-md-center">You did it!</h2> : <h2 id="Level-Text" className="row justify-content-md-center">Level {props.levelsCleared}</h2> }
+                            {props.levelsCleared > props.numLevels ? <h2 id="Level-Text" className="row justify-content-center">You did it!</h2> : <h2 id="Level-Text" className="row justify-content-center">Level {props.levelsCleared}</h2> }
                         </div>
 
                         {props.levelsCleared > props.numLevels ?
@@ -79,10 +79,10 @@ export default function GamePopup(props) {
 
                     <div className="game-popup container">
                         <div className="header col-lg-12">
-                            <h1 className="row justify-content-md-center">{props.gameTitle}</h1>
+                            <h1 className="row justify-content-center">{props.gameTitle}</h1>
                         </div>
                         <div className="content col-lg-12">
-                            <div className="row justify-content-md-center">
+                            <div className="row justify-content-center">
                                 {returnStars(props).map((star, i) =>
                                     <div key={i} className={star.props.activestar}>
                                         {star}
@@ -90,7 +90,7 @@ export default function GamePopup(props) {
                                 )
                                 }
                             </div>
-                            {props.levelsCleared > props.numLevels ? <h2 id="Level-Text" className="row justify-content-md-center">Try Again!</h2> : <h2 id="Level-Text" className="row justify-content-md-center">Level {props.levelsCleared}</h2> }
+                            {props.levelsCleared > props.numLevels ? <h2 id="Level-Text" className="row justify-content-center">Try Again!</h2> : <h2 id="Level-Text" className="row justify-content-center">Level {props.levelsCleared}</h2> }
                         </div>
                         
                         <div className="d-flex justify-content-center">

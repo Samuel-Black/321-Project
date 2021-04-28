@@ -1,4 +1,5 @@
 @import '../components/Colours.scss';
+@import '../components/BreakPoint.scss';
 
 #Level-Nav-Background-Container {
   width: 100vw;
@@ -6,14 +7,32 @@
 }
 
 #Level-Navigation-Title {
-  font-size: 6rem;
-  -webkit-text-stroke-width: 3px;
+  @include tiny-phone-up {    
+    font-size: 4rem;
+    -webkit-text-stroke-width: 2.5px;
+  }
+  @include phone-up {    
+    font-size: 5.5rem;
+    -webkit-text-stroke-width: 3.1px;
+  }
+  @include tablet-up {    
+    font-size: 6rem;
+    -webkit-text-stroke-width: 3.5px;
+  }
+  @include large-tablet-up {
+    font-size: 8rem;
+    -webkit-text-stroke-width: 4.5px;
+  }
+  @include hd-up {
+    font-size: 6rem;
+    -webkit-text-stroke-width: 3px;
+  }
   -webkit-text-stroke-color: black;
 }
 
 #Level-Nav-Background {
-  height: 100vh;
   width: 100vw;
+  min-height: 100vh;
   background-image: url('../assets/backgrounds/Space-Level-Background.svg');
   background-attachment: fixed;
   background-position: center;
@@ -29,7 +48,7 @@
 }
 
 #Level-Nav {
-  max-width: 80vw;
+  max-width: 100%;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-size: 1.2rem;
   .level-progress {
@@ -61,7 +80,18 @@
 }
 
 .Game-Container {
-  width: 45%;
+  @include phone-up {    
+    min-width: 250px;
+  }
+  @include tablet-up {    
+    width: 300px;
+  }
+  @include large-tablet-up {
+    width: 420px;
+  }
+  @include hd-up {
+    width: 500px;
+  }
   position: relative;
   border: 2px solid white;
   background: white;

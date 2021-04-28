@@ -15,7 +15,7 @@ export default function LevelNavigationPage(props) {
     return (
         <div id="Level-Nav-Background">
             <div className="container">
-                <div className="d-flex mb-3">
+                <div className="d-flex flex-wrap mb-3">
                     <div className="mr-auto">
                         <h1 id="Level-Navigation-Title">JumpStart</h1>
                     </div>

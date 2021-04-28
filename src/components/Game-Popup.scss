@@ -1,9 +1,9 @@
 @import '../components/Colours.scss';
+@import '../components/BreakPoint.scss';
 
 .popup-content {
     background-color: $vividTangelo !important;
     border-radius: 20px;
-    width: 30vw !important;
     border: 5px solid $maastrichtBlue !important;
     & .game-popup {
         & h1 {
@@ -61,6 +61,72 @@
                 fill: $secondaryWhite;
                 stroke: $rythmicBlue;
                 stroke-width: 1px;
+            }
+        }
+    }
+    
+    @include tiny-phone-up {    
+      width: 98vw !important;
+      & .game-popup {
+        #Popup-Play-Button, #Popup-Home-Button {
+            width: 70%;
+        }
+      }
+    }
+    @include phone-up {    
+      & .game-popup {
+        #Popup-Play-Button, #Popup-Home-Button {
+            width: 60%;
+        }
+      }
+    }
+    @include tablet-up { 
+        width: 70vw !important;
+        & .game-popup {
+          #Popup-Play-Button, #Popup-Home-Button {
+              width: 35%;
+          }
+        }
+    }
+    @include large-tablet-up {
+        width: 60vw !important; 
+        & .game-popup {
+            & h1 {
+                font-size: 5rem;
+                -webkit-text-stroke-width: 2.5px;
+                -webkit-text-stroke-color: black;
+            }
+            #Level-Text {
+                font-size: 5rem;
+                -webkit-text-stroke-width: 3px;
+                -webkit-text-stroke-color: black;
+            }    
+            font-size: 75px;
+          #Popup-Play-Button, #Popup-Home-Button {
+              width: 40%;
+              -webkit-text-stroke: 3px black;
+              text-shadow: 2.5px 2.5px black;
+          }
+        }
+    }
+    @include hd-up {
+      width: 30vw !important;
+      & .game-popup {
+            & h1 {
+                font-size: 5rem;
+                -webkit-text-stroke-width: 3px;
+                -webkit-text-stroke-color: black;
+            }
+            #Level-Text {
+                font-size: 3rem;
+                -webkit-text-stroke-width: 2px;
+                -webkit-text-stroke-color: black;
+            }
+            font-size: 50px;
+            #Popup-Play-Button, #Popup-Home-Button {
+                width: 33%;
+                -webkit-text-stroke: 1.5px black;
+                text-shadow: 2px 2px black;
             }
         }
     }

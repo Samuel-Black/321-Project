@@ -3,6 +3,7 @@ import Axios from 'axios'
 import { GetLevelProgressURL } from '../components/Request-URL'
 import { useAuthPlayer, useAuthUser } from '../libs'
 import LevelNavComponent from '../components/LevelNavComponent'
+import { getLocalPlayer } from '../components/localstorage/Local-Storage-Functions'
 
 export default function SkillNavigationPage(props) {
 
@@ -36,8 +37,7 @@ export default function SkillNavigationPage(props) {
             })
         }
         else if(user === false) { // If not using an account and not logged in, get progress from local storage
-            const localPlayer = JSON.parse(localStorage.getItem(currentPlayer.player.NickName+'-34CUH8sLCXUZTA79X748'))
-            console.log('local storage format: ', localPlayer)
+            const localPlayer = getLocalPlayer(currentPlayer.player.NickName)
             const localPlayerProgress = localPlayer.Progress;
             let localProgress = []
 

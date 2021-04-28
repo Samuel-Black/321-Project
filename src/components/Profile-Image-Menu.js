@@ -7,7 +7,7 @@ import './Profile-Image-Menu.scss'
 export default function ProfileImageMenu(props) {
 
     return (
-        <SimpleBar style={{ minWidth: 860 }} autoHide={false}>
+        <SimpleBar style={{ width: '70vw' }} autoHide={false}>
             <div id="Profile-Image-Menu-Container">
                 <div className="d-flex">
                     {ProfilePictureImages.map((image,i) => {

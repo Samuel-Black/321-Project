@@ -3,6 +3,7 @@ import { useAuthPlayer, useAuthUser } from '../libs'
 import GamePopup from './Game-Popup'
 import Axios from 'axios'
 import { CreateAttemptURL, CreateLocalAttemptURL } from './Request-URL'
+import { updateLocalProgress, getLocalPlayer } from './localstorage/Local-Storage-Functions'
 
 export default function GameWrapper(props) {
 
@@ -38,9 +39,9 @@ export default function GameWrapper(props) {
             })
         }
         else if(user === false) { // If not using an account and not logged in, store player in local storage
-            const localPlayer = JSON.parse(localStorage.getItem(currentPlayer.player.NickName+'-34CUH8sLCXUZTA79X748'))
+            const localPlayer = getLocalPlayer(currentPlayer.player.NickName)
             const localPlayerBirthDay = localPlayer.Birthday
-            console.log(localPlayer)
+            
             Axios.post(CreateLocalAttemptURL, {
                 GameName: props.GameName,
                 LevelNumber: difficulty,
@@ -71,11 +72,7 @@ export default function GameWrapper(props) {
             CreateAttempt()
             if(levelCompleted === 'True') { // If level was completed set it back to false for next level and increment the difficulty
                 if(user === false) { // If no user is logged in, store progress in local storage
-                    var localPlayer = JSON.parse(localStorage.getItem(currentPlayer.player.NickName+'-34CUH8sLCXUZTA79X748'))
-                    if(difficulty > parseInt(localPlayer['Progress'][props.SkillName][props.GameName])) {
-                        localPlayer['Progress'][props.SkillName][props.GameName] = difficulty
-                        localStorage.setItem(currentPlayer.player.NickName+'-34CUH8sLCXUZTA79X748', JSON.stringify(localPlayer))
-                    }
+                    updateLocalProgress(currentPlayer.player.NickName, difficulty, props.SkillName, props.GameName)
                 }
                 setDifficulty(difficulty + 1)
                 setLevelCompleted('False')

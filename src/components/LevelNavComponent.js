@@ -26,26 +26,28 @@ export default function LevelNavigationPage(props) {
                 <LevelNavbar />
             </div>
             <div className="container mt-5">
-                <SimpleBar style={{ height: '70vh' }} autoHide={false}>
+                <SimpleBar style={{ height: '60vh' }} autoHide={false}>
                     <div id="Level-Nav">
-                        {props.Levels.map((level,i) => {
-                            return (    
-                                <Link to={level.to} key={i}>
-                                    <div className={`d-inline-flex justify-content-center align-items-center mr-4 mb-5 Game-Container ${props.getProgress(level.name) >= level.numLevels ? 'green' : 'orange' }`}>
-                                        <div className="nav-item" id={"Game-"+level.id}>
-                                            <div className="d-flex justify-content-end">
-                                                <div className="d-inline-flex nav-item-svg">
-                                                    {props.getProgress(level.name) >= level.numLevels ? <TiTick size={40} /> : <BsArrowRightShort size={40} /> }
+                        <div className= "d-flex flex-wrap justify-content-around">
+                            {props.Levels.map((level,i) => {
+                                return (    
+                                    <Link to={level.to} key={i}>
+                                        <div className={`d-inline-flex justify-content-center align-items-center mr-4 mb-5 Game-Container ${props.getProgress(level.name) >= level.numLevels ? 'green' : 'orange' }`}>
+                                            <div className="nav-item" id={"Game-"+level.id}>
+                                                <div className="d-flex justify-content-end">
+                                                    <div className="d-inline-flex nav-item-svg">
+                                                        {props.getProgress(level.name) >= level.numLevels ? <TiTick size={40} /> : <BsArrowRightShort size={40} /> }
+                                                    </div>
                                                 </div>
+                                                <div className="d-flex justify-content-center"><img src={level.monster} /></div>
+                                                <div className="d-flex justify-content-center level-name">{level.name}</div>
+                                                <div className="d-flex justify-content-center level-progress">{`${props.getProgress(level.name)} of ${level.numLevels} completed`}</div>
                                             </div>
-                                            <div className="d-flex justify-content-center"><img src={level.monster} /></div>
-                                            <div className="d-flex justify-content-center level-name">{level.name}</div>
-                                            <div className="d-flex justify-content-center level-progress">{`${props.getProgress(level.name)} of ${level.numLevels} completed`}</div>
                                         </div>
-                                    </div>
-                                </Link>
-                            );
-                        })}
+                                    </Link>
+                                );
+                            })}
+                        </div>
                     </div>
                 </SimpleBar>
             </div>

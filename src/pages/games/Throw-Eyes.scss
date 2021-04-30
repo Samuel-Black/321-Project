@@ -1,3 +1,13 @@
 a:hover {
     cursor: pointer;
 }
+
+.rotate-phone-icon {
+    animation: rotate-right-90 1.3s infinite;
+    animation-direction: alternate;
+}
+
+@keyframes rotate-right-90 {
+    0%      { transform: translate(0,  0); }
+    100%    { transform: rotate(90deg); }
+}

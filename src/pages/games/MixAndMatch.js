@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react"
-import Source from "../../components/mixandmatch/Source"
-import Target from "../../components/mixandmatch/Target"
 import { shuffleArray } from '../../components/images/Image-Functions'
-import { ItemTypes } from '../../components/DragItemTypes'
 import SimpleBar from 'simplebar-react';
 import './MixAndMatch.scss'
 import 'simplebar/dist/simplebar.min.css';
+import { FaHandPointUp } from 'react-icons/fa';
+import '../../components/Hand-Drag-Animation.scss'
 
-import SwiperCore, { Navigation, Pagination, Scrollbar } from 'swiper';
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
@@ -15,7 +14,7 @@ import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
 
 // install Swiper modules
-SwiperCore.use([Navigation, Pagination, Scrollbar]);
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 //Known issue with Mix and Match, problem with drag and drop component when you drag the correct right card and then the correct left card if using {difficulty === 1 && } logic, find fix later
 export default function MixAndMatch(props) {
@@ -23,13 +22,10 @@ export default function MixAndMatch(props) {
     const difficulty = props.difficulty
     const levels = props.numLevels;
 
-    const [droppedItemPanel1, setDroppedItemPanel1] = useState({})
-    const [droppedItemPanel2, setDroppedItemPanel2] = useState({})
-    const [droppedItemPanel3, setDroppedItemPanel3] = useState({})
-
     const [panel1, setPanel1] = useState(null)
     const [panel2, setPanel2] = useState(null)
     const [panel3, setPanel3] = useState(null)
+    const [showHand, setShowHand] = useState(false);
 
     const [windowSize, setWindowSize] = useState({
       width: undefined,
@@ -50,31 +46,16 @@ export default function MixAndMatch(props) {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    console.log(panel1)
-
     const [errorMessage, setErrorMessage] = useState(null)
 
-    onDropPanel1 = onDropPanel1.bind(this)
-    onDropPanel2 = onDropPanel2.bind(this)
-    onDropPanel3 = onDropPanel3.bind(this)
-
     useEffect(() => {
-      if(props.popupState === false) {
-        clearDroppedCards()
-        randomizeImages()
-        props.setStartTime(new Date().getTime())
+      if(props.popupState === false && props.attemptNumber === 0 && difficulty > 1) {
+        setShowHand(true)
+        setTimeout(() => setShowHand(false), 4000)
       }
     }, [props.popupState])
-  
-    function onDropPanel1(item) {
-      setDroppedItemPanel1(item)
-    }
-    function onDropPanel2(item) {
-      setDroppedItemPanel2(item)
-    }
-    function onDropPanel3(item) {
-      setDroppedItemPanel3(item)
-    }
+
+    console.log(props.attemptNumber)
 
     function randomizeImages() {
       if(difficulty === 1) {
@@ -88,14 +69,6 @@ export default function MixAndMatch(props) {
         props.shuffledImages.hard.Panel1 = shuffleArray(props.shuffledImages.hard.Panel1)
         props.shuffledImages.hard.Panel2 = shuffleArray(props.shuffledImages.hard.Panel2)
         props.shuffledImages.hard.Panel3 = shuffleArray(props.shuffledImages.hard.Panel3)
-      }
-    }
-
-    function clearDroppedCards() {
-      setDroppedItemPanel1({})
-      setDroppedItemPanel2({})
-      if(difficulty === 3) {
-        setDroppedItemPanel3({})
       }
     }
 
@@ -135,7 +108,7 @@ export default function MixAndMatch(props) {
             props.setPopupState(true)
             props.setAttemptNumber(0)
           } 
-          else if(panel1 === 'false' && panel2 === 'false' && panel3 === 'false') {
+          else if(panel1 === 'false' || panel2 === 'false' || panel3 === 'false') {
             props.setAttemptNumber(props.attemptNumber + 1)
             props.setPopupState(true)
           }
@@ -174,7 +147,7 @@ export default function MixAndMatch(props) {
           <div className="container">
             {props.vertical ? 
             <>
-                  
+              {showHand === true && <FaHandPointUp size={80} className="horizontal-drag-hand" />}
                 {difficulty === 2 &&
                   <>
   
@@ -182,14 +155,13 @@ export default function MixAndMatch(props) {
 
                         <Swiper
                           loop={true}
-                          pagination={{ clickable: true, el: '.swiper-pagination' }}
+                          navigation= {{ nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }}
                           onSwiper={(s) => { // Initialize active panel as current panel on page load
-                            setPanel1(props.shuffledImages.hard.Panel1[s.realIndex].correct);
+                            setPanel1(props.shuffledImages.medium.Panel1[s.realIndex].correct);
                           }}
                           onSlideChange={(s) => { // update active panel as user swipes
                             setPanel1(props.shuffledImages.medium.Panel1[s.realIndex].correct);
                           }}
-                          navigation= {{ nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }}
                         >
                             {props.shuffledImages.medium.Panel1.map((image, i) => (
                               <SwiperSlide key={'Panel1' + i}>    
@@ -206,14 +178,13 @@ export default function MixAndMatch(props) {
                       
                       <Swiper
                         loop={true}
-                        pagination={{ clickable: true, el: '.swiper-pagination' }}
+                        navigation= {{ nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }}
                         onSwiper={(s) => { // Initialize active panel as current panel on page load
-                          setPanel2(props.shuffledImages.hard.Panel2[s.realIndex].correct);
+                          setPanel2(props.shuffledImages.medium.Panel2[s.realIndex].correct);
                         }}
                         onSlideChange={(s) => { // update active panel as user swipes
                           setPanel2(props.shuffledImages.medium.Panel2[s.realIndex].correct);
                         }}
-                        navigation= {{ nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }}
                       >
                         {props.shuffledImages.medium.Panel2.map((image, i) => (
                           <SwiperSlide key={'Panel2' + i}> 
@@ -239,14 +210,13 @@ export default function MixAndMatch(props) {
 
                           <Swiper
                             loop={true}
-                            pagination={{ clickable: true, el: '.swiper-pagination' }}
+                            navigation= {{ nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }}
                             onSwiper={(s) => { // Initialize active panel as current panel on page load
                               setPanel1(props.shuffledImages.hard.Panel1[s.realIndex].correct);
                             }}
                             onSlideChange={(s) => { // update active panel as user swipes
-                              setPanel1(props.shuffledImages.medium.Panel1[s.realIndex].correct);
+                              setPanel1(props.shuffledImages.hard.Panel1[s.realIndex].correct);
                             }}
-                            navigation= {{ nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }}
                           >
                               {props.shuffledImages.hard.Panel1.map((image, i) => (
                                 <SwiperSlide key={'Panel1' + i}>    
@@ -263,14 +233,13 @@ export default function MixAndMatch(props) {
                         
                         <Swiper
                           loop={true}
-                          pagination={{ clickable: true, el: '.swiper-pagination' }}
+                          navigation= {{ nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }}
                           onSwiper={(s) => { // Initialize active panel as current panel on page load
                             setPanel2(props.shuffledImages.hard.Panel2[s.realIndex].correct);
                           }}
                           onSlideChange={(s) => { // update active panel as user swipes
-                            setPanel2(props.shuffledImages.medium.Panel2[s.realIndex].correct);
+                            setPanel2(props.shuffledImages.hard.Panel2[s.realIndex].correct);
                           }}
-                          navigation= {{ nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }}
                         >
                           {props.shuffledImages.hard.Panel2.map((image, i) => (
                             <SwiperSlide key={'Panel2' + i}> 
@@ -287,14 +256,13 @@ export default function MixAndMatch(props) {
                         
                         <Swiper
                           loop={true}
-                          pagination={{ clickable: true, el: '.swiper-pagination' }}
+                          navigation= {{ nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }}
                           onSwiper={(s) => { // Initialize active panel as current panel on page load
                             setPanel3(props.shuffledImages.hard.Panel3[s.realIndex].correct);
                           }}
                           onSlideChange={(s) => { // update active panel as user swipes
                             setPanel3(props.shuffledImages.hard.Panel3[s.realIndex].correct);
                           }}
-                          navigation= {{ nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }}
                         >
                           {props.shuffledImages.hard.Panel3.map((image, i) => (
                             <SwiperSlide key={'Panel3' + i}> 
@@ -315,6 +283,7 @@ export default function MixAndMatch(props) {
                 </>
                 :
                 <>
+                {showHand === true && <FaHandPointUp size={80} className="vertical-drag-hand" />}
                 <div className="row justify-content-center mt-5">
 
                   <div className= "row horizontal-match mt-5">
@@ -323,7 +292,9 @@ export default function MixAndMatch(props) {
                       slidesPerView={1}
                       loop={true}
                       direction='vertical'
-                      pagination={{ clickable: true, el: '.swiper-pagination' }}
+                      onSwiper={(s) => { // Initialize active panel as current panel on page load
+                        setPanel1(props.shuffledImages.medium.Panel1[s.realIndex].correct);
+                      }}
                       onSlideChange={(s) => {
                         setPanel1(props.shuffledImages.medium.Panel1[s.realIndex].correct);
                       }}
@@ -339,7 +310,9 @@ export default function MixAndMatch(props) {
                       slidesPerView={1}
                       loop={true}
                       direction='vertical'
-                      pagination={{ clickable: true, el: '.swiper-pagination' }}
+                      onSwiper={(s) => { // Initialize active panel as current panel on page load
+                        setPanel2(props.shuffledImages.medium.Panel2[s.realIndex].correct);
+                      }}
                       onSlideChange={(s) => {
                         setPanel2(props.shuffledImages.medium.Panel2[s.realIndex].correct);
                       }}

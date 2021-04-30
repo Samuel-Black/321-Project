@@ -21,6 +21,24 @@
   }
 }
 
+.horizontal-drag-hand {
+  position:absolute;
+  z-index: 2;
+  top: 45vh;
+  left: 50vw;
+  animation: horizontal-drag 1.3s infinite;
+  animation-direction: alternate;
+}
+
+.vertical-drag-hand {
+  position:absolute;
+  z-index: 2;
+  top: 45vh;
+  left: 52vw;
+  animation: vertical-drag 1.3s infinite;
+  animation-direction: alternate;
+}
+
 .vertical-match {
   .swiper-container {
     object-fit: fill;

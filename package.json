@@ -29,6 +29,7 @@
     "sane-email-validation": "^3.0.1",
     "sass": "^1.32.8",
     "simplebar-react": "^2.3.0",
+    "swiper": "^6.5.8",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

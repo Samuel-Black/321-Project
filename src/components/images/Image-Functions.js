@@ -48,7 +48,9 @@ function assignCardsValues(keys, array) {
 function splitCardsString(string, object) {
     string = string.split(".");
     string = string[0].split("_");
-    
+    if(string[3] === 'Zoom' || string[3] === 'Full') {
+        object.zoom = string[3]
+    } 
     if(string[2].substr(0, string[2].length - 1) == 'Correct') {
         object.correct = 'true';
     } else {
@@ -223,10 +225,38 @@ function sortCardsArray(array) {
     return sortedArray;
 }
 
+function sortCardsArrayWithZoom(array) {
+    let sortedArray = [];
+
+    sortedArray.Full = [];
+    sortedArray.Full.correct = [];
+    sortedArray.Full.incorrect = [];
+    
+    sortedArray.Zoom = [];
+    sortedArray.Zoom.correct = [];
+    sortedArray.Zoom.incorrect = [];
+    
+    let correct = 0;
+    let incorrect = 0;
+
+    for(let i = 0; i < array.length; i++) {
+        if(array[i].correct == 'true') {
+            sortedArray[array[i].zoom].correct.push(array[i]);
+            correct++;
+        } else {
+            sortedArray[array[i].zoom].incorrect.push(array[i]);
+            incorrect++;
+        }
+    }
+
+    return sortedArray;
+}
+
 export {
     assignMaMValues,
     assignCardsValues,
     sortCardsArray,
+    sortCardsArrayWithZoom,
     shuffleArray,
     sortMaMImages,
     assignThrowEyesValues,

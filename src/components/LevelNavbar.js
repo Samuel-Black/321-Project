@@ -18,7 +18,7 @@ export default function LevelNavbar() {
                             return(
                                 <>
                                     {i === paths.length - 1 ?
-                                        <span className="d-flex ml-2 mt-2">
+                                        <span key={'Path-' + i} className="d-flex ml-2 mt-2">
                                             {path}
                                         </span>
                                     :

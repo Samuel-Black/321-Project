@@ -6,7 +6,7 @@ const importAll = require =>
   }, {});
 
 const imageModules = importAll(
-  require.context('../../assets/characters/', false, /\.(png|jpe?g|svg)$/)
+  require.context('../../assets/profile-pictures/', false, /\.(png|jpe?g|svg)$/)
 );
 
 let ProfilePictureImages = Object.values(imageModules);

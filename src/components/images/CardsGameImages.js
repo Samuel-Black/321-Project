@@ -1,4 +1,4 @@
-import { shuffleArray, assignCardsValues, sortCardsArray } from './Image-Functions';
+import { shuffleArray, assignCardsValues, sortCardsArray, sortCardsArrayWithZoom } from './Image-Functions';
 
 const importAll = require =>
   require.keys().reduce((acc, next) => {
@@ -68,7 +68,7 @@ const imageModulesKickLegs = importAll(
 let kickLegsImages = Object.values(imageModulesKickLegs);
 kickLegsImages = assignCardsValues(Object.keys(imageModulesKickLegs), kickLegsImages);
 let CardsKickLegs = shuffleArray(kickLegsImages);
-CardsKickLegs = sortCardsArray(CardsKickLegs);
+CardsKickLegs = sortCardsArrayWithZoom(CardsKickLegs);
 
 const imageModulesLeapEyes = importAll(
   require.context('../../assets/games/cards/LeapEyes/', false, /\.(png|jpe?g|svg)$/)

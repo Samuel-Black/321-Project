@@ -7,7 +7,7 @@ export const Levels = [
         id: 1,
         name: "Kick",
         to: "Kick", // used as the link for routes
-        numLevels: 6,
+        numLevels: 10,
         monster: MonsterImages[0].default,
         className: gameClassName
     },     
@@ -122,7 +122,7 @@ export const KickLevels = [
         id: 3,
         name: "Kick-Legs",
         to: "Kick-Legs", // used as the link for routes
-        numLevels: 2,
+        numLevels: 6,
         monster: MonsterImages[5].default,
         className: gameClassName
     }

@@ -78,11 +78,13 @@ export default function ThrowEyes(props) {
                         }
                     </Orientation>
                     <Orientation orientation='portrait' alwaysRender={false}>
-                        <div className="row justify-content-center">
-                            Please rotate your device!
-                        </div>
-                        <div className="row justify-content-center">
-                            <MdPhoneAndroid size={80} className="rotate-phone-icon" />
+                        <div className="container">
+                            <div className="row justify-content-center">
+                                Please rotate your device!
+                            </div>
+                            <div className="row justify-content-center">
+                                <MdPhoneAndroid size={80} className="rotate-phone-icon" />
+                            </div>
                         </div>
                     </Orientation>
                 </DeviceOrientation>

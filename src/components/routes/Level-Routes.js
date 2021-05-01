@@ -4,6 +4,7 @@ import { KickLevels, BalanceLevels, HopLevels, JumpLevels, LeapLevels, SlideLeve
 import SkillNavigationPage from '../../pages/SkillNavigationPage';
 import GameWrapper from '../Game-Wrapper';
 import CardsGame from '../../pages/games/CardsGame';
+import CardsGameZoom from '../../pages/games/CardGameZoom';
 import MixAndMatch from '../../pages/games/MixAndMatch';
 import ThrowEyes from '../../pages/games/Throw-Eyes';
 import { MaMBalanceArms, MaMJumpArms, MaMLeapLegs, MaMRunArms, MaMRunKnees, MaMHopLegs } from '../../components/images/MixAndMatchImages'
@@ -21,7 +22,7 @@ export default function LevelRoutes() {
                 <AppRoute path="Kick/" component={SkillNavigationPage} Levels={KickLevels} SkillName={'Kick'} isPrivate={true} requiresPlayer={true} />
                     <AppRoute path={`Kick/${KickLevels[0].to}`} component={GameWrapper} Game={CardsGame} isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={CardsKickEyes} numLevels={KickLevels[0].numLevels} SkillName="Kick" GameName={KickLevels[0].name} />
                     <AppRoute path={`Kick/${KickLevels[1].to}`} component={GameWrapper} Game={CardsGame} isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={CardsKickFoot} numLevels={KickLevels[1].numLevels} SkillName="Kick" GameName={KickLevels[1].name} />
-                    <AppRoute path={`Kick/${KickLevels[2].to}`} component={GameWrapper} Game={CardsGame} isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={CardsKickLegs} numLevels={KickLevels[2].numLevels} SkillName="Kick" GameName={KickLevels[2].name} />
+                    <AppRoute path={`Kick/${KickLevels[2].to}`} component={GameWrapper} Game={CardsGameZoom} isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={CardsKickLegs} numLevels={KickLevels[2].numLevels} SkillName="Kick" GameName={KickLevels[2].name} />
 
                 <AppRoute path="Jump/" component={SkillNavigationPage} Levels={JumpLevels} SkillName={'Jump'} isPrivate={true} requiresPlayer={true} />
                     <AppRoute path={`Jump/${JumpLevels[2].to}`} component={GameWrapper} Game={MixAndMatch} isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={MaMJumpArms} numLevels={JumpLevels[2].numLevels} SkillName="Jump" GameName={JumpLevels[2].name} />

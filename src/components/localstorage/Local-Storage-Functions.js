@@ -9,6 +9,7 @@ export function createLocalPlayer(localProfileImage, localBirthDay, nickname) { 
     var blankData = {
         'ProfileImage': localProfileImage,
         'Birthday': localBirthDay,
+        'Character-Unlock-Progress': 3,
         'Progress': {
             'Balance': {
                 'Balance-Eyes': 0,
@@ -57,9 +58,10 @@ export function setLocalPlayerList(setPlayerList) { // used in home page to popu
     var localPlayers = []
     for(let i = 0; i < localStorage.length; i++) {
         var key = localStorage.key(i).split("-")
-        console.log(key)
         if(key[1] == LocalIdentifier) {
             var temp = JSON.parse(localStorage.getItem(localStorage.key(i)))
+            if (temp.ProfileImage > 7 || temp.ProfileImage < 0) // If profile image is not in the defined range set it to 0
+                temp.ProfileImage = 0;
             localPlayers.push({ 'NickName': key[0], 'ProfilePicture': temp.ProfileImage })
         }
     }

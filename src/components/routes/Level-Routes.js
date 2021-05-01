@@ -5,10 +5,11 @@ import SkillNavigationPage from '../../pages/SkillNavigationPage';
 import GameWrapper from '../Game-Wrapper';
 import CardsGame from '../../pages/games/CardsGame';
 import CardsGameZoom from '../../pages/games/CardGameZoom';
+import HopArms from '../../pages/games/Hop-Arms';
 import MixAndMatch from '../../pages/games/MixAndMatch';
 import ThrowEyes from '../../pages/games/Throw-Eyes';
 import { MaMBalanceArms, MaMJumpArms, MaMLeapLegs, MaMRunArms, MaMRunKnees, MaMHopLegs } from '../../components/images/MixAndMatchImages'
-import { CardsBalanceEyes, CardsBalanceLegs, CardsHopEyes, CardsJumpFeet, CardsJumpKnees, CardsKickEyes, CardsKickFoot, CardsKickLegs, CardsLeapEyes, CardsRunEyes, CardsSlideFeet, } from '../../components/images/CardsGameImages'
+import { CardsBalanceEyes, CardsBalanceLegs, CardsHopEyes, CardsJumpFeet, CardsJumpKnees, CardsKickEyes, CardsKickFoot, CardsKickLegs, CardsLeapEyes, CardsRunEyes, CardsSlideFeet, CardsHopArms, } from '../../components/images/CardsGameImages'
 import { HotSpotThrowEyes } from '../../components/images/ThrowEyesImages'
 import BackButton from '../../components/Back-Button'
 import AppRoute from './AuthenticatedRoute'
@@ -45,6 +46,7 @@ export default function LevelRoutes() {
                 <AppRoute path="Hop/" component={SkillNavigationPage} Levels={HopLevels} SkillName={'Hop'} isPrivate={true} requiresPlayer={true} />
                     <AppRoute path={`Hop/${HopLevels[1].to}`} component={GameWrapper} Game={MixAndMatch} vertical isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={MaMHopLegs} numLevels={HopLevels[1].numLevels} SkillName="Hop" GameName={HopLevels[1].name} />
                     <AppRoute path={`Hop/${HopLevels[0].to}`} component={GameWrapper} Game={CardsGame} isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={CardsHopEyes} numLevels={HopLevels[0].numLevels} SkillName="Hop" GameName={HopLevels[0].name} />
+                    <AppRoute path={`Hop/${HopLevels[2].to}`} component={GameWrapper} Game={HopArms} isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={CardsHopArms} numLevels={HopLevels[2].numLevels} SkillName="Hop" GameName={HopLevels[2].name} />
 
                 <AppRoute path="Catch/" component={SkillNavigationPage} Levels={KickLevels} SkillName={'Catch'} isPrivate={true} requiresPlayer={true} />
 

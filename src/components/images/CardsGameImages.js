@@ -1,4 +1,4 @@
-import { shuffleArray, assignCardsValues, sortCardsArray, sortCardsArrayWithZoom } from './Image-Functions';
+import { shuffleArray, assignCardsValues, assignHopArmsValues, sortCardsArray, sortCardsArrayWithZoom, sortHopArmsArray } from './Image-Functions';
 
 const importAll = require =>
   require.keys().reduce((acc, next) => {
@@ -94,6 +94,14 @@ slideFeetImages = assignCardsValues(Object.keys(imageModulesSlideFeet), slideFee
 let CardsSlideFeet = shuffleArray(slideFeetImages);
 CardsSlideFeet = sortCardsArray(CardsSlideFeet);
 
+const imageModulesHopArms = importAll(
+  require.context('../../assets/games/hotspot/Hop_Arms/', false, /\.(png|jpe?g|svg)$/)
+);
+let hopArmsImages = Object.values(imageModulesHopArms);
+hopArmsImages = assignHopArmsValues(Object.keys(imageModulesHopArms), hopArmsImages);
+let CardsHopArms = shuffleArray(hopArmsImages);
+CardsHopArms = sortHopArmsArray(CardsHopArms);
+
 export {
     CardsBalanceEyes,
     CardsBalanceLegs,
@@ -106,4 +114,5 @@ export {
     CardsLeapEyes,
     CardsRunEyes,
     CardsSlideFeet,
+    CardsHopArms,
 }

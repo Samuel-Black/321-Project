@@ -12,8 +12,6 @@
   background-position: center;
 }
 
-
-
 #Home-Title {
   padding-top: 23%;
   h1 {
@@ -46,7 +44,7 @@
 }
 
 .card {
-  border-radius: 10%;
+  border-radius: 25px;
   @include phone-up {
     font-size: 1.6em;
   }
@@ -94,7 +92,8 @@
     height: 10rem;
   }
   img {
-    width: 6rem;
+    height: 100%;
+    width: auto;
   }
   color: black;
 }

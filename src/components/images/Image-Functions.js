@@ -56,8 +56,6 @@ function splitCardsString(string, object) {
     } else {
         object.correct = 'false';
     }
-
-    return object;
 }
 
 function assignThrowEyesValues(array) {
@@ -79,8 +77,6 @@ function splitThrowEyesString(string, object) {
         object.eyePosition = string[3];
         object.id = eyePosition(string[3]);
     }
-
-    return object;
 }
 
 function eyePosition(position) {
@@ -235,17 +231,78 @@ function sortCardsArrayWithZoom(array) {
     sortedArray.Zoom = [];
     sortedArray.Zoom.correct = [];
     sortedArray.Zoom.incorrect = [];
-    
-    let correct = 0;
-    let incorrect = 0;
 
     for(let i = 0; i < array.length; i++) {
         if(array[i].correct == 'true') {
             sortedArray[array[i].zoom].correct.push(array[i]);
-            correct++;
         } else {
             sortedArray[array[i].zoom].incorrect.push(array[i]);
-            incorrect++;
+        }
+    }
+
+    return sortedArray;
+}
+
+function assignHopArmsValues(keys, array) {
+    for (let i = 0; i < array.length; i++) {
+        splitHopArmsString(keys[i], array[i]);
+    }
+    return array;
+}
+
+function returnRandomHopArmsCharacters(array) {
+    let randomizedArray = [];
+    let keys = Object.keys(array)
+
+    console.log(keys.length)
+
+    while(keys.length !== 0) {
+        shuffleArray(keys);
+        randomizedArray.push(array[keys.pop()]);
+    }
+
+    console.log(randomizedArray)
+
+    return randomizedArray;
+}
+
+function splitHopArmsString(string, object) {
+    string = string.split(".");
+    string = string[0].split("_");
+
+    object.character = string[3]
+
+    if(string[2].substr(0, string[2].length - 1) == 'correct') {
+        object.correct = 'true';
+    } else {
+        object.correct = 'false';
+    }
+}
+
+function sortHopArmsArray(array) {
+    let sortedArray = [];
+
+    sortedArray.orbi = {};
+    sortedArray.orbi.correct = [];
+    sortedArray.orbi.incorrect = [];
+    
+    sortedArray.pod = {};
+    sortedArray.pod.correct = [];
+    sortedArray.pod.incorrect = [];
+    
+    sortedArray.puff = {};
+    sortedArray.puff.correct = [];
+    sortedArray.puff.incorrect = [];
+    
+    sortedArray.spike = {};
+    sortedArray.spike.correct = [];
+    sortedArray.spike.incorrect = [];
+
+    for(let i = 0; i < array.length; i++) {
+        if(array[i].correct == 'true') {
+            sortedArray[array[i].character].correct.push(array[i]);
+        } else {
+            sortedArray[array[i].character].incorrect.push(array[i]);
         }
     }
 
@@ -256,10 +313,13 @@ export {
     assignMaMValues,
     assignCardsValues,
     sortCardsArray,
+    sortHopArmsArray,
     sortCardsArrayWithZoom,
     shuffleArray,
     sortMaMImages,
     assignThrowEyesValues,
+    assignHopArmsValues,
     sortThrowEyesImages,
-    returnRandomThrowEyesChar
+    returnRandomThrowEyesChar,
+    returnRandomHopArmsCharacters
 }

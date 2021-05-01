@@ -23,6 +23,7 @@
     "react-router-dom": "^6.0.0-beta.0",
     "react-screen-orientation": "0.0.4",
     "react-scripts": "4.0.1",
+    "react-sizeme": "^3.0.1",
     "react-verification-code-input": "^1.2.9",
     "reactjs-popup": "^2.0.4",
     "sane-email-validation": "^3.0.1",

@@ -133,7 +133,7 @@ export default function HomePage() {
                             </div>
                             <div className="row justify-content-center">
                                 <div id="Login-Content" className="d-inline-flex flex-column align-items-center justify-content-center">
-                                <ProfileImageMenu ProfileImageState={setProfileImage} />
+                                <ProfileImageMenu ProfileImageState={setProfileImage} characterUnlockProgress={3} />
                                 
                                 {user !== false ? 
                                         <form className="mt-3">

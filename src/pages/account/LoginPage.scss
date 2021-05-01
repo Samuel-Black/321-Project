@@ -1,45 +1,36 @@
-@import '../../components/Colours.scss';
+@import "../../components/Colours.scss";
 
-#Login-Background {
-    min-height: 100vh;
-    min-width: 100vw;
-    background-color: $vividTangelo;
+#Base-container {
+  background-color: #1b1464;
 }
-
-#Login-Title {
-    margin-top: 80px;
-    h1 {
-        font-size: 9rem;
-        -webkit-text-stroke-width: 4px;
-        -webkit-text-stroke-color: black;
-    }
+#Login-Content-Container {
+  padding-top: 10%;
 }
-
-h2 {
-    font-size: 3rem;
-}
-
-#Login-Content-Row {
-    margin-top: 100px;
-}
-
-#Login-Button {
-    width: 150px;
-    height: 45px;
-}
-
 #Login-Content {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    label {
-        font-size: 1.3rem;
-    }
-    form {
-        width: 380px;
-    }
-    a {
-        font-weight: bold;
-    }
-    input {
-        width: 380px;
-    }
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  color: black;
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  border-radius: 25px;
+  label {
+    font-size: 1.3rem;
+  }
+  form {
+    width: 80%;
+  }
+  a {
+    font-weight: bold;
+  }
+  input {
+    width: 100%;
+  }
+}
+input {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
 }

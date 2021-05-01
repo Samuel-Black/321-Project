@@ -91,8 +91,6 @@ export default function CardsGame(props) {
             return 'justify-content-center';
     }
 
-    console.log(SetRowJustification(useWindowSize().width))
-
     return (
         <div className="container-fluid">
             <div className="row justify-content-center">

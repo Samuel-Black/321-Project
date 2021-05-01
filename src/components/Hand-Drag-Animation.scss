@@ -1,0 +1,10 @@
+
+@keyframes horizontal-drag {
+    0%      { transform: translate(0,  0); }
+    100%    { transform: translate(15vw, 0); }
+}
+
+@keyframes vertical-drag {
+    0%      { transform: translate(0,  0); }
+    100%    { transform: translate(0, 15vh); }
+}

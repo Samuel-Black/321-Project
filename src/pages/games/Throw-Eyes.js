@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import Character from '../../components/throweyes/Character'
-import Target from '../../components/throweyes/Target'
+import TargetTemplate from '../../components/throweyes/Target-Template'
 import { returnRandomThrowEyesChar } from '../../components/images/Image-Functions'
 import './Throw-Eyes.scss'
 import 'reactjs-popup/dist/index.css';
+import DeviceOrientation, { Orientation } from 'react-screen-orientation'
+import { MdPhoneAndroid } from 'react-icons/md';
 
 export default function ThrowEyes(props) {
     
@@ -51,39 +53,39 @@ export default function ThrowEyes(props) {
 
     return (
         <>
-        <div className="container-fluid">
-        {difficulty <= levels &&
-            <>
-                <Character image={character.default} />
-                {difficulty === 1 && 
-                    <div className="row justify-content-center">
-                        {easyTargets.map((target, i) => ( 
-                        <div class="col-lg-2">
-                            {target == true ?  <a onClick={() => winCondition(i+1)}> <Target image={props.shuffledImages.target.default} targetID={character.id} /> </a> : <span></span> }
+            <div className="container-fluid">
+                <DeviceOrientation lockOrientation={'landscape'}>
+                    <Orientation orientation='landscape' alwaysRender={false}>
+                        {difficulty <= levels &&
+                            <>
+                                <Character image={character.default} />
+                                {difficulty === 1 && 
+                                <>
+                                    <TargetTemplate targets={easyTargets} winCondition={winCondition} image={props.shuffledImages.target.default} targetID={character.id} />
+                                </>
+                                }
+                                {difficulty === 2 &&
+                                <>
+                                    <TargetTemplate targets={mediumTargets} winCondition={winCondition} image={props.shuffledImages.target.default} targetID={character.id} />
+                                </>
+                                }
+                                {difficulty === 3 &&
+                                <>
+                                    <TargetTemplate targets={hardTargets} winCondition={winCondition} image={props.shuffledImages.target.default} targetID={character.id} />
+                                </>
+                                }
+                            </>
+                        }
+                    </Orientation>
+                    <Orientation orientation='portrait' alwaysRender={false}>
+                        <div className="row justify-content-center">
+                            Please rotate your device!
                         </div>
-                        ))}
-                    </div>
-                }
-                {difficulty === 2 &&
-                    <div className="row justify-content-center">
-                        {mediumTargets.map((target, i) => ( 
-                        <div class="col-lg-2">
-                            {target == true ?  <a onClick={() => winCondition(i+1)}> <Target image={props.shuffledImages.target.default} targetID={character.id} /> </a> : <span></span> }
+                        <div className="row justify-content-center">
+                            <MdPhoneAndroid size={80} className="rotate-phone-icon" />
                         </div>
-                        ))}
-                    </div>
-                }
-                {difficulty === 3 &&
-                    <div className="row justify-content-center">
-                        {hardTargets.map((target, i) => ( 
-                        <div class="col-lg-2">
-                            {target == true ?  <a onClick={() => winCondition(i+1)}> <Target image={props.shuffledImages.target.default} targetID={character.id} /> </a> : <span></span> }
-                        </div>
-                        ))}
-                    </div>
-                }
-            </>
-        }
+                    </Orientation>
+                </DeviceOrientation>
             </div>
         </>
     )

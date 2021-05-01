@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from "react"
-import Source from "../../components/mixandmatch/Source"
-import Target from "../../components/mixandmatch/Target"
 import { shuffleArray } from '../../components/images/Image-Functions'
-import { ItemTypes } from '../../components/DragItemTypes'
-//import SimpleBar from 'simplebar-react';
+import SimpleBar from 'simplebar-react';
 import './MixAndMatch.scss'
 import 'simplebar/dist/simplebar.min.css';
+import { FaHandPointUp } from 'react-icons/fa';
+import '../../components/Hand-Drag-Animation.scss'
+
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.scss';
+import 'swiper/components/navigation/navigation.scss';
+import 'swiper/components/pagination/pagination.scss';
+import 'swiper/components/scrollbar/scrollbar.scss';
+
+// install Swiper modules
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 //Known issue with Mix and Match, problem with drag and drop component when you drag the correct right card and then the correct left card if using {difficulty === 1 && } logic, find fix later
 export default function MixAndMatch(props) {
@@ -13,38 +22,40 @@ export default function MixAndMatch(props) {
     const difficulty = props.difficulty
     const levels = props.numLevels;
 
-    const [droppedItemPanel1, setDroppedItemPanel1] = useState({})
-    const [droppedItemPanel2, setDroppedItemPanel2] = useState({})
-    const [droppedItemPanel3, setDroppedItemPanel3] = useState({})
+    const [panel1, setPanel1] = useState(null)
+    const [panel2, setPanel2] = useState(null)
+    const [panel3, setPanel3] = useState(null)
+    const [showHand, setShowHand] = useState(false);
+
+    const [windowSize, setWindowSize] = useState({
+      width: undefined,
+      height: undefined,
+    });
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowSize({
+                width: window.innerWidth,
+                height: window.innerHeight,
+            });
+        }
+        
+        window.addEventListener("resize", handleResize);
+        handleResize();
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
     const [errorMessage, setErrorMessage] = useState(null)
 
-    onDropPanel1 = onDropPanel1.bind(this)
-    onDropPanel2 = onDropPanel2.bind(this)
-    onDropPanel3 = onDropPanel3.bind(this)
-
     useEffect(() => {
-      if(difficulty >= 2 ) {
-        winCondition()
-      }
-    }, [droppedItemPanel1, droppedItemPanel2, droppedItemPanel3])
-
-    useEffect(() => {
-      if(props.popupState === false) {
-        clearDroppedCards()
-        randomizeImages()
-        props.setStartTime(new Date().getTime())
+      if(props.popupState === false && props.attemptNumber === 0 && difficulty > 1) {
+        setShowHand(true)
+        setTimeout(() => setShowHand(false), 4000)
       }
     }, [props.popupState])
-  
-    function onDropPanel1(item) {
-      setDroppedItemPanel1(item)
-    }
-    function onDropPanel2(item) {
-      setDroppedItemPanel2(item)
-    }
-    function onDropPanel3(item) {
-      setDroppedItemPanel3(item)
-    }
+
+    console.log(props.attemptNumber)
 
     function randomizeImages() {
       if(difficulty === 1) {
@@ -58,14 +69,6 @@ export default function MixAndMatch(props) {
         props.shuffledImages.hard.Panel1 = shuffleArray(props.shuffledImages.hard.Panel1)
         props.shuffledImages.hard.Panel2 = shuffleArray(props.shuffledImages.hard.Panel2)
         props.shuffledImages.hard.Panel3 = shuffleArray(props.shuffledImages.hard.Panel3)
-      }
-    }
-
-    function clearDroppedCards() {
-      setDroppedItemPanel1({})
-      setDroppedItemPanel2({})
-      if(difficulty === 3) {
-        setDroppedItemPanel3({})
       }
     }
 
@@ -87,35 +90,27 @@ export default function MixAndMatch(props) {
 
       else {
         if(difficulty === 2) {
-          if( ((Object.keys(droppedItemPanel1).length !== 0 && droppedItemPanel1.constructor === Object) && (Object.keys(droppedItemPanel2).length !== 0 && droppedItemPanel2.constructor === Object))) {
-            props.setFinishTime(new Date().getTime()) // When user clicks an option set the finish time
-            if(droppedItemPanel1.correct === 'true' && droppedItemPanel2.correct === 'true') {
-              props.setLevelCompleted('True')
-              props.setPopupState(true)
-              props.setAttemptNumber(0)
-            } 
-            else if( (droppedItemPanel1.correct === 'false' || droppedItemPanel2.correct === 'false') ) {
-              props.setAttemptNumber(props.attemptNumber + 1)
-              props.setPopupState(true)
-            }
-            clearDroppedCards()
-            randomizeImages()
+          props.setFinishTime(new Date().getTime()) // When user clicks an option set the finish time
+          if(panel1 === 'true' && panel2 === 'true') {
+            props.setLevelCompleted('True')
+            props.setPopupState(true)
+            props.setAttemptNumber(0)
+          } 
+          else if( (panel1 === 'false' || panel2 === 'false') ) {
+            props.setAttemptNumber(props.attemptNumber + 1)
+            props.setPopupState(true)
           }
         }
         if(difficulty === 3) {
-          if( ((Object.keys(droppedItemPanel1).length !== 0 && droppedItemPanel1.constructor === Object) && (Object.keys(droppedItemPanel2).length !== 0 && droppedItemPanel2.constructor === Object) && (Object.keys(droppedItemPanel3).length !== 0 && droppedItemPanel3.constructor === Object))) {
-            props.setFinishTime(new Date().getTime()) // When user clicks an option set the finish time
-            if(droppedItemPanel1.correct === 'true' && droppedItemPanel2.correct === 'true' && droppedItemPanel3.correct === 'true') {
-              props.setLevelCompleted('True')
-              props.setPopupState(true)
-              props.setAttemptNumber(0)
-            } 
-            else if( (droppedItemPanel1.correct === 'false' || droppedItemPanel2.correct === 'false' || droppedItemPanel3.correct === 'false') ) {
-              props.setAttemptNumber(props.attemptNumber + 1)
-              props.setPopupState(true)
-            }
-            clearDroppedCards()
-            randomizeImages()
+          props.setFinishTime(new Date().getTime()) // When user clicks an option set the finish time
+          if(panel1 === 'true' && panel2 === 'true' && panel3 === 'true') {
+            props.setLevelCompleted('True')
+            props.setPopupState(true)
+            props.setAttemptNumber(0)
+          } 
+          else if(panel1 === 'false' || panel2 === 'false' || panel3 === 'false') {
+            props.setAttemptNumber(props.attemptNumber + 1)
+            props.setPopupState(true)
           }
         }
       }
@@ -127,16 +122,24 @@ export default function MixAndMatch(props) {
         <>
           {difficulty === 1 &&
             <div className="container-fluid">
-              <div className="d-flex align-items-center justify-content-center">
-                  {props.shuffledImages.easy.map((image, i) => {
-                      return(
-                          <div key={i} className="d-inline-flex card-option mr-2">
-                              <a onClick={() => winCondition(image.correct)} >
-                                  <img src={image.default} />
-                              </a>
-                          </div>
-                      )
-                  })}
+              <div className="row justify-content-center">
+                <SimpleBar style={{ width: '70vw' }} autoHide={false}>
+                  <div className="container-fluid">
+                    <div className={`row ${windowSize.width < 1334 ? '' : 'justify-content-center'}`}>
+                      <div className="d-flex">
+                        {props.shuffledImages.easy.map((image, i) => {
+                            return(
+                                <div key={i} className="card-option mr-2">
+                                    <a onClick={() => winCondition(image.correct)} >
+                                        <img src={image.default} />
+                                    </a>
+                                </div>
+                            )
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                </SimpleBar>
               </div>
             </div>
           }
@@ -144,99 +147,189 @@ export default function MixAndMatch(props) {
           <div className="container">
             {props.vertical ? 
             <>
-              <div className="row align-items-center">
-                  <div className="col-lg align-self-center">
-                  
-                  {difficulty === 2 &&
+              {showHand === true && <FaHandPointUp size={80} className="horizontal-drag-hand" />}
+                {difficulty === 2 &&
                   <>
-                    <div className= "row justify-content-center vertical-match">
-                      <Target position={ItemTypes.CARDPANEL1} droppedItem={droppedItemPanel1} onDrop={onDropPanel1} />
+  
+                    <div className= "row justify-content-center vertical-match mt-5">
+
+                        <Swiper
+                          loop={true}
+                          navigation= {{ nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }}
+                          onSwiper={(s) => { // Initialize active panel as current panel on page load
+                            setPanel1(props.shuffledImages.medium.Panel1[s.realIndex].correct);
+                          }}
+                          onSlideChange={(s) => { // update active panel as user swipes
+                            setPanel1(props.shuffledImages.medium.Panel1[s.realIndex].correct);
+                          }}
+                        >
+                            {props.shuffledImages.medium.Panel1.map((image, i) => (
+                              <SwiperSlide key={'Panel1' + i}>    
+                                <div className="d-flex justify-content-center">
+                                  <img src={image.default} />
+                               </div>
+                              </SwiperSlide>
+                            ))}
+                        </Swiper>
+                      
                     </div>
+
                     <div className= "row justify-content-center vertical-match">
-                      <Target position={ItemTypes.CARDPANEL2} droppedItem={droppedItemPanel2} onDrop={onDropPanel2} />
+                      
+                      <Swiper
+                        loop={true}
+                        navigation= {{ nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }}
+                        onSwiper={(s) => { // Initialize active panel as current panel on page load
+                          setPanel2(props.shuffledImages.medium.Panel2[s.realIndex].correct);
+                        }}
+                        onSlideChange={(s) => { // update active panel as user swipes
+                          setPanel2(props.shuffledImages.medium.Panel2[s.realIndex].correct);
+                        }}
+                      >
+                        {props.shuffledImages.medium.Panel2.map((image, i) => (
+                          <SwiperSlide key={'Panel2' + i}> 
+                            <div className="d-flex justify-content-center">
+                              <img src={image.default} />
+                            </div>
+                          </SwiperSlide>
+                        ))}
+                      </Swiper>
+                      
                     </div>
-                  </>
-                  }
-                  {difficulty === 3 &&
-                  <>
-                    <div className= "row justify-content-center vertical-match">
-                      <Target position={ItemTypes.CARDPANEL1} droppedItem={droppedItemPanel1} onDrop={onDropPanel1} />
-                    </div>
-                    <div className= "row justify-content-center vertical-match">
-                      <Target position={ItemTypes.CARDPANEL2} droppedItem={droppedItemPanel2} onDrop={onDropPanel2} />
-                    </div>
-                    <div className= "row justify-content-center vertical-match">
-                      <Target position={ItemTypes.CARDPANEL3} droppedItem={droppedItemPanel3} onDrop={onDropPanel3} />
+  
+                    <div className= "row justify-content-center mt-1">
+                      <button onClick={() => winCondition()}>Confirm!</button>
                     </div>
                   </>
                   }
 
-                  </div>
-                </div>
-                <div className="row justify-content-center">
-                  
-                  {difficulty === 2 &&
-                  <>
-                    <div className="row vertical-match">
-                      {props.shuffledImages.medium.Panel1.map((image) => (
-                        <Source image={image.default} correct={image.correct} position={image.position} />
-                      ))}
-                    </div>
-                    <div className="row vertical-match">
-                      {props.shuffledImages.medium.Panel2.map((image) => (
-                        <Source image={image.default} correct={image.correct} position={image.position} />
-                      ))}
-                    </div>
-                  </>
-                  }
-                  
                   {difficulty === 3 &&
-                  <>
-                    <div className="row vertical-match">
-                      {props.shuffledImages.hard.Panel1.map((image) => (
-                        <Source image={image.default} correct={image.correct} position={image.position} />
-                      ))}
-                    </div>
-                    <div className="row vertical-match">
-                      {props.shuffledImages.hard.Panel2.map((image) => (
-                        <Source image={image.default} correct={image.correct} position={image.position} />
-                      ))}
-                    </div>
-                    <div className="row vertical-match">
-                      {props.shuffledImages.hard.Panel3.map((image) => (
-                        <Source image={image.default} correct={image.correct} position={image.position} />
-                      ))}
-                    </div>
-                  </>
-                  }
+                    <>
+  
+                      <div className= "row justify-content-center vertical-match mt-5">
 
-                </div>
+                          <Swiper
+                            loop={true}
+                            navigation= {{ nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }}
+                            onSwiper={(s) => { // Initialize active panel as current panel on page load
+                              setPanel1(props.shuffledImages.hard.Panel1[s.realIndex].correct);
+                            }}
+                            onSlideChange={(s) => { // update active panel as user swipes
+                              setPanel1(props.shuffledImages.hard.Panel1[s.realIndex].correct);
+                            }}
+                          >
+                              {props.shuffledImages.hard.Panel1.map((image, i) => (
+                                <SwiperSlide key={'Panel1' + i}>    
+                                  <div className="d-flex justify-content-center">
+                                    <img src={image.default} />
+                                </div>
+                                </SwiperSlide>
+                              ))}
+                          </Swiper>
+                        
+                      </div>
+
+                      <div className= "row justify-content-center vertical-match">
+                        
+                        <Swiper
+                          loop={true}
+                          navigation= {{ nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }}
+                          onSwiper={(s) => { // Initialize active panel as current panel on page load
+                            setPanel2(props.shuffledImages.hard.Panel2[s.realIndex].correct);
+                          }}
+                          onSlideChange={(s) => { // update active panel as user swipes
+                            setPanel2(props.shuffledImages.hard.Panel2[s.realIndex].correct);
+                          }}
+                        >
+                          {props.shuffledImages.hard.Panel2.map((image, i) => (
+                            <SwiperSlide key={'Panel2' + i}> 
+                              <div className="d-flex justify-content-center">
+                                <img src={image.default} />
+                              </div>
+                            </SwiperSlide>
+                          ))}
+                        </Swiper>
+                        
+                      </div>
+
+                      <div className= "row justify-content-center vertical-match">
+                        
+                        <Swiper
+                          loop={true}
+                          navigation= {{ nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }}
+                          onSwiper={(s) => { // Initialize active panel as current panel on page load
+                            setPanel3(props.shuffledImages.hard.Panel3[s.realIndex].correct);
+                          }}
+                          onSlideChange={(s) => { // update active panel as user swipes
+                            setPanel3(props.shuffledImages.hard.Panel3[s.realIndex].correct);
+                          }}
+                        >
+                          {props.shuffledImages.hard.Panel3.map((image, i) => (
+                            <SwiperSlide key={'Panel3' + i}> 
+                              <div className="d-flex justify-content-center">
+                                <img src={image.default} />
+                              </div>
+                            </SwiperSlide>
+                          ))}
+                        </Swiper>
+                        
+                      </div>
+    
+                      <div className= "row justify-content-center mt-1">
+                        <button onClick={() => winCondition()}>Confirm!</button>
+                      </div>
+                    </>
+                  }
                 </>
                 :
                 <>
-                <div className="row align-items-center">
+                {showHand === true && <FaHandPointUp size={80} className="vertical-drag-hand" />}
+                <div className="row justify-content-center mt-5">
 
-                  <div className="col-lg-4 align-self-center horizontal-match">
-                    {props.shuffledImages.medium.Panel1.map((image) => (
-                    <div className="row justify-content-center">
-                      <Source image={image.default} correct={image.correct} position={image.position} />
-                    </div>
-                    ))}
+                  <div className= "row horizontal-match mt-5">
+
+                    <Swiper
+                      slidesPerView={1}
+                      loop={true}
+                      direction='vertical'
+                      onSwiper={(s) => { // Initialize active panel as current panel on page load
+                        setPanel1(props.shuffledImages.medium.Panel1[s.realIndex].correct);
+                      }}
+                      onSlideChange={(s) => {
+                        setPanel1(props.shuffledImages.medium.Panel1[s.realIndex].correct);
+                      }}
+                    >
+                        {props.shuffledImages.medium.Panel1.map((image) => (
+                          <SwiperSlide> 
+                            <img src={image.default} />
+                          </SwiperSlide>
+                        ))}
+                    </Swiper>
+                    
+                    <Swiper
+                      slidesPerView={1}
+                      loop={true}
+                      direction='vertical'
+                      onSwiper={(s) => { // Initialize active panel as current panel on page load
+                        setPanel2(props.shuffledImages.medium.Panel2[s.realIndex].correct);
+                      }}
+                      onSlideChange={(s) => {
+                        setPanel2(props.shuffledImages.medium.Panel2[s.realIndex].correct);
+                      }}
+                    >
+                      {props.shuffledImages.medium.Panel2.map((image) => (
+                        <SwiperSlide> 
+                          <img src={image.default} />
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                    
                   </div>
 
-                  <div className= "row justify-content-center horizontal-match">
-                    <Target position={ItemTypes.CARDPANEL1} droppedItem={droppedItemPanel1} onDrop={onDropPanel1} />
-                    <Target position={ItemTypes.CARDPANEL2} droppedItem={droppedItemPanel2} onDrop={onDropPanel2} />
-                  </div>
+                </div>
 
-                  <div className="col-lg-4 align-self-center horizontal-match">
-                    {props.shuffledImages.medium.Panel2.map((image) => (
-                      <div className="row justify-content-center">
-                        <Source image={image.default} correct={image.correct} position={image.position} />
-                      </div>
-                    ))}
-                  </div>
-
+                <div className= "row justify-content-center mt-1">
+                  <button onClick={() => winCondition()}>Confirm!</button>
                 </div>
                 </>
             }

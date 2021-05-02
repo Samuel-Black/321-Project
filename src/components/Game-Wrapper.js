@@ -83,7 +83,7 @@ export default function GameWrapper(props) {
     return(
         <div className="game-background">
             {props.backButton}
-            <GamePopup open={popupState} setOpen={setPopupState} gameTitle={gameTitle} levelsCleared={difficulty} numLevels={levels} levelPassed={attemptNumber < 1} />
+            <GamePopup open={popupState} setOpen={setPopupState} gameTitle={gameTitle} levelsCleared={difficulty} numLevels={levels} levelPassed={attemptNumber < 1} {...props}  />
                 <props.Game setFinishTime={setFinishTime} difficulty={difficulty} setLevelCompleted={setLevelCompleted} popupState={popupState} setPopupState={setPopupState} attemptNumber={attemptNumber} setAttemptNumber={setAttemptNumber} {...props} />
         </div>
     )

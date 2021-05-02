@@ -14,27 +14,3 @@ html, body {
   background-attachment: fixed;
   background-position: center;
 }
-
-#Home-Title {
-  padding-top: 23%;
-  h1 {
-    font-size: 15rem;
-    -webkit-text-stroke-width: 4px;
-    -webkit-text-stroke-color: black;
-  }
-}
-
-#Home-Button {
-  padding-top: 10%;
-}
-
-.btn-primary {
-  background-color: yellow;
-  border-color: yellow;
-  padding: 4rem 5rem;
-  border-radius: 3rem;
-  &:hover {
-    background-color: yellow;
-    border-color: yellow;
-  }
-}

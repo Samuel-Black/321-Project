@@ -108,6 +108,8 @@ export const KickLevels = [
         to: "Kick-Eyes", // used as the link for routes
         numLevels: 2,
         monster: MonsterImages[0].default,
+        gameType: 'Cards',
+        gameInstructions: 'Select the card where Orbi is looking at the ball!',
         className: gameClassName
     },     
     {
@@ -116,6 +118,8 @@ export const KickLevels = [
         to: "Kick-Foot", // used as the link for routes
         numLevels: 2,
         monster: MonsterImages[1].default,
+        gameType: 'Cards',
+        gameInstructions: 'Select the card that shows the best spot on your foot to use to kick a ball!',
         className: gameClassName
     },   
     {
@@ -124,6 +128,8 @@ export const KickLevels = [
         to: "Kick-Legs", // used as the link for routes
         numLevels: 6,
         monster: MonsterImages[5].default,
+        gameType: 'Cards',
+        gameInstructions: 'Select the card where Orbi is in the proper position to kick the ball!',
         className: gameClassName
     }
 ];
@@ -135,6 +141,8 @@ export const BalanceLevels = [
         to: "Balance-Eyes", // used as the link for routes
         numLevels: 2,
         monster: MonsterImages[0].default,
+        gameType: 'Cards',
+        gameInstructions: "Select the card where Orbi's eyes are in the best position for her to hold her balance!",
         className: gameClassName
     },     
     {
@@ -143,6 +151,8 @@ export const BalanceLevels = [
         to: "Balance-Legs", // used as the link for routes
         numLevels: 2,
         monster: MonsterImages[1].default,
+        gameType: 'Cards',
+        gameInstructions: "Select the card where Puff's legs are in the best position for him to hold his balance!",
         className: gameClassName
     },   
     {
@@ -151,6 +161,11 @@ export const BalanceLevels = [
         to: "Balance-Arms", // used as the link for routes
         numLevels: 2,
         monster: MonsterImages[5].default,
+        gameType: 'Mix & Match',
+        gameInstructions: [
+                            "Select the card where Orbi's arms are in the best position for him to hold his balance!", 
+                            "Drag the sliders to match the cards where Orbi's arms are in the best position for him to hold his balance!",
+                        ],
         className: gameClassName
     }
 ];
@@ -162,6 +177,8 @@ export const HopLevels = [
         to: "Hop-Eyes", // used as the link for routes
         numLevels: 3,
         monster: MonsterImages[0].default,
+        gameType: 'Cards',
+        gameInstructions: "Select the card where Spike's eyes are in the best position for him to balance while hopping!",
         className: gameClassName
     },     
     {
@@ -170,6 +187,11 @@ export const HopLevels = [
         to: "Hop-Legs", // used as the link for routes
         numLevels: 3,
         monster: MonsterImages[1].default,
+        gameType: 'Mix & Match',
+        gameInstructions: [
+                            "Select the card where Puff's legs are in the best position for him to hop!", 
+                            "Drag the sliders to match the cards where Puff's legs are in the best position for him to hop!",
+                        ],
         className: gameClassName
     },     
     {
@@ -178,6 +200,8 @@ export const HopLevels = [
         to: "Hop-Arms", // used as the link for routes
         numLevels: 4,
         monster: MonsterImages[1].default,
+        gameType: 'Cards',
+        gameInstructions: "Select the card where Spike, bowling-ball, Orbi, and Puff's arms are in the best position for them to hop!",
         className: gameClassName
     }
 ];
@@ -189,6 +213,8 @@ export const JumpLevels = [
         to: "Jump-Feet", // used as the link for routes
         numLevels: 2,
         monster: MonsterImages[0].default,
+        gameType: 'Cards',
+        gameInstructions: "Select the card where Orbi's feet are in the best position for her to jump!",
         className: gameClassName
     },     
     {
@@ -197,6 +223,8 @@ export const JumpLevels = [
         to: "Jump-Knees", // used as the link for routes
         numLevels: 3,
         monster: MonsterImages[1].default,
+        gameType: 'Cards',
+        gameInstructions: "Select the card where Spike's knees are in the best position for him to jump!",
         className: gameClassName
     },     
     {
@@ -205,6 +233,11 @@ export const JumpLevels = [
         to: "Jump-Arms", // used as the link for routes
         numLevels: 2,
         monster: MonsterImages[1].default,
+        gameType: 'Mix & Match',
+        gameInstructions: [
+                            "Select the card where Spike's arms are in the best position for him to jump!", 
+                            "Drag the sliders to match the cards where Spike's arms are in the best position for him to jump!",
+                        ],
         className: gameClassName
     }
 ];
@@ -216,6 +249,8 @@ export const LeapLevels = [
         to: "Leap-Eyes", // used as the link for routes
         numLevels: 2,
         monster: MonsterImages[0].default,
+        gameType: 'Cards',
+        gameInstructions: "Select the card where Blocky's eye is in the best position for him to leap!",
         className: gameClassName
     },     
     {
@@ -224,6 +259,11 @@ export const LeapLevels = [
         to: "Leap-Legs", // used as the link for routes
         numLevels: 2,
         monster: MonsterImages[1].default,
+        gameType: 'Mix & Match',
+        gameInstructions: [
+                            "Select the card where Mrs Doubtfire's legs are in the best position for her to leap!",
+                            "Drag the sliders to match the cards where Mrs Doubtfire's legs are in the best position for her to leap!",
+                        ],
         className: gameClassName
     }
 ];
@@ -235,6 +275,8 @@ export const SlideLevels = [
         to: "Slide-Feet", // used as the link for routes
         numLevels: 2,
         monster: MonsterImages[0].default,
+        gameType: 'Cards',
+        gameInstructions: "Select the card where Blocky's feet are in the best position for him to slide!",
         className: gameClassName
     },     
     {
@@ -262,6 +304,8 @@ export const RunLevels = [
         to: "Run-Eyes", // used as the link for routes
         numLevels: 3,
         monster: MonsterImages[0].default,
+        gameType: 'Cards',
+        gameInstructions: "Select the card where Spike's eyes are in the best position for him to run!",
         className: gameClassName
     },     
     {
@@ -270,6 +314,11 @@ export const RunLevels = [
         to: "Run-Arms", // used as the link for routes
         numLevels: 2,
         monster: MonsterImages[1].default,
+        gameType: 'Mix & Match',
+        gameInstructions: [
+                            "Select the card where Puff's arms are in the best position for him to run!",
+                            "Drag the sliders to match the cards where Puff's arms are in the best position for him to run!",
+                        ],
         className: gameClassName
     },     
     {
@@ -278,6 +327,11 @@ export const RunLevels = [
         to: "Run-Knees", // used as the link for routes
         numLevels: 2,
         monster: MonsterImages[1].default,
+        gameType: 'Mix & Match',
+        gameInstructions: [
+                            "Select the card where Pod's knees are in the best position for him to run!",
+                            "Drag the sliders to match the cards where Pod's knees are in the best position for him to run!",
+                        ],
         className: gameClassName
     }
 ];
@@ -289,6 +343,8 @@ export const ThrowLevels = [
         to: "Throw-Eyes", // used as the link for routes
         numLevels: 3,
         monster: MonsterImages[0].default,
+        gameType: 'Targets',
+        gameInstructions: "Select the target that Purple is looking at!",
         className: gameClassName    
     }
 ];

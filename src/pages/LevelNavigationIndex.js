@@ -6,12 +6,13 @@ import Axios from 'axios'
 import { GetTotalProgressURL } from '../components/Request-URL'
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
-import { RiUserFill } from 'react-icons/ri'
+import { RiUserFill, RiLock2Fill } from 'react-icons/ri'
 import { TiTick } from 'react-icons/ti'
 import { BsArrowRightShort } from 'react-icons/bs'
 import LevelNavbar from '../components/LevelNavbar'
 import { getLocalPlayer } from '../components/localstorage/Local-Storage-Functions'
 import './LevelNavigationPage.scss'
+import '../components/Content-Lock.scss'
 
 export default function LevelNavigationPage(props) {
     
@@ -83,22 +84,37 @@ export default function LevelNavigationPage(props) {
                 <SimpleBar style={{ height: '60vh' }} autoHide={false}>
                     <div id="Level-Nav">
                         <div className= "d-flex flex-wrap justify-content-around">
-                            {Levels.map((level,i) => {
-                                return (    
-                                    <Link to={level.to} key={i}>
-                                        <div className={`d-inline-flex mb-5 Game-Container ${getSkillProgress(level.name) >= level.numLevels ? 'green' : 'orange' }`}>
-                                            <div className="nav-item" id={"Game-"+level.id}>
-                                                <div className="d-flex justify-content-end mr-2">
-                                                    <div className="d-flex nav-item-svg">
-                                                        {getSkillProgress(level.name) >= level.numLevels ? <TiTick size={40} /> : <BsArrowRightShort size={40} /> }
+                            {Levels.map((level, i) => {
+                                return (
+                                    <>  
+                                        {(level.name === 'Catch' || level.name === 'Underhand-Roll' || level.name === 'Strike' || level.name === 'Gallop') ? 
+                                            <div className={`d-inline-flex locked-content mb-5 Game-Container ${getSkillProgress(level.name) >= level.numLevels ? 'green' : 'orange' }`}>
+                                            <RiLock2Fill size={80} />
+                                                <div className="nav-item" id={"Game-"+level.id}>
+                                                    <div className="d-flex justify-content-end mr-2">
+                                                    </div>
+                                                    <div className="d-flex justify-content-center"><img src={level.monster} /></div>
+                                                    <div className="d-flex justify-content-center level-name">{level.name}</div>
+                                                    <div className="d-flex justify-content-center level-progress">{`${getSkillProgress(level.name)} of ${level.numLevels} completed`}</div>
+                                                </div>
+                                            </div>
+                                        :
+                                            <Link to={level.to} key={i}>
+                                                <div className={`d-inline-flex mb-5 Game-Container ${getSkillProgress(level.name) >= level.numLevels ? 'green' : 'orange' }`}>
+                                                    <div className="nav-item" id={"Game-"+level.id}>
+                                                        <div className="d-flex justify-content-end mr-2">
+                                                            <div className="d-flex nav-item-svg">
+                                                                {getSkillProgress(level.name) >= level.numLevels ? <TiTick size={40} /> : <BsArrowRightShort size={40} /> }
+                                                            </div>
+                                                        </div>
+                                                        <div className="d-flex justify-content-center"><img src={level.monster} /></div>
+                                                        <div className="d-flex justify-content-center level-name">{level.name}</div>
+                                                        <div className="d-flex justify-content-center level-progress">{`${getSkillProgress(level.name)} of ${level.numLevels} completed`}</div>
                                                     </div>
                                                 </div>
-                                                <div className="d-flex justify-content-center"><img src={level.monster} /></div>
-                                                <div className="d-flex justify-content-center level-name">{level.name}</div>
-                                                <div className="d-flex justify-content-center level-progress">{`${getSkillProgress(level.name)} of ${level.numLevels} completed`}</div>
-                                            </div>
-                                        </div>
-                                    </Link>
+                                            </Link>
+                                        } 
+                                    </> 
                                 );
                             })}
                         </div>

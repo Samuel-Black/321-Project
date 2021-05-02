@@ -48,20 +48,20 @@ export default function LevelRoutes() {
                     <AppRoute path={`Hop/${HopLevels[0].to}`} component={GameWrapper} Game={CardsGame} isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={CardsHopEyes} numLevels={HopLevels[0].numLevels} SkillName="Hop" GameName={HopLevels[0].name} />
                     <AppRoute path={`Hop/${HopLevels[2].to}`} component={GameWrapper} Game={HopArms} isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={CardsHopArms} numLevels={HopLevels[2].numLevels} SkillName="Hop" GameName={HopLevels[2].name} />
 
-                <AppRoute path="Catch/" component={SkillNavigationPage} Levels={KickLevels} SkillName={'Catch'} isPrivate={true} requiresPlayer={true} />
+                <AppRoute path="Catch/" component={SkillNavigationPage} Levels={KickLevels} SkillName={'Catch'} isPrivate={true} requiresPlayer={true} contentLocked={true} />
 
                 <AppRoute path="Slide/" component={SkillNavigationPage} Levels={SlideLevels} SkillName={'Slide'} isPrivate={true} requiresPlayer={true} />
                     <AppRoute path={`Slide/${SlideLevels[0].to}`} component={GameWrapper} Game={CardsGame} isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={CardsSlideFeet} numLevels={SlideLevels[0].numLevels} SkillName="Slide" GameName={SlideLevels[0].name} />
 
-                <AppRoute path="Underhand-Roll/" component={SkillNavigationPage} Levels={KickLevels} SkillName={'Underhand-Roll'} isPrivate={true} requiresPlayer={true} />
+                <AppRoute path="Underhand-Roll/" component={SkillNavigationPage} Levels={KickLevels} SkillName={'Underhand-Roll'} isPrivate={true} requiresPlayer={true} contentLocked={true} />
 
                 <AppRoute path="Leap/" component={SkillNavigationPage} Levels={LeapLevels} SkillName={'Leap'} isPrivate={true} requiresPlayer={true} />
                     <AppRoute path={`Leap/${LeapLevels[1].to}`} component={GameWrapper} Game={MixAndMatch} isPrivate={true} requiresPlayer={true}  backButton={<BackButton />} shuffledImages={MaMLeapLegs} numLevels={LeapLevels[1].numLevels} SkillName="Leap" GameName={LeapLevels[1].name} />
                     <AppRoute path={`Leap/${LeapLevels[0].to}`} component={GameWrapper} Game={CardsGame} isPrivate={true} requiresPlayer={true} backButton={<BackButton />} shuffledImages={CardsLeapEyes} numLevels={LeapLevels[0].numLevels} SkillName="Leap" GameName={LeapLevels[0].name} />
 
-                <AppRoute path="Strike/" component={SkillNavigationPage} Levels={KickLevels} SkillName={'Strike'} isPrivate={true} requiresPlayer={true} />
+                <AppRoute path="Strike/" component={SkillNavigationPage} Levels={KickLevels} SkillName={'Strike'} isPrivate={true} requiresPlayer={true} contentLocked={true} />
 
-                <AppRoute path="Gallop/" component={SkillNavigationPage} Levels={KickLevels} SkillName={'Gallop'} isPrivate={true} requiresPlayer={true} />
+                <AppRoute path="Gallop/" component={SkillNavigationPage} Levels={KickLevels} SkillName={'Gallop'} isPrivate={true} requiresPlayer={true} contentLocked={true} />
         </Routes>
     );
 

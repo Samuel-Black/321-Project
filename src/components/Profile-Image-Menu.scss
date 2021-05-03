@@ -1,13 +1,26 @@
 #Profile-Image-Menu-Container {
     
     .card {
+        .locked-content {
+            border-radius: 25px;
+            img {
+                opacity: 0.6;
+            }
+        }
+        svg {
+            fill: rgb(65, 65, 65);
+            position: absolute;
+            right: 37%;
+            top: 25%;
+        }
         min-width: 18rem; 
         .card-img-top {
             min-height: 10rem;
             max-height: 10rem;
         }
         img {
-            max-width: 6rem;
+          height: 100%;
+          width: auto;
         }
     }
 }

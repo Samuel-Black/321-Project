@@ -1,0 +1,29 @@
+@import '../components/Colours.scss';
+@import '../components/BreakPoint.scss';
+
+#Rewards-Page-Container {
+}
+
+#Rewards-Content-Container {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 60px;
+    border-style: outset;
+    border-width: 3px;
+    border-color: $cinnabar;
+}
+
+#Rewards-Title {
+    font-size: 5rem;
+    text-shadow: 6px 6px black;
+    background-color: rgba($cinnabar, 0.9);
+    border-width: 3px;
+    padding: 2rem 3rem;
+    border-radius: 60px;
+    width: 7.5em;
+    outline: none;
+    border-color: $spanishCrimson;
+    box-shadow: 0 0 7px $spanishCrimson;
+    svg {
+        filter: drop-shadow(1px 1px 0px black) drop-shadow(-1px 1px 0px black) drop-shadow(1px -1px 0px black) drop-shadow(-1px -1px 0px black);
+    }
+}

@@ -12,10 +12,7 @@
   background-position: center;
 }
 
-
-
 #Home-Title {
-  padding-top: 23%;
   h1 {
     @include tiny-phone-up {
       font-size: 5rem;
@@ -46,7 +43,7 @@
 }
 
 .card {
-  border-radius: 10%;
+  border-radius: 25px;
   @include phone-up {
     font-size: 1.6em;
   }
@@ -94,59 +91,72 @@
     height: 10rem;
   }
   img {
-    width: 6rem;
+    height: 100%;
+    width: auto;
   }
   color: black;
 }
 
-.btn-primary {
-  background-color: yellow;
-  border-color: yellow;
-
-  @include tiny-phone-up {
-    padding: 3rem 4rem;
-    border-radius: 3rem;
-    svg {
-      height: 4em;
-      width: 4em;
-    }
-  }
-  @include phone-up {
-    padding: 4rem 5rem;
-    border-radius: 3rem;
-    svg {
-      height: 5em;
-      width: 5em;
-    }
-  }
-  @include tablet-up {
-    height: 250px;
-    width: 350px;
-    border-radius: 3rem;
-    svg {
-      height: 120px;
-      width: 120px;
-    }
-  }
-  @include large-tablet-up {
-    height: 250px;
-    width: 350px;
-    border-radius: 3rem;
-    svg {
-      height: 120px;
-      width: 120px;
-    }
-  }
-  @include hd-up { 
-    padding: 4rem 5rem;
-    border-radius: 3rem;
-    svg {
-      height: 6em;
-      width: 6em;
-    }
+#Rewards-Button {
+  background-color: $cinnabar;
+  border-color: $pansyPurple;
+  svg {
+    animation: shake 3s infinite;
   }
   &:hover {
-    background-color: yellow;
-    border-color: yellow;
+    svg {
+      animation: bounce 1.3s infinite;
+    }
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5),
+            inset 5px 5px 8px rgba(0,0,0,0.5);
   }
+}
+
+#Play-Button {
+  background-color: $mediumSeaGreen;
+  border-color: $glaucous;
+  svg {
+    transition: transform .4s ease-in-out;
+  }
+  &:hover {
+    svg {
+      transform: translate3d(1vw, 0px, 0px);
+    }
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5),
+            inset 5px 5px 8px rgba(0,0,0,0.5);
+  }
+}
+
+.btn-primary {
+  font-size: 3.5rem;
+  border-width: 3px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.5),
+            10px 10px 15px rgba(0,0,0,0.5),
+            -1px -1px 30px rgba(0,0,0,0.2);
+  padding: 2rem 3rem;
+  border-radius: 60px;
+  width: 7.5em;
+}
+
+#Home-Page-Button-Flex {
+  width: 80vw;
+}
+
+@keyframes bounce {
+  0%   { transform: scale(1,1)      translateY(0); }
+  10%  { transform: scale(1.1,.9)   translateY(0); }
+  30%  { transform: scale(.9,1.1)   translateY(-15px); }
+  50%  { transform: scale(1.05,.95) translateY(0); }
+  57%  { transform: scale(1,1)      translateY(-7px); }
+  64%  { transform: scale(1,1)      translateY(0); }
+  100% { transform: scale(1,1)      translateY(0); }
+}
+@keyframes shake {
+  0% { transform: translate(0px, 0px) }
+  50% { transform: translate(0px, 0px); }
+  60% { transform: translate(1px, 0px); }
+  70% { transform: translate(-1px, 0px); }
+  80% { transform: translate(1px, 0px); }
+  90% { transform: translate(-1px, 0px); }
+  100% { transform: translate(0px, 0px); }
 }

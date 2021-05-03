@@ -6,6 +6,8 @@ import SimpleBar from 'simplebar-react'
 import { Link } from 'react-router-dom'
 import { useAuthPlayer } from '../libs/'
 import LevelNavbar from '../components/LevelNavbar'
+import { RiLock2Fill } from 'react-icons/ri'
+import '../components/Content-Lock.scss'
 import 'simplebar/dist/simplebar.min.css'
 
 export default function LevelNavigationPage(props) {
@@ -30,21 +32,36 @@ export default function LevelNavigationPage(props) {
                     <div id="Level-Nav">
                         <div className= "d-flex flex-wrap justify-content-around">
                             {props.Levels.map((level,i) => {
-                                return (    
-                                    <Link to={level.to} key={i}>
-                                        <div className={`d-inline-flex justify-content-center align-items-center mr-4 mb-5 Game-Container ${props.getProgress(level.name) >= level.numLevels ? 'green' : 'orange' }`}>
-                                            <div className="nav-item" id={"Game-"+level.id}>
-                                                <div className="d-flex justify-content-end">
-                                                    <div className="d-inline-flex nav-item-svg">
-                                                        {props.getProgress(level.name) >= level.numLevels ? <TiTick size={40} /> : <BsArrowRightShort size={40} /> }
+                                return ( 
+                                    <>   
+                                        {(level.name === 'Slide-Eyes' || level.name === 'Slide-HipsShoulders' ) ?   
+                                            <div className={`d-inline-flex locked-content justify-content-center align-items-center mr-4 mb-5 Game-Container ${props.getProgress(level.name) >= level.numLevels ? 'green' : 'orange' }`}>
+                                                <RiLock2Fill size={80} />
+                                                <div className="nav-item" id={"Game-"+level.id}>
+                                                    <div className="d-flex justify-content-end">
+                                                    </div>
+                                                    <div className="d-flex justify-content-center"><img src={level.monster} /></div>
+                                                    <div className="d-flex justify-content-center level-name">{level.name}</div>
+                                                    <div className="d-flex justify-content-center level-progress">{`${props.getProgress(level.name)} of ${level.numLevels} completed`}</div>
+                                                </div>
+                                            </div>
+                                        :      
+                                            <Link to={level.to} key={i}>
+                                                <div className={`d-inline-flex justify-content-center align-items-center mr-4 mb-5 Game-Container ${props.getProgress(level.name) >= level.numLevels ? 'green' : 'orange' }`}>
+                                                    <div className="nav-item" id={"Game-"+level.id}>
+                                                        <div className="d-flex justify-content-end">
+                                                            <div className="d-inline-flex nav-item-svg">
+                                                                {props.getProgress(level.name) >= level.numLevels ? <TiTick size={40} /> : <BsArrowRightShort size={40} /> }
+                                                            </div>
+                                                        </div>
+                                                        <div className="d-flex justify-content-center"><img src={level.monster} /></div>
+                                                        <div className="d-flex justify-content-center level-name">{level.name}</div>
+                                                        <div className="d-flex justify-content-center level-progress">{`${props.getProgress(level.name)} of ${level.numLevels} completed`}</div>
                                                     </div>
                                                 </div>
-                                                <div className="d-flex justify-content-center"><img src={level.monster} /></div>
-                                                <div className="d-flex justify-content-center level-name">{level.name}</div>
-                                                <div className="d-flex justify-content-center level-progress">{`${props.getProgress(level.name)} of ${level.numLevels} completed`}</div>
-                                            </div>
-                                        </div>
-                                    </Link>
+                                            </Link>
+                                        }
+                                    </>
                                 );
                             })}
                         </div>

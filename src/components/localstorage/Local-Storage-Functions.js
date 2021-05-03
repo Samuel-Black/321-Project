@@ -9,6 +9,7 @@ export function createLocalPlayer(localProfileImage, localBirthDay, nickname) { 
     var blankData = {
         'ProfileImage': localProfileImage,
         'Birthday': localBirthDay,
+        'Character-Unlock-Progress': 3,
         'Progress': {
             'Balance': {
                 'Balance-Eyes': 0,
@@ -20,7 +21,8 @@ export function createLocalPlayer(localProfileImage, localBirthDay, nickname) { 
             },
             'Kick': {
                 'Kick-Eyes': 0,
-                'Kick-Foot': 0
+                'Kick-Foot': 0,
+                'Kick-Legs': 0
             },
             'Jump': {
                 'Jump-Feet': 0,
@@ -56,9 +58,10 @@ export function setLocalPlayerList(setPlayerList) { // used in home page to popu
     var localPlayers = []
     for(let i = 0; i < localStorage.length; i++) {
         var key = localStorage.key(i).split("-")
-        console.log(key)
         if(key[1] == LocalIdentifier) {
             var temp = JSON.parse(localStorage.getItem(localStorage.key(i)))
+            if (temp.ProfileImage > 7 || temp.ProfileImage < 0) // If profile image is not in the defined range set it to 0
+                temp.ProfileImage = 0;
             localPlayers.push({ 'NickName': key[0], 'ProfilePicture': temp.ProfileImage })
         }
     }
@@ -67,6 +70,14 @@ export function setLocalPlayerList(setPlayerList) { // used in home page to popu
 
 export function updateLocalProgress(nickname, difficulty, SkillName, GameName) { // used to update progress of a local player when a level is completed
     var localPlayer = JSON.parse(localStorage.getItem(nickname + '-' + LocalIdentifier))
+
+    if(typeof localPlayer['Progress'][SkillName] === 'undefined') { // If SkillName does not exist e.g. 'Kick', initialize it
+        localPlayer['Progress'][SkillName] = {};
+    }
+    if(typeof localPlayer['Progress'][SkillName][GameName] === 'undefined') { // If GameName does not exist e.g. 'Kick-Legs', initialize it
+        localPlayer['Progress'][SkillName][GameName] = 0;
+    }
+    
     if(difficulty > parseInt(localPlayer['Progress'][SkillName][GameName])) {
         localPlayer['Progress'][SkillName][GameName] = difficulty
         localStorage.setItem(nickname + '-' + LocalIdentifier, JSON.stringify(localPlayer))

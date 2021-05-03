@@ -2,6 +2,7 @@ import './Home-Page.scss'
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { FaPlay } from 'react-icons/fa';
+import { GiLockedChest, GiOpenChest } from 'react-icons/gi';
 import Settings from '../components/Settings'
 import PlayerSignout from '../components/Player-Signout'
 import { useAuthPlayer, useAuthUser } from '../libs'
@@ -17,16 +18,18 @@ import { ProfilePictureImages } from '../components/images/ProfilePictureImages'
 
 export default function HomePage() {
 
-    const currentPlayer = useAuthPlayer()
-    const user = useAuthUser()
+    const currentPlayer = useAuthPlayer();
+    const user = useAuthUser();
 
-    const [playerList, setPlayerList] = useState([])
-    const [createNewPlayer, setCreateNewPlayer] = useState(false)
-    const [newPlayerCreated, setNewPlayerCreated] = useState(false)
-    const [nickname, setNickname] = useState('')
-    const [birthday, setBirthday] = useState('')
-    const [errorMessage, setErrorMessage] = useState(null)
-    const [profileImage, setProfileImage] = useState(0)
+    const [playerList, setPlayerList] = useState([]);
+    const [createNewPlayer, setCreateNewPlayer] = useState(false);
+    const [newPlayerCreated, setNewPlayerCreated] = useState(false);
+    const [nickname, setNickname] = useState('');
+    const [birthday, setBirthday] = useState('');
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [profileImage, setProfileImage] = useState(0);
+    const [playButtonHover, setPlayButtonHover] = useState(false);
+    const [rewardsButtonHover, setRewardsButtonHover] = useState(false);
     //const [activeProfileImage, setActiveProfileImage] = useState(0)
 
     const GetPlayers = () => {
@@ -52,37 +55,37 @@ export default function HomePage() {
                 profileImage: profileImage,
                 birthday: FormatBirthday(birthday.toString())
             }).then(() => {
-                hideCreatePlayer()
+                hideCreatePlayer();
             }).catch((error) => {
-                setErrorMessage(error)
+                setErrorMessage(error);
             })
         }
         else if(user === false) { // If not using an account and not logged in, store player in local storage
-            const localProfileImage = profileImage
-            const localBirthDay = FormatBirthday(birthday.toString())
-            createLocalPlayer(localProfileImage, localBirthDay, nickname)
+            const localProfileImage = profileImage;
+            const localBirthDay = FormatBirthday(birthday.toString());
+            createLocalPlayer(localProfileImage, localBirthDay, nickname);
         }
 
-        setNewPlayerCreated(true)
+        setNewPlayerCreated(true);
     }
 
     useEffect(() => { // on page load display available players
-        GetPlayers()
+        GetPlayers();
     }, [])
     
     useEffect(() => { // if a new player is created populate the new list then display
         if(newPlayerCreated === true) {
-            GetPlayers()
-            hideCreatePlayer()
+            GetPlayers();
+            hideCreatePlayer();
         }
     }, [newPlayerCreated])
 
     function showCreatePlayer() {
-        setCreateNewPlayer(true)
+        setCreateNewPlayer(true);
     }
 
     function hideCreatePlayer() {
-        setCreateNewPlayer(false)
+        setCreateNewPlayer(false);
     }
 
     return(
@@ -133,7 +136,7 @@ export default function HomePage() {
                             </div>
                             <div className="row justify-content-center">
                                 <div id="Login-Content" className="d-inline-flex flex-column align-items-center justify-content-center">
-                                <ProfileImageMenu ProfileImageState={setProfileImage} />
+                                <ProfileImageMenu ProfileImageState={setProfileImage} characterUnlockProgress={3} />
                                 
                                 {user !== false ? 
                                         <form className="mt-3">
@@ -156,9 +159,18 @@ export default function HomePage() {
                         <h1>JumpStart</h1>
                     </div>
                     <div id="Home-Button" className="row justify-content-center">
-                        <Link to="/LevelNavigation">
-                            <button type="button" className="btn btn-primary"><FaPlay /></button>
-                        </Link>
+                        <div id="Home-Page-Button-Flex" className="d-flex justify-content-around flex-wrap">
+                            <div className="d-flex justify-content-center">
+                                <Link to="/Rewards">
+                                    <button type="button" id="Rewards-Button" className="btn btn-primary" onMouseEnter={() => setRewardsButtonHover(true)} onMouseLeave={() => setRewardsButtonHover(false)} >Rewards! {rewardsButtonHover === true ? <GiOpenChest /> :<GiLockedChest />}</button>
+                                </Link>
+                            </div>
+                            <div className="d-flex justify-content-center">
+                                <Link to="/LevelNavigation">
+                                    <button type="button" id="Play-Button" className="btn btn-primary">Play! <FaPlay /></button>
+                                </Link>
+                            </div>
+                        </div>
                     </div>
                 </div>
             }

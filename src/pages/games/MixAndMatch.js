@@ -198,7 +198,7 @@ export default function MixAndMatch(props) {
                     </div>
   
                     <div className= "row justify-content-center mt-1">
-                      <button onClick={() => winCondition()}>Confirm!</button>
+                      <button className="button btn-secondary" onClick={() => winCondition()}>Confirm!</button>
                     </div>
                   </>
                   }
@@ -276,7 +276,7 @@ export default function MixAndMatch(props) {
                       </div>
     
                       <div className= "row justify-content-center mt-1">
-                        <button onClick={() => winCondition()}>Confirm!</button>
+                        <button className="button btn-secondary" onClick={() => winCondition()}>Confirm!</button>
                       </div>
                     </>
                   }
@@ -329,7 +329,7 @@ export default function MixAndMatch(props) {
                 </div>
 
                 <div className= "row justify-content-center mt-1">
-                  <button onClick={() => winCondition()}>Confirm!</button>
+                  <button className="button btn-secondary" onClick={() => winCondition()}>Confirm!</button>
                 </div>
                 </>
             }

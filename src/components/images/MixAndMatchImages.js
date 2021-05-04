@@ -11,54 +11,54 @@ const imageModulesBalanceArms = importAll(
 );
 let balanceArmsImages = Object.values(imageModulesBalanceArms);
 balanceArmsImages = assignMaMValues(Object.keys(imageModulesBalanceArms), balanceArmsImages);
-let MaMBalanceArms = shuffleArray(balanceArmsImages);
-MaMBalanceArms = sortMaMImages(MaMBalanceArms);
+let BalanceArms = shuffleArray(balanceArmsImages);
+BalanceArms = sortMaMImages(BalanceArms);
 
 const imageModulesJumpArms = importAll(
   require.context('../../assets/games/mix&match/Jump_Arms/', false, /\.(png|jpe?g|svg)$/)
 );
 let jumpArmsImages = Object.values(imageModulesJumpArms);
 jumpArmsImages = assignMaMValues(Object.keys(imageModulesJumpArms), jumpArmsImages);
-let MaMJumpArms = shuffleArray(jumpArmsImages);
-MaMJumpArms = sortMaMImages(MaMJumpArms);
+let JumpArms = shuffleArray(jumpArmsImages);
+JumpArms = sortMaMImages(JumpArms);
 
 const imageModulesLeapLegs = importAll(
   require.context('../../assets/games/mix&match/Leap_Legs/', false, /\.(png|jpe?g|svg)$/)
 );
 let leapLegsImages = Object.values(imageModulesLeapLegs);
 leapLegsImages = assignMaMValues(Object.keys(imageModulesLeapLegs), leapLegsImages);
-let MaMLeapLegs = shuffleArray(leapLegsImages);
-MaMLeapLegs = sortMaMImages(MaMLeapLegs);
+let LeapLegs = shuffleArray(leapLegsImages);
+LeapLegs = sortMaMImages(LeapLegs);
 
 const imageModulesRunArms = importAll(
   require.context('../../assets/games/mix&match/Run_Arms/', false, /\.(png|jpe?g|svg)$/)
 );
 let runArmsImages = Object.values(imageModulesRunArms);
 runArmsImages = assignMaMValues(Object.keys(imageModulesRunArms), runArmsImages);
-let MaMRunArms = shuffleArray(runArmsImages);
-MaMRunArms = sortMaMImages(MaMRunArms);
+let RunArms = shuffleArray(runArmsImages);
+RunArms = sortMaMImages(RunArms);
 
 const imageModulesRunKnees = importAll(
   require.context('../../assets/games/mix&match/Run_Knees/', false, /\.(png|jpe?g|svg)$/)
 );
 let runKneesImages = Object.values(imageModulesRunKnees);
 runKneesImages = assignMaMValues(Object.keys(imageModulesRunKnees), runKneesImages);
-let MaMRunKnees = shuffleArray(runKneesImages);
-MaMRunKnees = sortMaMImages(MaMRunKnees);
+let RunKnees = shuffleArray(runKneesImages);
+RunKnees = sortMaMImages(RunKnees);
 
 const imageModulesHopLegs = importAll(
   require.context('../../assets/games/mix&match/Hop_Legs/', false, /\.(png|jpe?g|svg)$/)
 );
 let hopLegsImages = Object.values(imageModulesHopLegs);
 hopLegsImages = assignMaMValues(Object.keys(imageModulesHopLegs), hopLegsImages);
-let MaMHopLegs = shuffleArray(hopLegsImages);
-MaMHopLegs = sortMaMImages(MaMHopLegs);
+let HopLegs = shuffleArray(hopLegsImages);
+HopLegs = sortMaMImages(HopLegs);
 
 export {
-    MaMBalanceArms,
-    MaMJumpArms,
-    MaMLeapLegs,
-    MaMRunArms,
-    MaMRunKnees,
-    MaMHopLegs,
+    BalanceArms,
+    JumpArms,
+    LeapLegs,
+    RunArms,
+    RunKnees,
+    HopLegs,
 }

@@ -24,10 +24,12 @@ const Container = ({Component, isPrivate, requiresPlayer, ...props}) => {
 
 const AppRoute = ({ component: Component, path, isPrivate, requiresPlayer, ...props }) => {
     return (
+      <>
       <Route
           path={path}
-          element={<Container Component={Component} isPrivate={isPrivate} requiresPlayer={requiresPlayer} {...props} />}
+            element={<Container Component={Component} isPrivate={isPrivate} requiresPlayer={requiresPlayer} {...props} />}
       />
+      </>
     )
 }
   

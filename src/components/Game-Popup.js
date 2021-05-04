@@ -1,4 +1,3 @@
-import React, { useRef } from 'react';
 import Popup from 'reactjs-popup';
 import './Game-Popup.scss';
 import { BsStarFill, BsStar } from 'react-icons/bs';
@@ -28,18 +27,10 @@ export default function GamePopup(props) {
     
     const navigate = useNavigate();
 
-    const playButtonRef = useRef();
-
-    function returnGameInstructions() {
-        if(props.gameType === 'Cards' || (props.gameType === 'Mix & Match' && props.levelsCleared === 0)) {
-            return 'Select the correct card!';
-        }
-        if(props.gameType === 'Mix & Match' && props.levelsCleared > 0) {
-            return 'Drag the sliders to match the cards and create the correct image!';
-        }
-        if(props.gameType === 'Targets' && props.levelsCleared > 0) {
-            return 'Select the target that fshabkj is looking at!';
-        }
+    function returnMinusFirstCap() { // return a string with the first letter converted to lower case
+        var firstLetter = props.gameDescription.substr(0, 1);
+        let lowerCased = firstLetter.toLowerCase() + props.gameDescription.substr(1);
+        return lowerCased;
     }
 
     return(
@@ -59,7 +50,7 @@ export default function GamePopup(props) {
                                     </div>
                                 )}
                             </div>
-                            {props.levelsCleared > props.numLevels ? <h2 id="Level-Text" className="row justify-content-center">You did it!</h2> : <h2 id="Level-Text" className="row justify-content-center">Level {props.levelsCleared}</h2> }
+                            {props.levelsCleared > props.numLevels ? <h2 id="Level-Text" className="row justify-content-center">Great job, You did it!</h2> : <h2 id="Level-Text" className="row justify-content-center">Level {props.levelsCleared}</h2> }
                         </div>
 
                         {props.levelsCleared > props.numLevels ?
@@ -73,9 +64,36 @@ export default function GamePopup(props) {
                             </div>
                         :
                             <>
-                                <SimpleBar className="mt-1 mb-3" style={{ height: '13vh' }} autoHide={false}>
+                                <SimpleBar className="mt-1 mb-3" style={{ maxHeight: '25vh' }} autoHide={false}>
                                     <div id="Popup-Comment" className="d-flex justify-content-center">
-                                        {props.gameInstructions}
+                                        {props.levelsCleared > 1 ?
+                                            <>
+                                                Great job! <br />
+                                                {(props.gameType === 'Mix & Match' && props.levelsCleared >= 2) ?
+                                                    <>
+                                                        {props.gameInstructions[1]}
+                                                    </>
+                                                :
+                                                    <>
+                                                        {props.gameInstructions}
+                                                    </>
+                                                }
+                                            </>
+                                        :
+                                            <>
+                                                {props.gameType === 'Mix & Match' ?
+                                                    <>
+                                                        {props.gameDescription}<br />
+                                                        {props.gameInstructions[0]}
+                                                    </>
+                                                :
+                                                    <>
+                                                        {props.gameDescription}<br />
+                                                        {props.gameInstructions}
+                                                    </>
+                                                }
+                                            </>
+                                        }
                                     </div>
                                 </SimpleBar>
                                 <div className="d-flex justify-content-center mb-2">
@@ -91,7 +109,7 @@ export default function GamePopup(props) {
 
                     </div>
 
-                    :
+                :
 
                     <div className="game-popup container">
                         <div className="header col-lg-12">
@@ -108,9 +126,38 @@ export default function GamePopup(props) {
                             {props.levelsCleared > props.numLevels ? <h2 id="Level-Text" className="row justify-content-center">Try Again!</h2> : <h2 id="Level-Text" className="row justify-content-center">Level {props.levelsCleared}</h2> }
                         </div>
 
-                        <SimpleBar className="mt-1 mb-3" style={{ height: '13vh' }} autoHide={false}>
+                        <SimpleBar className="mt-1 mb-3" style={{ maxHeight: '25vh' }} autoHide={false}>
                             <div id="Popup-Comment" className="d-flex justify-content-center">
-                                {props.gameInstructions}
+                                    Oops!<br />Remember,&nbsp; 
+                                    {props.levelsCleared > 1 ?
+                                        <>
+                                            {props.gameType === 'Mix & Match' ?
+                                                <>
+                                                    {returnMinusFirstCap()}<br />
+                                                    {props.gameInstructions[1]}
+                                                </>
+                                            :
+                                                <>
+                                                    {returnMinusFirstCap()}<br />
+                                                    {props.gameInstructions}
+                                                </>
+                                            }
+                                        </>
+                                    :
+                                        <>
+                                            {props.gameType === 'Mix & Match' ?
+                                                <>
+                                                    {returnMinusFirstCap()}<br />
+                                                    {props.gameInstructions[0]}
+                                                </>
+                                            :
+                                                <>
+                                                    {returnMinusFirstCap()}<br />
+                                                    {props.gameInstructions}
+                                                </>
+                                            }
+                                        </>
+                                    }
                             </div>
                         </SimpleBar>
                         

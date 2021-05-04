@@ -10,6 +10,18 @@
   background-position: center;
 }
 
+.match {
+  &:hover {
+    cursor: grab;
+  }
+  &:active {
+    cursor: grabbing;
+  }
+  &:target {
+    cursor: grabbing;
+  }
+}
+
 .horizontal-match {
   .swiper-container {
     object-fit: fill;

@@ -105,13 +105,13 @@ export default function HomePage() {
                                     <SimpleBar style={{ maxWidth: '90vw', width: '85vw', maxHeight: '50vh' }} autoHide={false}>
                                         <div className="container">
                                             <div className='row'>
-                                                <div class="d-flex">
+                                                <div className="d-flex">
                                                     {playerList.map(player => {
                                                         return (
                                                             <div key={player.NickName} className="Player-Container card mr-3">
                                                                 <a onClick={() => currentPlayer.setPlayer(player)}>
-                                                                    <img class="card-img-top" src={ProfilePictureImages[player.ProfilePicture].default} alt="Player Profile Picture" />
-                                                                    <div class="card-footer">{player.NickName}</div>
+                                                                    <img className="card-img-top" src={ProfilePictureImages[player.ProfilePicture].default} alt="Player Profile Picture" />
+                                                                    <div className="card-footer">{player.NickName}</div>
                                                                 </a>
                                                             </div>
                                                         )
@@ -119,7 +119,7 @@ export default function HomePage() {
                                                     <div id="Create-Player" className="Player-Container card">
                                                         <a onClick={showCreatePlayer}>
                                                             <TiUserAdd size={150} className="card-img-top" />
-                                                            <div class="card-footer">New Player</div>
+                                                            <div className="card-footer">New Player</div>
                                                         </a>
                                                     </div>
                                                 </div>
@@ -155,7 +155,7 @@ export default function HomePage() {
             :
                 <div className="container">
                     <PlayerSignout />
-                    <div id="Home-Title" class="row justify-content-center title">
+                    <div id="Home-Title" className="row justify-content-center title">
                         <h1>JumpStart</h1>
                     </div>
                     <div id="Home-Button" className="row justify-content-center">

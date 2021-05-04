@@ -1,4 +1,4 @@
-import { shuffleArray, assignThrowEyesValues, sortThrowEyesImages } from './Image-Functions';
+import { assignThrowEyesValues, sortThrowEyesImages } from './Image-Functions';
 
 const importAll = require =>
   require.keys().reduce((acc, next) => {
@@ -12,9 +12,8 @@ const imageModules = importAll(
 
 let images = Object.values(imageModules);
 images = assignThrowEyesValues(images);
-let HotSpotThrowEyes = sortThrowEyesImages(images);
-//HotSpotThrowEyes = shuffleArray(HotSpotThrowEyes);
+let ThrowEyes = sortThrowEyesImages(images);
 
 export {
-    HotSpotThrowEyes,
+    ThrowEyes,
 }

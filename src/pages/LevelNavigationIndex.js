@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { Levels } from '../components/Level-List'
+import { Skills } from '../components/Level-List'
 import { Link } from 'react-router-dom'
 import { useAuthPlayer, useAuthUser } from '../libs'
 import Axios from 'axios'
 import { GetTotalProgressURL } from '../components/Request-URL'
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
-import { RiUserFill, RiLock2Fill } from 'react-icons/ri'
-import { TiTick } from 'react-icons/ti'
-import { BsArrowRightShort } from 'react-icons/bs'
 import LevelNavbar from '../components/LevelNavbar'
+import { LevelSelectTemplate, LevelSelectTemplateLocked } from '../components/Level-Select-Template'
 import { getLocalPlayer } from '../components/localstorage/Local-Storage-Functions'
 import './LevelNavigationPage.scss'
-import '../components/Content-Lock.scss'
 
 export default function LevelNavigationPage(props) {
     
@@ -67,54 +64,25 @@ export default function LevelNavigationPage(props) {
 
     return (
         <div id="Level-Nav-Background">
-            <div className="container">
-                <div className="d-flex flex-wrap mb-3">
-                    <div className="mr-auto">
-                        <h1 id="Level-Navigation-Title">JumpStart</h1>
-                    </div>
-                    <div id="Current-Player" className="align-self-center">
-                        <RiUserFill />{currentPlayer.player.NickName}
-                    </div>
-                </div>
 
-                <LevelNavbar />
-                
-            </div>
+            <LevelNavbar />
+
             <div className="container mt-5">
                 <SimpleBar style={{ height: '60vh' }} autoHide={false}>
                     <div id="Level-Nav">
                         <div className= "d-flex flex-wrap justify-content-around">
-                            {Levels.map((level, i) => {
+                            {Skills.map((skill, i) => {
                                 return (
-                                    <>  
-                                        {(level.name === 'Catch' || level.name === 'Underhand-Roll' || level.name === 'Strike' || level.name === 'Gallop') ? 
-                                            <div className={`d-inline-flex locked-content mb-5 Game-Container ${getSkillProgress(level.name) >= level.numLevels ? 'green' : 'orange' }`}>
-                                            <RiLock2Fill size={80} />
-                                                <div className="nav-item" id={"Game-"+level.id}>
-                                                    <div className="d-flex justify-content-end mr-2">
-                                                    </div>
-                                                    <div className="d-flex justify-content-center"><img src={level.monster} /></div>
-                                                    <div className="d-flex justify-content-center level-name">{level.name}</div>
-                                                    <div className="d-flex justify-content-center level-progress">{`${getSkillProgress(level.name)} of ${level.numLevels} completed`}</div>
-                                                </div>
-                                            </div>
+                                    <div key={skill.name} className="d-flex">  
+                                        {(skill.name === 'Catch' || skill.name === 'Underhand-Roll' || skill.name === 'Strike' || skill.name === 'Gallop') ? 
+                                            
+                                            <LevelSelectTemplateLocked completed={getSkillProgress(skill.name) >= skill.numLevels} skillID={skill.id} monster={skill.monster} levelName={skill.name} skillProgress={getSkillProgress(skill.name)} numLevels={skill.numLevels} />
                                         :
-                                            <Link to={level.to} key={i}>
-                                                <div className={`d-inline-flex mb-5 Game-Container ${getSkillProgress(level.name) >= level.numLevels ? 'green' : 'orange' }`}>
-                                                    <div className="nav-item" id={"Game-"+level.id}>
-                                                        <div className="d-flex justify-content-end mr-2">
-                                                            <div className="d-flex nav-item-svg">
-                                                                {getSkillProgress(level.name) >= level.numLevels ? <TiTick size={40} /> : <BsArrowRightShort size={40} /> }
-                                                            </div>
-                                                        </div>
-                                                        <div className="d-flex justify-content-center"><img src={level.monster} /></div>
-                                                        <div className="d-flex justify-content-center level-name">{level.name}</div>
-                                                        <div className="d-flex justify-content-center level-progress">{`${getSkillProgress(level.name)} of ${level.numLevels} completed`}</div>
-                                                    </div>
-                                                </div>
+                                            <Link to={skill.to} >
+                                                <LevelSelectTemplate completed={getSkillProgress(skill.name) >= skill.numLevels} skillID={skill.id} monster={skill.monster} levelName={skill.name} skillProgress={getSkillProgress(skill.name)} numLevels={skill.numLevels} />
                                             </Link>
                                         } 
-                                    </> 
+                                    </div> 
                                 );
                             })}
                         </div>

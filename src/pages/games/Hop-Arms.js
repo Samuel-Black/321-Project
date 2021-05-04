@@ -85,9 +85,6 @@ export default function HopArms(props) {
         }
     }
 
-    console.log('rowWidth: ', rowWidth)
-    console.log('contentWidth: ', contentWidth)
-
     function SetRowJustification() { // cards are cut off by the simplebar component when statically defined as centered, this is a solution
         if(contentWidth > rowWidth) {
             return '';
@@ -101,35 +98,35 @@ export default function HopArms(props) {
                 <SimpleBar style={{ width: '85vw' }} autoHide={false}>
                     <div className="container-fluid">
                         <SizeMe
-                            monitorWidth
-                            refreshRate={16}>
-                                {({ size }) => 
-                                    <div className={`row ${SetRowJustification()}`}>
-                                        {setRowWidth(size.width)}
-                                        <SizeMe
-                                            monitorWidth
-                                            refreshRate={16}>
-                                                {({ size }) => 
-                                                    <div className="d-flex align-items-end hop-arms-flex">
-                                                    {setContentWidth(size.width)}
-                                                        {difficulty <= levels &&
-                                                            <>
-                                                                {currentCards.map((image, i) => {
-                                                                    return(
-                                                                        <div key={i} className="card-option hop-arms-character mr-2">
-                                                                            <a onClick={() => WinCondition(image.correct)} >
-                                                                                <img src={image.default} />
-                                                                            </a>
-                                                                        </div>
-                                                                    )
-                                                                })}
-                                                            </>
-                                                        }
-                                                    </div>
+                        monitorWidth
+                        refreshRate={16}>
+                            {({ size }) => 
+                                <div className={`row ${SetRowJustification()}`}>
+                                    {setRowWidth(size.width)}
+                                    <SizeMe
+                                    monitorWidth
+                                    refreshRate={16}>
+                                        {({ size }) => 
+                                            <div className="d-flex align-items-end hop-arms-flex">
+                                            {setContentWidth(size.width)}
+                                                {difficulty <= levels &&
+                                                    <>
+                                                        {currentCards.map((image, i) => {
+                                                            return(
+                                                                <div key={i} className="card-option hop-arms-character mr-2">
+                                                                    <a onClick={() => WinCondition(image.correct)} >
+                                                                        <img src={image.default} />
+                                                                    </a>
+                                                                </div>
+                                                            )
+                                                        })}
+                                                    </>
                                                 }
-                                        </SizeMe>
-                                    </div>
-                                }
+                                            </div>
+                                        }
+                                    </SizeMe>
+                                </div>
+                            }
                         </SizeMe>
                     </div>
                 </SimpleBar>

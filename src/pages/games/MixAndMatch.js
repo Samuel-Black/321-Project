@@ -4,6 +4,7 @@ import SimpleBar from 'simplebar-react';
 import './MixAndMatch.scss'
 import 'simplebar/dist/simplebar.min.css';
 import { FaHandPointUp } from 'react-icons/fa';
+import { SizeMe } from 'react-sizeme';
 import '../../components/Hand-Drag-Animation.scss'
 
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
@@ -26,25 +27,8 @@ export default function MixAndMatch(props) {
     const [panel2, setPanel2] = useState(null)
     const [panel3, setPanel3] = useState(null)
     const [showHand, setShowHand] = useState(false);
-
-    const [windowSize, setWindowSize] = useState({
-      width: undefined,
-      height: undefined,
-    });
-
-    useEffect(() => {
-        function handleResize() {
-            setWindowSize({
-                width: window.innerWidth,
-                height: window.innerHeight,
-            });
-        }
-        
-        window.addEventListener("resize", handleResize);
-        handleResize();
-
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
+    const [rowWidth, setRowWidth] = useState(null);
+    const [contentWidth, setContentWidth] = useState(null);
 
     const [errorMessage, setErrorMessage] = useState(null)
 
@@ -80,11 +64,11 @@ export default function MixAndMatch(props) {
             props.setLevelCompleted('True')
             props.setPopupState(true)
             props.setAttemptNumber(0)
+            randomizeImages()
         }
         else if(selection === 'false') {
           props.setAttemptNumber(props.attemptNumber + 1)
           props.setPopupState(true)
-          randomizeImages()
         }
       }
 
@@ -116,6 +100,13 @@ export default function MixAndMatch(props) {
       }
     }
 
+    function SetRowJustification() { // cards are cut off by the simplebar component when statically defined as centered, this is a solution
+        if(contentWidth > rowWidth) {
+            return '';
+        } else
+            return 'justify-content-center';
+    }
+
     return (
       <>
         {difficulty <= levels &&
@@ -125,19 +116,33 @@ export default function MixAndMatch(props) {
               <div className="row justify-content-center">
                 <SimpleBar style={{ width: '70vw' }} autoHide={false}>
                   <div className="container-fluid">
-                    <div className={`row ${windowSize.width < 1334 ? '' : 'justify-content-center'}`}>
-                      <div className="d-flex">
-                        {props.shuffledImages.easy.map((image, i) => {
-                            return(
-                                <div key={i} className="card-option mr-2">
-                                    <a onClick={() => winCondition(image.correct)} >
-                                        <img src={image.default} />
-                                    </a>
+                    <SizeMe
+                      monitorWidth
+                      refreshRate={16}>
+                      {({ size }) => 
+                        <div className={`row ${SetRowJustification()}`}>
+                          {setRowWidth(size.width)}
+                          <SizeMe
+                          monitorWidth
+                          refreshRate={16}>
+                              {({ size }) => 
+                                <div className="d-flex">
+                                  {setContentWidth(size.width)}
+                                  {props.shuffledImages.easy.map((image, i) => {
+                                      return(
+                                        <div key={i} className="d-flex align-items-end card-option mr-2">
+                                            <a onClick={() => winCondition(image.correct)} >
+                                                <img src={image.default} />
+                                            </a>
+                                        </div>
+                                      )
+                                  })}
                                 </div>
-                            )
-                        })}
-                      </div>
-                    </div>
+                              }
+                          </SizeMe>
+                        </div>
+                        }
+                    </SizeMe>
                   </div>
                 </SimpleBar>
               </div>
@@ -151,7 +156,7 @@ export default function MixAndMatch(props) {
                 {difficulty === 2 &&
                   <>
   
-                    <div className= "row justify-content-center vertical-match mt-5">
+                    <div className= "row justify-content-center match vertical-match mt-5">
 
                         <Swiper
                           loop={true}
@@ -174,7 +179,7 @@ export default function MixAndMatch(props) {
                       
                     </div>
 
-                    <div className= "row justify-content-center vertical-match">
+                    <div className= "row justify-content-center match vertical-match">
                       
                       <Swiper
                         loop={true}
@@ -206,7 +211,7 @@ export default function MixAndMatch(props) {
                   {difficulty === 3 &&
                     <>
   
-                      <div className= "row justify-content-center vertical-match mt-5">
+                      <div className= "row justify-content-center match vertical-match mt-5">
 
                           <Swiper
                             loop={true}
@@ -229,7 +234,7 @@ export default function MixAndMatch(props) {
                         
                       </div>
 
-                      <div className= "row justify-content-center vertical-match">
+                      <div className= "row justify-content-center match vertical-match">
                         
                         <Swiper
                           loop={true}
@@ -252,7 +257,7 @@ export default function MixAndMatch(props) {
                         
                       </div>
 
-                      <div className= "row justify-content-center vertical-match">
+                      <div className= "row justify-content-center match vertical-match">
                         
                         <Swiper
                           loop={true}
@@ -286,7 +291,7 @@ export default function MixAndMatch(props) {
                 {showHand === true && <FaHandPointUp size={80} className="vertical-drag-hand" />}
                 <div className="row justify-content-center mt-5">
 
-                  <div className= "row horizontal-match mt-5">
+                  <div className= "row horizontal-match match mt-5">
 
                     <Swiper
                       slidesPerView={1}
@@ -299,8 +304,8 @@ export default function MixAndMatch(props) {
                         setPanel1(props.shuffledImages.medium.Panel1[s.realIndex].correct);
                       }}
                     >
-                        {props.shuffledImages.medium.Panel1.map((image) => (
-                          <SwiperSlide> 
+                        {props.shuffledImages.medium.Panel1.map((image, i) => (
+                          <SwiperSlide key={i}> 
                             <img src={image.default} />
                           </SwiperSlide>
                         ))}
@@ -317,8 +322,8 @@ export default function MixAndMatch(props) {
                         setPanel2(props.shuffledImages.medium.Panel2[s.realIndex].correct);
                       }}
                     >
-                      {props.shuffledImages.medium.Panel2.map((image) => (
-                        <SwiperSlide> 
+                      {props.shuffledImages.medium.Panel2.map((image,i) => (
+                        <SwiperSlide key={i}> 
                           <img src={image.default} />
                         </SwiperSlide>
                       ))}

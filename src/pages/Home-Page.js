@@ -1,20 +1,20 @@
-import './Home-Page.scss'
+import './Home-Page.scss';
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { FaPlay } from 'react-icons/fa';
 import { GiLockedChest, GiOpenChest } from 'react-icons/gi';
-import Settings from '../components/Settings'
-import PlayerSignout from '../components/Player-Signout'
-import { useAuthPlayer, useAuthUser } from '../libs'
-import Axios from 'axios'
-import ProfileImageMenu from '../components/Profile-Image-Menu'
-import FormatBirthday from '../components/Birthday-Format'
-import CreatePlayerTemplate from '../components/Create-Player-Template'
-import { GetPlayersURL, CreatePlayerURL } from '../components/Request-URL'
-import { createLocalPlayer, setLocalPlayerList } from '../components/localstorage/Local-Storage-Functions'
+import Settings from '../components/Settings';
+import PlayerSignout from '../components/Player-Signout';
+import { useAuthPlayer, useAuthUser } from '../libs';
+import Axios from 'axios';
+import ProfileImageMenu from '../components/Profile-Image-Menu';
+import FormatBirthday from '../components/Birthday-Format';
+import CreatePlayerTemplate from '../components/Create-Player-Template';
+import { GetPlayersURL, CreatePlayerURL } from '../components/Request-URL';
+import { createLocalPlayer, setLocalPlayerList } from '../components/localstorage/Local-Storage-Functions';
 import SimpleBar from 'simplebar-react';
 import { TiUserAdd } from 'react-icons/ti';
-import { ProfilePictureImages } from '../components/images/ProfilePictureImages'
+import { ProfilePictureImages } from '../components/images/ProfilePictureImages';
 
 export default function HomePage() {
 
@@ -28,7 +28,6 @@ export default function HomePage() {
     const [birthday, setBirthday] = useState('');
     const [errorMessage, setErrorMessage] = useState(null);
     const [profileImage, setProfileImage] = useState(0);
-    const [playButtonHover, setPlayButtonHover] = useState(false);
     const [rewardsButtonHover, setRewardsButtonHover] = useState(false);
     //const [activeProfileImage, setActiveProfileImage] = useState(0)
 

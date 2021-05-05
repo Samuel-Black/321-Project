@@ -1,32 +1,36 @@
-import React, { useState, useEffect } from 'react'
-import { Skills } from '../components/Level-List'
-import { Link } from 'react-router-dom'
-import { useAuthPlayer, useAuthUser } from '../libs'
-import Axios from 'axios'
-import { GetTotalProgressURL } from '../components/Request-URL'
+import React, { useState, useEffect } from 'react';
+import { Skills } from '../components/Level-List';
+import { Link } from 'react-router-dom';
+import { useAuthPlayer, useAuthUser, useRewardUnlocked } from '../libs';
+import Axios from 'axios';
+import { GetTotalProgressURL } from '../components/Request-URL';
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
-import LevelNavbar from '../components/LevelNavbar'
-import { LevelSelectTemplate, LevelSelectTemplateLocked } from '../components/Level-Select-Template'
-import { getLocalPlayer } from '../components/localstorage/Local-Storage-Functions'
-import './LevelNavigationPage.scss'
+import LevelNavbar from '../components/LevelNavbar';
+import { LevelSelectTemplate, LevelSelectTemplateLocked } from '../components/Level-Select-Template';
+import { getLocalPlayer } from '../components/localstorage/Local-Storage-Functions';
+import './LevelNavigationPage.scss';
 
 export default function LevelNavigationPage(props) {
     
-    const currentPlayer = useAuthPlayer()
-    const user = useAuthUser()
+    const currentPlayer = useAuthPlayer();
+    const user = useAuthUser();
+    const rewards = useRewardUnlocked();
 
-    const [progress, setProgress] = useState([])
-    const [errorMessage, setErrorMessage] = useState(null)
+    const [progress, setProgress] = useState([]);
+
+    // When a player completes a game, the game popup will update this attribute to reflect the skill name, this is used to check whether a reward has been unlocked for a skill.
+    const [completedLevelSkillName, setCompletedLevelSkillName] = useState(null); 
+    const [errorMessage, setErrorMessage] = useState(null);
 
     function getSkillProgress(SkillName) {
-        let total = 0
+        let total = 0;
         for (let i = 0; i < progress.length; i++) {
             if (progress[i].SkillName === SkillName) {
-                total += progress[i].LevelsCompleted
+                total += progress[i].LevelsCompleted;
             }
         }
-        return total
+        return total;
     }
 
     const GetProgress = () => {
@@ -37,30 +41,30 @@ export default function LevelNavigationPage(props) {
             }).then((response) => {
                 setProgress(response.data);
             }).catch((error) => {
-                setErrorMessage(error)
+                setErrorMessage(error);
             })
         }
         else if(user === false) { // If not using an account and not logged in, get progress from local storage
-            let localPlayer = getLocalPlayer(currentPlayer.player.NickName)
+            let localPlayer = getLocalPlayer(currentPlayer.player.NickName);
             let localPlayerProgress = localPlayer.Progress;
-            let localProgress = []
+            let localProgress = [];
 
             for(let skillKey in localPlayerProgress) {
                 if(localPlayerProgress.hasOwnProperty(skillKey)) {
                     for(let gameKey in localPlayerProgress[skillKey]) {
-                        let localLevelsCompleted = parseInt(localPlayerProgress[skillKey][gameKey])
-                        localProgress.push({ 'SkillName': skillKey, 'LevelsCompleted': localLevelsCompleted })
+                        let localLevelsCompleted = parseInt(localPlayerProgress[skillKey][gameKey]);
+                        localProgress.push({ 'SkillName': skillKey, 'LevelsCompleted': localLevelsCompleted });
                     }
                 }
             }
 
-            setProgress(localProgress)
+            setProgress(localProgress);
         }
     }
 
     useEffect(() => {
-        GetProgress()
-    }, [])
+        GetProgress();
+    }, []);
 
     return (
         <div id="Level-Nav-Background">
@@ -75,7 +79,6 @@ export default function LevelNavigationPage(props) {
                                 return (
                                     <div key={skill.name} className="d-flex">  
                                         {(skill.name === 'Catch' || skill.name === 'Underhand-Roll' || skill.name === 'Strike' || skill.name === 'Gallop') ? 
-                                            
                                             <LevelSelectTemplateLocked completed={getSkillProgress(skill.name) >= skill.numLevels} skillID={skill.id} monster={skill.monster} levelName={skill.name} skillProgress={getSkillProgress(skill.name)} numLevels={skill.numLevels} />
                                         :
                                             <Link to={skill.to} >

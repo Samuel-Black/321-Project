@@ -12,7 +12,7 @@
         width: auto;
         transition: transform .4s ease-in-out;
     }
-    &:hover {
+    #Card-Game &:hover {
         img {
             transform:  translate3d(0px, -1vw, 0px)
                         scale(1.03, 1.03);

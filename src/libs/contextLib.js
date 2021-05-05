@@ -1,12 +1,23 @@
 import React, { useContext, createContext, useReducer, useState, useEffect } from "react";
 import { initialState, AuthReducer } from './Reducer';
-import { Auth } from 'aws-amplify'
-import { Grid } from 'react-loading-icons'
+import { Auth } from 'aws-amplify';
+import { Grid } from 'react-loading-icons';
 
 const AuthUserContext = createContext();
 const AuthPlayerContext = createContext();
 const AuthStateContext = createContext();
 const AuthDispatchContext = createContext();
+const RewardUnlockedContext = createContext();
+
+
+function useRewardUnlocked() {
+    const context = useContext(RewardUnlockedContext);
+    if (context === undefined) {
+        throw new Error("useAuthState must be used within a AuthProvider");
+    }
+   
+    return context;
+}
 
 function useAuthUser() {
     const context = useContext(AuthUserContext);
@@ -53,6 +64,7 @@ const AuthProvider = ({ children }) => {
     const [userData, setUserData] = useState(false)
     const [player, setPlayer] = useState(false)
     const [loading, setLoading] = useState(true)
+    const [rewardUnlocked, setRewardUnlocked] = useState([])
 
     useEffect( () => {
         getUserData().then((result) => {
@@ -74,11 +86,13 @@ const AuthProvider = ({ children }) => {
             :
             <AuthUserContext.Provider value={userData}>
                 <AuthPlayerContext.Provider value={{player, setPlayer}}>
-                    <AuthStateContext.Provider value={user}>
-                        <AuthDispatchContext.Provider value={dispatch}>
-                            {children}
-                        </AuthDispatchContext.Provider>
-                    </AuthStateContext.Provider>
+                    <RewardUnlockedContext.Provider value={{rewardUnlocked, setRewardUnlocked}}>
+                        <AuthStateContext.Provider value={user}>
+                            <AuthDispatchContext.Provider value={dispatch}>
+                                {children}
+                            </AuthDispatchContext.Provider>
+                        </AuthStateContext.Provider>
+                    </RewardUnlockedContext.Provider>
                 </AuthPlayerContext.Provider>
             </AuthUserContext.Provider>
         }
@@ -86,4 +100,4 @@ const AuthProvider = ({ children }) => {
     );
 };
 
-export { useAuthUser, useAuthPlayer, useAuthState, useAuthDispatch, AuthProvider }
+export { useAuthUser, useAuthPlayer, useAuthState, useAuthDispatch, AuthProvider, useRewardUnlocked }

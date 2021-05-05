@@ -9,6 +9,12 @@
     box-shadow: 16px 16px 40px rgba(0,0,0,0.5),
     20px 20px 30px rgba(0,0,0,0.5),
     -2px -2px 60px rgba(0,0,0,0.2);
+
+    .simplebar-vertical {
+        width: 13px;
+        top: 15px;
+        max-height: 95%;
+    }
 }
 
 #Rewards-Content-Container {
@@ -16,21 +22,107 @@
     border-radius: 60px;
     box-shadow: 0px 0px 4px rgba(0,0,0,0.5),
     inset 0px 0px 20px rgba(0,0,0,0.5);
+    .simplebar-content-wrapper {
+        border-radius: 45px;
+    }
+    .locked-message {
+        position: absolute;
+        bottom: 5%;
+        @include tiny-phone-up {
+            font-size: 1.2rem;
+        }
+        @include phone-up {
+            font-size: 1.5rem;
+        }
+        @include large-tablet-up {
+            font-size: 1.8rem;
+        }
+        @include hd-up { 
+            font-size: 2.8rem;
+        }
+    }
+    .reward-image {
+        position: relative;
+        top: 0px;
+        left: 0px;
+        img {
+            border-radius: 15px;
+            @include tiny-phone-up {
+              width: 180px;
+            }
+            @include phone-up {
+              width: 250px;
+            }
+            @include tablet-up {
+              width: 250px;
+            }
+            @include large-tablet-up {
+                width: 300px;
+            }
+            @include hd-up { 
+                width: 300px;
+                min-width: 25vw;
+            }
+            height: auto;
+        }
+    }
+    .locked-content {
+        svg {
+            @include tiny-phone-up {
+                height: 30px;
+                width: 30px;
+            }
+            @include phone-up {
+                height: 50px;
+                width: 50px;
+            }
+            @include tablet-up {
+                height: 60px;
+                width: 60px;
+            }
+            @include large-tablet-up {
+                height: 70px;
+                width: 70px;
+            }
+            @include hd-up { 
+                height: 100px;
+                width: 100px;
+            }
+        }
+    }
 }
 
 #Rewards-Title {
     background-color: rgba(white, 0.2);
-    font-size: 5rem;
     text-shadow: 3px 2px black;
     border-width: 3px;
     padding: 2rem 3rem;
     border-radius: 60px;
-    width: 7.5em;
+    @include tiny-phone-up {
+        width: 100%;
+        font-size: 3.3rem;
+    }
+    @include phone-up {
+        width: 7.5em;
+        font-size: 5rem;
+    }
     outline: none;
     box-shadow: 0px 0px 4px rgba(0,0,0,0.5),
     inset 0px 0px 20px rgba(0,0,0,0.5);
-    svg {
-        filter: drop-shadow(1px 1px 0px black) drop-shadow(-1px 1px 0px black) drop-shadow(1px -1px 0px black) drop-shadow(-1px -1px 0px black);
-        fill: $juneBud;
-    }
+}
+
+.rewards-content-flex {
+    max-width: 100%;
+}
+
+.colour-option {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    border-color: white;
+    border-style: solid;
+}
+
+#Drawing-Canvas {
+    
 }

@@ -8,12 +8,12 @@ import App from '../../App';
 import AppRoute from './AuthenticatedRoute';
 
 export default class MyRoutes extends Component {
-
+    
     render() {
         return (
             <Routes>
                 <AppRoute path="/" component={App} isPrivate={true} requiresPlayer={false} />
-                <AppRoute path="Rewards" component={RewardsPage} isPrivate={true} requiresPlayer={true} />
+                <AppRoute path="Rewards/*" component={RewardsPage} isPrivate={true} requiresPlayer={true} />
                 <AppRoute path="LevelNavigation/*" component={LevelNav} isPrivate={true} requiresPlayer={true} />
                 <AppRoute path="Login" component={LoginPage} isPrivate={false} requiresPlayer={false} />
                 <AppRoute path="Signup" component={SignupPage} isPrivate={false} requiresPlayer={false} />

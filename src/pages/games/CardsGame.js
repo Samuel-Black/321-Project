@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { shuffleArray } from '../../components/images/Image-Functions'
+import React, { useEffect, useState } from 'react';
+import { shuffleArray } from '../../components/images/Image-Functions';
 import SimpleBar from 'simplebar-react';
 import { SizeMe } from 'react-sizeme';
-import './CardsGame.scss'
+import './CardsGame.scss';
 
 export default function CardsGame(props) {
 
@@ -64,7 +64,7 @@ export default function CardsGame(props) {
     }
 
     return (
-        <div className="container-fluid">
+        <div id="Card-Game" className="container-fluid">
             <div className="row justify-content-center">
                 <SimpleBar style={{ width: '70vw' }} autoHide={false}>
                     <div className="container-fluid">
@@ -103,5 +103,5 @@ export default function CardsGame(props) {
                 </SimpleBar>
             </div>
         </div>
-    )
+    );
 }

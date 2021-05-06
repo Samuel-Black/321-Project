@@ -111,8 +111,8 @@ export default function HomePage() {
                         <div className="container-fluid">
                             <div className="container mb-5">
                                 <div className="row justify-content-center">
-                                        <h2>Who's playing?</h2>
-                                    </div>
+                                    <h2>Who's playing?</h2>
+                                </div>
                             </div>
                             <div className="container-fluid mb-5">      
                                 <div className="row justify-content-center">

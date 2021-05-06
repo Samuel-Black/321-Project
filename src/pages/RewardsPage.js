@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useAuthPlayer, useAuthUser, useRewardUnlocked } from '../libs';
+import { useAuthPlayer, useAuthUser } from '../libs';
 import { Link } from "react-router-dom";
-import Axios from 'axios';
-import { getLocalPlayer } from '../components/localstorage/Local-Storage-Functions';
-import { GetTotalProgressURL } from '../components/Request-URL';
 import { Skills } from '../components/Level-List';
 import SimpleBar from 'simplebar-react';
 import { RiLock2Fill } from 'react-icons/ri';
 import { Rewards } from '../components/Rewards-List';
 import { TiHome } from 'react-icons/ti';
+import { GetProgress, getSkillProgress } from '../components/Player-Progress-Functions'
 //import { ReactPainter } from 'react-painter';
 //import CanvasDraw from "react-canvas-draw";
 //import { SizeMe } from 'react-sizeme';
@@ -27,6 +25,74 @@ export default function RewardsPage(props) {
     const [unlockCount, setUnlockCount] = useState(0);
     const [progress, setProgress] = useState(0);
     const [errorMessage, setErrorMessage] = useState(null);
+
+    useEffect(() => {
+        GetProgress(user, currentPlayer, setProgress, setErrorMessage);
+    }, []);
+
+    useEffect(() => {
+        if(progress.length !== 0) {
+            let count = 0;
+            Skills.map((skill) => {
+                if(getSkillProgress(skill.name, progress) >= skill.numLevels) {
+                    count++;
+                }
+            });
+            setUnlockCount(count);
+        }
+    }, [progress]);
+
+    return(
+        <div className="App">
+        <Link to='../' id='Home-Nav-Button'>
+            <TiHome size={100} />
+        </Link>
+            <div id="Rewards-Page-Container" className="container">
+                <div className="container">
+                    <div className="row justify-content-center mt-3">
+                        <h1 id="Rewards-Title">Rewards</h1>
+                    </div>
+                </div>
+                <div id="Rewards-Content-Container" className="container-fluid mb-3">
+                    <SimpleBar style={{ height: '60vh' }} autoHide={false}>
+                        <div className="d-flex flex-wrap justify-content-around mt-4 rewards-content-flex">
+                            {Rewards.map((reward, i) => {
+                                return(
+                                    <>
+                                        {unlockCount > i ?
+                                            <div key={'Reward-'+i} className={`d-inline-flex reward-image mb-3 unlocked-content`}>
+                                                <div id={reward.CharacterName + '-Unlock'}>
+                                                        <a href={reward.Unlock} download>
+                                                            <button className='btn btn-secondary'>
+                                                                <div className='d-flex justify-content-center'>Download</div>
+                                                            </button>
+                                                        </a>
+                                                        <img src={reward.Thumbnail} />
+                                                </div>
+                                            </div>
+                                        :
+                                            <div key={'Reward-'+i} className={`d-inline-flex reward-image mb-3 locked-content`}>
+                                            <RiLock2Fill size={80} />
+                                            <div className='locked-message d-flex flex-wrap'>
+                                                Master {(i + 1) - unlockCount} more {(i + 1) - unlockCount > 1 ? 'skills' : 'skill'} to unlock {reward.CharacterName}.
+                                            </div>
+                                                <div id={reward.CharacterName + '-Unlock'}>
+                                                    <img src={reward.Thumbnail} />
+                                                </div>
+                                            </div>
+                                        }
+                                    </>
+                                );
+                            })}
+                        </div>
+                    </SimpleBar>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+
 
     /*
 
@@ -141,109 +207,6 @@ export default function RewardsPage(props) {
         />
     );
     */
-    function getSkillProgress(SkillName) {
-        let total = 0;
-        for (let i = 0; i < progress.length; i++) {
-            if (progress[i].SkillName === SkillName) {
-                total += progress[i].LevelsCompleted;
-            }
-        }
-        return total;
-    }
-
-    const GetProgress = () => {
-        if(user !== false) { // If using a logged in account, get progress from DB
-            Axios.post(GetTotalProgressURL, {
-                UserName: user.attributes.sub,
-                NickName: currentPlayer.player.NickName
-            }).then((response) => {
-                setProgress(response.data);
-            }).catch((error) => {
-                setErrorMessage(error);
-            });
-        }
-        else if(user === false) { // If not using an account and not logged in, get progress from local storage
-            let localPlayer = getLocalPlayer(currentPlayer.player.NickName);
-            let localPlayerProgress = localPlayer.Progress;
-            let localProgress = [];
-
-            for(let skillKey in localPlayerProgress) {
-                if(localPlayerProgress.hasOwnProperty(skillKey)) {
-                    for(let gameKey in localPlayerProgress[skillKey]) {
-                        let localLevelsCompleted = parseInt(localPlayerProgress[skillKey][gameKey]);
-                        localProgress.push({ 'SkillName': skillKey, 'LevelsCompleted': localLevelsCompleted });
-                    }
-                }
-            }
-            setProgress(localProgress);
-        }
-    }
-
-    useEffect(() => {
-        if(progress.length !== 0) {
-            let count = 0;
-            Skills.map((skill) => {
-                if(getSkillProgress(skill.name) >= skill.numLevels) {
-                    count++;
-                }
-            });
-            setUnlockCount(count);
-        }
-    }, [progress]);
-
-    useEffect(() => {
-        GetProgress();
-    }, []);
-
-    return(
-        <div className="App">
-        <Link to='../' id='Home-Nav-Button'>
-            <TiHome size={100} />
-        </Link>
-            <div id="Rewards-Page-Container" className="container">
-                <div className="container">
-                    <div className="row justify-content-center mt-3">
-                        <h1 id="Rewards-Title">Rewards</h1>
-                    </div>
-                </div>
-                <div id="Rewards-Content-Container" className="container-fluid mb-3">
-                    <SimpleBar style={{ height: '60vh' }} autoHide={false}>
-                        <div className="d-flex flex-wrap justify-content-around mt-4 rewards-content-flex">
-                            {Rewards.map((reward, i) => {
-                                return(
-                                    <>
-                                        {unlockCount > i ?
-                                            <div key={'Reward-'+i} className={`d-inline-flex reward-image mb-3 unlocked-content`}>
-                                                <div id={reward.CharacterName + '-Unlock'}>
-                                                        <a href={reward.Unlock} download>
-                                                            <button className='btn btn-secondary'>
-                                                                <div className='d-flex justify-content-center'>Download</div>
-                                                            </button>
-                                                        </a>
-                                                        <img src={reward.Thumbnail} />
-                                                </div>
-                                            </div>
-                                        :
-                                            <div key={'Reward-'+i} className={`d-inline-flex reward-image mb-3 locked-content`}>
-                                            <RiLock2Fill size={80} />
-                                            <div className='locked-message d-flex flex-wrap'>
-                                                Master {(i + 1) - unlockCount} more {(i + 1) - unlockCount > 1 ? 'skills' : 'skill'} to unlock {reward.CharacterName}.
-                                            </div>
-                                                <div id={reward.CharacterName + '-Unlock'}>
-                                                    <img src={reward.Thumbnail} />
-                                                </div>
-                                            </div>
-                                        }
-                                    </>
-                                );
-                            })}
-                        </div>
-                    </SimpleBar>
-                </div>
-            </div>
-        </div>
-    )
-}
 
 /*
 {draw === false ?

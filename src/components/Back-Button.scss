@@ -4,11 +4,19 @@
     position: absolute;
     top: 1%;
     left: 1%;
-    &:hover {
-        cursor: pointer;
-    }
     #Back {
         fill: $pastelYellow;
         color: $maastrichtBlue;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+            cursor: pointer;
+            transform: scale(1.05);
+            border-radius: 100%;
+            border-style: solid;
+            border-color: $maastrichtBlue;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.5),
+                      10px 10px 15px rgba(0,0,0,0.5),
+                      -1px -1px 30px rgba(0,0,0,0.2);
+        }
     }
 }

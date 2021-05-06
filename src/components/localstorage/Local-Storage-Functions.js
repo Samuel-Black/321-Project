@@ -1,6 +1,11 @@
 const LocalIdentifier = '34CUH8sLCXUZTA79X748'; // random string is appended to created player nicknames to ensure only our local storage is used
 
 export function getLocalPlayer(nickname) {
+    // If player does not exist, assume they use an authenticated account and initialize them solely for reward tracking functionality.
+    const localPlayer = JSON.parse(localStorage.getItem(nickname + '-' + LocalIdentifier)); 
+    if(localPlayer === null) {
+        createLocalPlayer(null, null, nickname);
+    }
     return JSON.parse(localStorage.getItem(nickname + '-' + LocalIdentifier));
 }
 
@@ -9,7 +14,6 @@ export function createLocalPlayer(localProfileImage, localBirthDay, nickname) { 
     var blankData = {
         'ProfileImage': localProfileImage,
         'Birthday': localBirthDay,
-        'Character-Unlock-Progress': 3,
         'Progress': {
             'Balance': {
                 'Balance-Eyes': 0,
@@ -61,7 +65,9 @@ export function setLocalPlayerList(setPlayerList) { // used in home page to popu
             var temp = JSON.parse(localStorage.getItem(localStorage.key(i)))
             if (temp.ProfileImage > 7 || temp.ProfileImage < 0) // If profile image is not in the defined range set it to 0
                 temp.ProfileImage = 0;
-            localPlayers.push({ 'NickName': key[0], 'ProfilePicture': temp.ProfileImage });
+            if(temp.ProfileImage != null || temp.Birthday != null) { // If either are null, do not load
+                localPlayers.push({ 'NickName': key[0], 'ProfilePicture': temp.ProfileImage });
+            }
         }
     }
     setPlayerList(localPlayers);
@@ -87,15 +93,11 @@ export function updateLocalProgress(nickname, difficulty, SkillName, GameName) {
 export function setSkillCompleted(nickname, SkillName) { // used to update progress of a local player when a level is completed
     var localPlayer = JSON.parse(localStorage.getItem(nickname + '-' + LocalIdentifier));
 
-    if(typeof localPlayer['Character-Unlock-Progress'] === 'undefined') { // If Character-Unlock-Progress does not exist initialize it
-        localPlayer['Character-Unlock-Progress'] = 3;
-    }
     if(typeof localPlayer['Completed'] === 'undefined') { // If Completed does not exist initialize it
         localPlayer['Completed'] = {};
     }
     if(typeof localPlayer['Completed'][SkillName] === 'undefined') { // If SkillName does not exist e.g. 'Kick', initialize it and set completed to true
-        localPlayer['Progress'][SkillName] = true;
-        localPlayer['Character-Unlock-Progress'] += 1;
+        localPlayer['Completed'][SkillName] = true;
         localStorage.setItem(nickname + '-' + LocalIdentifier, JSON.stringify(localPlayer));
     }
 }

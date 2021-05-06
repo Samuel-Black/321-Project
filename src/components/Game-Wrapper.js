@@ -73,7 +73,7 @@ export default function GameWrapper(props) {
             if(levelCompleted === 'True') { // If level was completed set it back to false for next level and increment the difficulty
                 if(user === false) { // If no user is logged in, store progress in local storage
                     updateLocalProgress(currentPlayer.player.NickName, difficulty, props.SkillName, props.GameName);
-                    console.log(props)
+                    console.log(props);
                 }
                 setDifficulty(difficulty + 1);
                 setLevelCompleted('False');

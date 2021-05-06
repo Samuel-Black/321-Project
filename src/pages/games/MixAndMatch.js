@@ -112,7 +112,7 @@ export default function MixAndMatch(props) {
         {difficulty <= levels &&
         <>
           {difficulty === 1 &&
-            <div className="container-fluid">
+            <div id='Card-Game' className="container-fluid">
               <div className="row justify-content-center">
                 <SimpleBar style={{ width: '70vw' }} autoHide={false}>
                   <div className="container-fluid">

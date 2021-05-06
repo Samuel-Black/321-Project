@@ -15,8 +15,8 @@
 #Home-Title {
   h1 {
     @include tiny-phone-up {
-      font-size: 5rem;
-      -webkit-text-stroke-width: 3px;
+      font-size: 4.7rem;
+      -webkit-text-stroke-width: 2.8px;
     }
     @include phone-up {
       font-size: 6rem;
@@ -135,11 +135,36 @@
             -1px -1px 30px rgba(0,0,0,0.2);
   padding: 2rem 3rem;
   border-radius: 60px;
-  width: 7.5em;
+  @include tiny-phone-up {
+    width: 8em;
+    font-size: 2rem;
+  }
+  @include tablet-up {
+    width: 8em;
+    font-size: 3rem;
+  }
+  @include hd-up { 
+    width: 7.5em;
+  }
 }
 
 #Home-Page-Button-Flex {
   width: 80vw;
+}
+
+#Profile-Image-Menu-Container {
+  min-height: 170px;
+  .card {
+    min-height: 168px;
+  }
+  .active {
+    transition: all 200ms linear;
+    border-style: solid;
+    border-color: black;
+    border-width: 3px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5),
+            inset 5px 5px 8px rgba(0,0,0,0.5);
+  }
 }
 
 @keyframes bounce {

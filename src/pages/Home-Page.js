@@ -1,20 +1,21 @@
-import './Home-Page.scss'
+import './Home-Page.scss';
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { FaPlay } from 'react-icons/fa';
 import { GiLockedChest, GiOpenChest } from 'react-icons/gi';
-import Settings from '../components/Settings'
-import PlayerSignout from '../components/Player-Signout'
-import { useAuthPlayer, useAuthUser } from '../libs'
-import Axios from 'axios'
-import ProfileImageMenu from '../components/Profile-Image-Menu'
-import FormatBirthday from '../components/Birthday-Format'
-import CreatePlayerTemplate from '../components/Create-Player-Template'
-import { GetPlayersURL, CreatePlayerURL } from '../components/Request-URL'
-import { createLocalPlayer, setLocalPlayerList } from '../components/localstorage/Local-Storage-Functions'
+import Settings from '../components/Settings';
+import PlayerSignout from '../components/Player-Signout';
+import { useAuthPlayer, useAuthUser } from '../libs';
+import Axios from 'axios';
+import ProfileImageMenu from '../components/Profile-Image-Menu';
+import FormatBirthday from '../components/Birthday-Format';
+import CreatePlayerTemplate from '../components/Create-Player-Template';
+import { GetPlayersURL, CreatePlayerURL } from '../components/Request-URL';
+import { createLocalPlayer, setLocalPlayerList } from '../components/localstorage/Local-Storage-Functions';
 import SimpleBar from 'simplebar-react';
 import { TiUserAdd } from 'react-icons/ti';
-import { ProfilePictureImages } from '../components/images/ProfilePictureImages'
+import { ProfilePictureImages } from '../components/images/ProfilePictureImages';
+import { TiHome } from 'react-icons/ti';
 
 export default function HomePage() {
 
@@ -28,9 +29,12 @@ export default function HomePage() {
     const [birthday, setBirthday] = useState('');
     const [errorMessage, setErrorMessage] = useState(null);
     const [profileImage, setProfileImage] = useState(0);
-    const [playButtonHover, setPlayButtonHover] = useState(false);
     const [rewardsButtonHover, setRewardsButtonHover] = useState(false);
-    //const [activeProfileImage, setActiveProfileImage] = useState(0)
+    const [activeProfileImage, setActiveProfileImage] = useState(0);
+
+    useEffect(() => {
+        setActiveProfileImage(profileImage);
+    }, [profileImage])
 
     const GetPlayers = () => {
         if(user !== false) { // If using a logged in account, query DB for players
@@ -39,11 +43,11 @@ export default function HomePage() {
             }).then((response) => {
                 setPlayerList(response.data);
             }).catch((error) => {
-                setErrorMessage(error)
+                setErrorMessage(error);
             })
         }
         if (user === false) { // If not using an account and not logged in, use local storage if exists
-            setLocalPlayerList(setPlayerList)
+            setLocalPlayerList(setPlayerList);
         }
     }
 
@@ -71,14 +75,14 @@ export default function HomePage() {
 
     useEffect(() => { // on page load display available players
         GetPlayers();
-    }, [])
+    }, []);
     
     useEffect(() => { // if a new player is created populate the new list then display
         if(newPlayerCreated === true) {
             GetPlayers();
             hideCreatePlayer();
         }
-    }, [newPlayerCreated])
+    }, [newPlayerCreated]);
 
     function showCreatePlayer() {
         setCreateNewPlayer(true);
@@ -87,6 +91,16 @@ export default function HomePage() {
     function hideCreatePlayer() {
         setCreateNewPlayer(false);
     }
+
+    function validateNickName() {
+        for(const player of playerList) {
+            if(player.NickName === nickname) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     return(
         <div className="App">
@@ -97,8 +111,8 @@ export default function HomePage() {
                         <div className="container-fluid">
                             <div className="container mb-5">
                                 <div className="row justify-content-center">
-                                        <h2>Who's playing?</h2>
-                                    </div>
+                                    <h2>Who's playing?</h2>
+                                </div>
                             </div>
                             <div className="container-fluid mb-5">      
                                 <div className="row justify-content-center">
@@ -131,22 +145,27 @@ export default function HomePage() {
                         </div>
                     :
                         <div className="container">
+                            <a onClick={() => setCreateNewPlayer(false)} id='Home-Nav-Button'>
+                                <TiHome size={100} />
+                            </a>
                             <div className="row justify-content-center">
                                 <h2>Create New Player</h2>
                             </div>
                             <div className="row justify-content-center">
                                 <div id="Login-Content" className="d-inline-flex flex-column align-items-center justify-content-center">
-                                <ProfileImageMenu ProfileImageState={setProfileImage} characterUnlockProgress={3} />
+                                <ProfileImageMenu ProfileImageState={setProfileImage} ActiveProfileImage={activeProfileImage} />
                                 
                                 {user !== false ? 
                                         <form className="mt-3">
-                                            {CreatePlayerTemplate(setNickname, setBirthday, birthday, createPlayer, errorMessage)}
+                                            {CreatePlayerTemplate(setNickname, validateNickName, setBirthday, birthday, createPlayer)}
                                         </form>
                                     :
                                         <>
-                                            {CreatePlayerTemplate(setNickname, setBirthday, birthday, createPlayer, errorMessage)}
+                                            {CreatePlayerTemplate(setNickname, validateNickName, setBirthday, birthday, createPlayer)}
                                         </>
                                 }
+                                
+                                    {errorMessage ? <p>{errorMessage}</p> : null}
                                 </div>
                             </div>
                         </div>

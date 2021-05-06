@@ -1,4 +1,3 @@
-import React from 'react';
 import Popup from 'reactjs-popup';
 import './Game-Popup.scss';
 import { BsStarFill, BsStar } from 'react-icons/bs';
@@ -7,29 +6,28 @@ import { FaPlay } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import SimpleBar from 'simplebar-react';
 
-// return number of stars and style them according to progress
+
 function returnStars(props) {
     let stars = [];
     for(let i = 0; i < props.numLevels; i++) {
         if(i + 1 < props.levelsCleared) {
-            stars[i] = <BsStarFill />;
+            stars[i] = <BsStarFill />
         }
         else if(i + 1 === props.levelsCleared) {
-            stars[i] = <BsStarFill activestar=" activestar" />;
+            stars[i] = <BsStarFill activestar=" activestar" />
         }
         else {
-            stars[i] = <BsStar />;
+            stars[i] = <BsStar />
         }
     }
     return stars;
 }
 
 export default function GamePopup(props) {
-
-    const navigate = useNavigate();
     
-    // return a string with the first letter converted to lower case
-    function returnMinusFirstCap() { 
+    const navigate = useNavigate();
+
+    function returnMinusFirstCap() { // return a string with the first letter converted to lower case
         var firstLetter = props.gameDescription.substr(0, 1);
         let lowerCased = firstLetter.toLowerCase() + props.gameDescription.substr(1);
         return lowerCased;
@@ -56,16 +54,14 @@ export default function GamePopup(props) {
                         </div>
 
                         {props.levelsCleared > props.numLevels ?
-                            <>
-                                <div className="d-flex justify-content-center mt-3 mb-2">
-                                    <button onClick={() => { 
-                                            navigate(-1);
-                                        }} 
-                                    className="button btn-secondary">
-                                        Home <TiHome />
-                                    </button>
-                                </div>
-                            </>
+                            <div className="d-flex justify-content-center mt-3 mb-2">
+                                <button onClick={() => { 
+                                        navigate(-1);
+                                    }} 
+                                className="button btn-secondary">
+                                    Home <TiHome />
+                                </button>
+                            </div>
                         :
                             <>
                                 <SimpleBar className="mt-1 mb-3" style={{ maxHeight: '25vh' }} autoHide={false}>

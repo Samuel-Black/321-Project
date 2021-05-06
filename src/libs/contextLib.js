@@ -1,12 +1,23 @@
 import React, { useContext, createContext, useReducer, useState, useEffect } from "react";
 import { initialState, AuthReducer } from './Reducer';
-import { Auth } from 'aws-amplify'
-import { Grid } from 'react-loading-icons'
+import { Auth } from 'aws-amplify';
+import { Grid } from 'react-loading-icons';
 
 const AuthUserContext = createContext();
 const AuthPlayerContext = createContext();
 const AuthStateContext = createContext();
 const AuthDispatchContext = createContext();
+const ProgressContext = createContext();
+
+
+function useProgress() {
+    const context = useContext(ProgressContext);
+    if (context === undefined) {
+        throw new Error("useAuthState must be used within a AuthProvider");
+    }
+   
+    return context;
+}
 
 function useAuthUser() {
     const context = useContext(AuthUserContext);
@@ -45,45 +56,48 @@ function useAuthDispatch() {
 }
 
 async function getUserData() {
-    return await Auth.currentAuthenticatedUser()
+    return await Auth.currentAuthenticatedUser();
 }
 
 const AuthProvider = ({ children }) => {
     const [user, dispatch] = useReducer(AuthReducer, initialState);
-    const [userData, setUserData] = useState(false)
-    const [player, setPlayer] = useState(false)
-    const [loading, setLoading] = useState(true)
+    const [userData, setUserData] = useState(false);
+    const [player, setPlayer] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [progress, setProgress] = useState([]);
 
-    useEffect( () => {
+    useEffect(() => {
         getUserData().then((result) => {
-            setUserData(result)
-            setLoading(false)
+            setUserData(result);
+            setLoading(false);
         }).catch((error) => {
-            setLoading(false)
+            setLoading(false);
         })
      }, []);
 
      useEffect( () => { // If userData value changes, set the player to false
-        setPlayer(false)
+        setPlayer(false);
      }, [userData]);
 
     return (
         <>
-        {loading ?
-            <div><Grid /></div> 
+            {loading ?
+                <div><Grid /></div> 
             :
-            <AuthUserContext.Provider value={userData}>
-                <AuthPlayerContext.Provider value={{player, setPlayer}}>
-                    <AuthStateContext.Provider value={user}>
-                        <AuthDispatchContext.Provider value={dispatch}>
-                            {children}
-                        </AuthDispatchContext.Provider>
-                    </AuthStateContext.Provider>
-                </AuthPlayerContext.Provider>
-            </AuthUserContext.Provider>
-        }
+                <AuthUserContext.Provider value={userData}>
+                    <AuthPlayerContext.Provider value={{player, setPlayer}}>
+                        <ProgressContext.Provider value={{progress, setProgress}}>
+                            <AuthStateContext.Provider value={user}>
+                                <AuthDispatchContext.Provider value={dispatch}>
+                                    {children}
+                                </AuthDispatchContext.Provider>
+                            </AuthStateContext.Provider>
+                        </ProgressContext.Provider>
+                    </AuthPlayerContext.Provider>
+                </AuthUserContext.Provider>
+            }
         </>
     );
 };
 
-export { useAuthUser, useAuthPlayer, useAuthState, useAuthDispatch, AuthProvider }
+export { useAuthUser, useAuthPlayer, useAuthState, useAuthDispatch, AuthProvider, useProgress }

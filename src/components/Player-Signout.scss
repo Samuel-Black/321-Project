@@ -1,8 +1,28 @@
+@import '../components/BreakPoint.scss';
+
 #Player-Logout-Button {
     position: absolute;
     top: 1%;
     right: 1%;
     svg {
+        padding-right: 10px;
+        border-style: solid;
+        border-width: 4px;
+        border-color: white;
+        border-radius: 35px;
         fill: white;
+        transition: all 0.25s ease-in-out;
+        @include tiny-phone-up {
+            height: 60px;
+            width: 60px;
+        }
+        @include tablet-up {
+            height: 100px;
+            width: 100px;
+        }
+        &:hover {
+            border-radius: 25px;
+            transform: scale(1.05);
+        }
     }
 }

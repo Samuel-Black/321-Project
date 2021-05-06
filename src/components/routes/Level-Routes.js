@@ -1,6 +1,6 @@
 import { Routes } from 'react-router-dom';
 import LevelNavIndex from '../../pages/LevelNavigationIndex';
-import { Skills, Levels } from '../../components/Level-List'
+import { Skills, Levels } from '../../components/Level-List';
 import SkillNavigationPage from '../../pages/SkillNavigationPage';
 import GameWrapper from '../Game-Wrapper';
 import CardsGame from '../../pages/games/CardsGame';
@@ -8,8 +8,8 @@ import CardsGameZoom from '../../pages/games/CardGameZoom';
 import HopArms from '../../pages/games/Hop-Arms';
 import MixAndMatch from '../../pages/games/MixAndMatch';
 import ThrowEyes from '../../pages/games/Throw-Eyes';
-import BackButton from '../../components/Back-Button'
-import AppRoute from './AuthenticatedRoute'
+import BackButton from '../../components/Back-Button';
+import AppRoute from './AuthenticatedRoute';
 
 export default function LevelRoutes() {
 
@@ -27,7 +27,7 @@ export default function LevelRoutes() {
             return ThrowEyes;
         }
         if(gameType === 'HopArm') {
-            return HopArms
+            return HopArms;
         }
         return null;
     }

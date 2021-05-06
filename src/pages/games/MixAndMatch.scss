@@ -40,6 +40,7 @@
   left: 50vw;
   animation: horizontal-drag 1.3s infinite;
   animation-direction: alternate;
+  pointer-events: none;
 }
 
 .vertical-drag-hand {
@@ -49,6 +50,7 @@
   left: 52vw;
   animation: vertical-drag 1.3s infinite;
   animation-direction: alternate;
+  pointer-events: none;
 }
 
 .vertical-match {

@@ -15,6 +15,7 @@ import { createLocalPlayer, setLocalPlayerList } from '../components/localstorag
 import SimpleBar from 'simplebar-react';
 import { TiUserAdd } from 'react-icons/ti';
 import { ProfilePictureImages } from '../components/images/ProfilePictureImages';
+import { TiHome } from 'react-icons/ti';
 
 export default function HomePage() {
 
@@ -29,7 +30,11 @@ export default function HomePage() {
     const [errorMessage, setErrorMessage] = useState(null);
     const [profileImage, setProfileImage] = useState(0);
     const [rewardsButtonHover, setRewardsButtonHover] = useState(false);
-    //const [activeProfileImage, setActiveProfileImage] = useState(0)
+    const [activeProfileImage, setActiveProfileImage] = useState(0);
+
+    useEffect(() => {
+        setActiveProfileImage(profileImage);
+    }, [profileImage])
 
     const GetPlayers = () => {
         if(user !== false) { // If using a logged in account, query DB for players
@@ -38,11 +43,11 @@ export default function HomePage() {
             }).then((response) => {
                 setPlayerList(response.data);
             }).catch((error) => {
-                setErrorMessage(error)
+                setErrorMessage(error);
             })
         }
         if (user === false) { // If not using an account and not logged in, use local storage if exists
-            setLocalPlayerList(setPlayerList)
+            setLocalPlayerList(setPlayerList);
         }
     }
 
@@ -70,14 +75,14 @@ export default function HomePage() {
 
     useEffect(() => { // on page load display available players
         GetPlayers();
-    }, [])
+    }, []);
     
     useEffect(() => { // if a new player is created populate the new list then display
         if(newPlayerCreated === true) {
             GetPlayers();
             hideCreatePlayer();
         }
-    }, [newPlayerCreated])
+    }, [newPlayerCreated]);
 
     function showCreatePlayer() {
         setCreateNewPlayer(true);
@@ -86,6 +91,16 @@ export default function HomePage() {
     function hideCreatePlayer() {
         setCreateNewPlayer(false);
     }
+
+    function validateNickName() {
+        for(const player of playerList) {
+            if(player.NickName === nickname) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     return(
         <div className="App">
@@ -130,22 +145,27 @@ export default function HomePage() {
                         </div>
                     :
                         <div className="container">
+                            <a onClick={() => setCreateNewPlayer(false)} id='Home-Nav-Button'>
+                                <TiHome size={100} />
+                            </a>
                             <div className="row justify-content-center">
                                 <h2>Create New Player</h2>
                             </div>
                             <div className="row justify-content-center">
                                 <div id="Login-Content" className="d-inline-flex flex-column align-items-center justify-content-center">
-                                <ProfileImageMenu ProfileImageState={setProfileImage} characterUnlockProgress={3} />
+                                <ProfileImageMenu ProfileImageState={setProfileImage} ActiveProfileImage={activeProfileImage} />
                                 
                                 {user !== false ? 
                                         <form className="mt-3">
-                                            {CreatePlayerTemplate(setNickname, setBirthday, birthday, createPlayer, errorMessage)}
+                                            {CreatePlayerTemplate(setNickname, validateNickName, setBirthday, birthday, createPlayer)}
                                         </form>
                                     :
                                         <>
-                                            {CreatePlayerTemplate(setNickname, setBirthday, birthday, createPlayer, errorMessage)}
+                                            {CreatePlayerTemplate(setNickname, validateNickName, setBirthday, birthday, createPlayer)}
                                         </>
                                 }
+                                
+                                    {errorMessage ? <p>{errorMessage}</p> : null}
                                 </div>
                             </div>
                         </div>

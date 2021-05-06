@@ -8,7 +8,7 @@ export default function PlayerSignout() {
 
     return(
         <div id="Player-Logout-Button">
-            <a onClick={() => currentPlayer.setPlayer(false)}><BiLogOut size={85} /></a>
+            <a onClick={() => currentPlayer.setPlayer(false)}><BiLogOut size={100} /></a>
         </div>
     )
 

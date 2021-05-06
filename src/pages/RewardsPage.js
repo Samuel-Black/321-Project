@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthPlayer, useAuthUser, useRewardUnlocked } from '../libs';
+import { Link } from "react-router-dom";
 import Axios from 'axios';
 import { getLocalPlayer } from '../components/localstorage/Local-Storage-Functions';
 import { GetTotalProgressURL } from '../components/Request-URL';
@@ -7,15 +8,16 @@ import { Skills } from '../components/Level-List';
 import SimpleBar from 'simplebar-react';
 import { RiLock2Fill } from 'react-icons/ri';
 import { Rewards } from '../components/Rewards-List';
-import { ReactPainter } from 'react-painter';
-import CanvasDraw from "react-canvas-draw";
-import { SizeMe } from 'react-sizeme';
-import { FaPaintBrush, FaEraser } from 'react-icons/fa';
-import { CirclePicker } from 'react-color';
-import { Dropdown } from 'react-bootstrap';
-import './RewardsPage.scss';
+import { TiHome } from 'react-icons/ti';
+//import { ReactPainter } from 'react-painter';
+//import CanvasDraw from "react-canvas-draw";
+//import { SizeMe } from 'react-sizeme';
+//import { FaPaintBrush, FaEraser } from 'react-icons/fa';
+//import { CirclePicker } from 'react-color';
+//import { Dropdown } from 'react-bootstrap';
 import 'simplebar/dist/simplebar.min.css';
 import '../components/Content-Lock.scss';
+import './RewardsPage.scss';
 
 export default function RewardsPage(props) {
 
@@ -25,8 +27,6 @@ export default function RewardsPage(props) {
     const [unlockCount, setUnlockCount] = useState(0);
     const [progress, setProgress] = useState(0);
     const [errorMessage, setErrorMessage] = useState(null);
-    
-    
 
     /*
 
@@ -197,6 +197,9 @@ export default function RewardsPage(props) {
 
     return(
         <div className="App">
+        <Link to='../' id='Home-Nav-Button'>
+            <TiHome size={100} />
+        </Link>
             <div id="Rewards-Page-Container" className="container">
                 <div className="container">
                     <div className="row justify-content-center mt-3">

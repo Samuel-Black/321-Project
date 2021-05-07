@@ -2,7 +2,7 @@ import React from 'react';
 import Popup from 'reactjs-popup';
 import './Game-Popup.scss';
 import { BsStarFill, BsStar } from 'react-icons/bs';
-import { TiHome, TiArrowBack } from 'react-icons/ti';
+import { TiHome } from 'react-icons/ti';
 import { FaPlay } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import SimpleBar from 'simplebar-react';
@@ -57,6 +57,11 @@ export default function GamePopup(props) {
 
                         {props.levelsCleared > props.numLevels ?
                             <>
+                                <SimpleBar className="mt-1 mb-3" style={{ maxHeight: '25vh' }} autoHide={false}>
+                                    <div id="Popup-Comment" className="d-flex justify-content-center">
+                                        Now you're an expert on{props.gameSuccess}
+                                    </div>
+                                </SimpleBar>
                                 <div className="d-flex justify-content-center mt-3 mb-2">
                                     <button onClick={() => { 
                                             navigate(-1);

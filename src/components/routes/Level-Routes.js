@@ -61,6 +61,7 @@ export default function LevelRoutes() {
                         gameType={level.gameType} 
                         gameDescription={level.gameDescription} 
                         gameInstructions={level.gameInstructions} 
+                        gameSuccess={level.gameSuccess} 
                         isPrivate={true} requiresPlayer={true} 
                         backButton={<BackButton />} 
                         shuffledImages={level.images} 

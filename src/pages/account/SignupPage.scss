@@ -1,10 +1,5 @@
 @import '../../components/Colours.scss';
-
-#Signup-Background {
-    min-height: 100vh;
-    min-width: 100vw;
-    background-color: $vividTangelo;
-}
+@import '../../components/BreakPoint.scss';
 
 .password-strength-bar {
     p {
@@ -13,21 +8,96 @@
 }
 
 
-#Signup-Content {
-    form {
-        min-width: 450px;
+//
+
+#Login-Title {
+    @include tiny-phone-up {
+        margin-bottom: 1vh;
     }
+    @include phone-up {
+        margin-bottom: 3vh;
+    }
+    @include large-tablet-up {
+        margin-bottom: 6vh;
+    }
+    h1 {
+        @include tiny-phone-up {
+            font-size: 4.5rem;
+            -webkit-text-stroke-width: 2.4px;
+            -webkit-text-stroke-color: black;
+        }
+        @include phone-up {
+            font-size: 6rem;
+            -webkit-text-stroke-width: 2.8px;
+            -webkit-text-stroke-color: black;
+        }
+        @include tablet-up {
+            font-size: 9rem;
+            -webkit-text-stroke-width: 3.5px;
+            -webkit-text-stroke-color: black;
+        }
+    }
+}
+
+h2 {
+    @include tiny-phone-up {
+        font-size: 2rem;
+    }
+    @include phone-up {
+        font-size: 2.5rem;
+    }
+    @include tablet-up {
+        font-size: 3rem;
+    }
+}
+
+#Login-Button {
+    @include tiny-phone-up {
+        font-size: 1.5rem;
+    }
+    @include phone-up {
+        font-size: 1.5rem;
+    }
+    @include tablet-up {
+        font-size: 2rem;
+    }
+}
+
+#Login-Content {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    label {
-        font-size: 1.3rem;
+
+    label {    
+        @include tiny-phone-up {
+            font-size: 1.05rem;
+        }
+        @include tablet-up {
+            font-size: 2rem;
+        }
     }
     form {
-        width: 380px;
+        @include tiny-phone-up {
+            min-width: 20vw;
+            max-width: 70vw;
+            .form-group {
+                min-width: 100%;
+                input {
+                    max-width: 100%;
+                }
+            }
+        }
+        @include phone-up {
+            min-width: 20vw;
+            max-width: 70vw;
+            .form-group {
+                min-width: 100%;
+                input {
+                    min-width: 100%;
+                }
+            }
+        }
     }
     a {
         font-weight: bold;
     }
-    input {
-        width: 450px;
-    }
 }
+

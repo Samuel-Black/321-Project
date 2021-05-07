@@ -1,3 +1,5 @@
+@import './BreakPoint.scss';
+
 #Profile-Image-Menu-Container {
     
     .card {
@@ -13,10 +15,25 @@
             right: 37%;
             top: 25%;
         }
-        min-width: 18rem; 
+        @include tiny-phone-up {
+            min-width: 10rem; 
+        }
+        @include hd-up { 
+            min-width: 18rem; 
+        }
         .card-img-top {
-            min-height: 10rem;
-            max-height: 10rem;
+            @include tiny-phone-up {
+                min-height: 6rem;
+                max-height: 6rem;
+            }
+            @include phone-up {
+                font-size: 6rem;
+                -webkit-text-stroke-width: 3px;
+            }
+            @include hd-up { 
+                min-height: 10rem;
+                max-height: 10rem;
+            }
         }
         img {
           height: 100%;

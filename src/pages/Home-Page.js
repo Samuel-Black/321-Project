@@ -81,6 +81,7 @@ export default function HomePage() {
         if(newPlayerCreated === true) {
             GetPlayers();
             hideCreatePlayer();
+            setNewPlayerCreated(false);
         }
     }, [newPlayerCreated]);
 
@@ -93,9 +94,19 @@ export default function HomePage() {
     }
 
     function validateNickName() {
-        for(const player of playerList) {
-            if(player.NickName === nickname) {
-                return false;
+        if(typeof nickname == null) {
+            return 'Please enter a Nickname';
+        }
+        else {
+            if(nickname.length === 0) {
+                return 'Please enter a Nickname';
+            }
+            else {
+                for(const player of playerList) {
+                    if(player.NickName === nickname) {
+                        return 'That Nickname is already in use!';
+                    }
+                }
             }
         }
         return true;
@@ -144,7 +155,7 @@ export default function HomePage() {
                             </div>
                         </div>
                     :
-                        <div className="container">
+                        <div id="Create-New-Player-Container" className="container">
                             <a onClick={() => setCreateNewPlayer(false)} id='Home-Nav-Button'>
                                 <TiHome size={100} />
                             </a>

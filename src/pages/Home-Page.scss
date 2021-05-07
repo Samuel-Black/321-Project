@@ -6,10 +6,21 @@
   min-width: 100vw;
   display: flex;
   align-items: center;
-  background-image: url('../assets/backgrounds/Space-Level-Background.svg');
+  background-image: url('../assets/backgrounds/Space-Level-Background.png');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
+}
+
+#Create-Player-Button {
+  font-family: 'Rabbit-on-the-Moon';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 5em;
+}
+
+.button-disabled {
+  pointer-events: none;
 }
 
 #Home-Title {
@@ -97,6 +108,36 @@
   color: black;
 }
 
+#Create-New-Player-Container {
+  h2 {
+    @include tiny-phone-up {
+      font-size: 2.3rem;
+    }
+    @include phone-up {
+      font-size: 3rem;
+    }
+  }
+  #Create-Player-Button {
+    @include tiny-phone-up {
+      font-size: 2.3rem;
+      height: 2.2em;
+    }
+    @include tablet-up {
+      font-size: 3rem;
+      width: 5em;
+    }
+  }
+}
+
+.react-date-picker {
+  input {
+    color: white;
+  }
+  svg {
+    stroke: white;
+  }
+}
+
 #Rewards-Button {
   background-color: $cinnabar;
   border-color: $pansyPurple;
@@ -153,9 +194,18 @@
 }
 
 #Profile-Image-Menu-Container {
-  min-height: 170px;
-  .card {
-    min-height: 168px;
+  
+  @include tiny-phone-up {
+  }
+  @include tablet-up {
+    width: 8em;
+    font-size: 3rem;
+  }
+  @include hd-up { 
+    min-height: 170px;
+    .card {
+      min-height: 168px;
+    }
   }
   .active {
     transition: all 200ms linear;

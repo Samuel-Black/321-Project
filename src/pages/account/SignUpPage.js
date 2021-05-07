@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react'
-import { signupUser, confirmUserSignUp, useAuthState, useAuthDispatch } from '../../libs'
+import React, { useState, useEffect } from 'react';
+import { signupUser, confirmUserSignUp, useAuthState, useAuthDispatch } from '../../libs';
 import { Link } from 'react-router-dom';
-import { Oval } from 'react-loading-icons'
-import { useNavigate } from 'react-router-dom'
+import { Oval } from 'react-loading-icons';
+import { useNavigate } from 'react-router-dom';
 import ReactCodeInput from 'react-verification-code-input';
 import PasswordStrengthBar from 'react-password-strength-bar';
-import './SignupPage.scss'
+import './SignupPage.scss';
 const passwordValidator = require('password-validator');
-const isEmail = require('sane-email-validation')
+const isEmail = require('sane-email-validation');
 
 export default function SignupPage() {
     
-    const schema = new passwordValidator()
+    const schema = new passwordValidator();
     const navigate = useNavigate();
 
     schema
@@ -23,38 +23,38 @@ export default function SignupPage() {
     .has().not().spaces()                           // Should not have spaces
     .is().not().oneOf(['Passw0rd', 'Password123', 'Spacebar123', 'Qwerty123', 'Asdf123']);
 
-    const [email, setEmail] = useState('')
-    const [emailFocused, setEmailFocused] = useState(false)
-    const [password, setPassword] = useState('')
-    const [passwordFocused, setPasswordFocused] = useState(false)
-    const [confirmPassword, setConfirmPassword] = useState('')
-    const [confirmPasswordFocused, setConfirmPasswordFocused] = useState(false)
-    const [authenticationCode, setAuthenticationCode] = useState('')
-    const [step, setStep] = useState(0)
-    const [emailError, setEmailError] = useState(null)
-    const [passwordError, setPasswordError] = useState(null)
-    const [confirmPasswordError, setConfirmPasswordError] = useState(null)
-    const [autoCompleteSignUp, setAutoCompleteSignUp] = useState(false)
+    const [email, setEmail] = useState('');
+    const [emailFocused, setEmailFocused] = useState(false);
+    const [password, setPassword] = useState('');
+    const [passwordFocused, setPasswordFocused] = useState(false);
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [confirmPasswordFocused, setConfirmPasswordFocused] = useState(false);
+    const [authenticationCode, setAuthenticationCode] = useState('');
+    const [step, setStep] = useState(0);
+    const [emailError, setEmailError] = useState(null);
+    const [passwordError, setPasswordError] = useState(null);
+    const [confirmPasswordError, setConfirmPasswordError] = useState(null);
+    const [autoCompleteSignUp, setAutoCompleteSignUp] = useState(false);
 
     useEffect(() => {
         if (email.length > 0 && !emailFocused && !isEmail(email)) // If there is something in the email input field, and It's not focused, and the address Isn't valid, set error message
-            setEmailError(`${email} is not a valid email address.`)
+            setEmailError(`${email} is not a valid email address.`);
         else if (isEmail(email) || email.length === 0) 
-            setEmailError(null)
-    }, [emailFocused])
+            setEmailError(null);
+    }, [emailFocused]);
 
     useEffect(() => {
         if (!passwordFocused && !schema.validate(password) && password.length > 0) {
-            const errors = schema.validate(password, {list: true})
-            let errorMessageString = 'Password must '
+            const errors = schema.validate(password, {list: true});
+            let errorMessageString = 'Password must ';
             for (let i = 0; i < errors.length; i++) {
-                errorMessageString += `${PasswordErrorMessage(errors[i])}${(i === errors.length - 1) ? '.' : ', '}`
+                errorMessageString += `${PasswordErrorMessage(errors[i])}${(i === errors.length - 1) ? '.' : ', '}`;
             }
-            setPasswordError(errorMessageString)
+            setPasswordError(errorMessageString);
         }
         else if (schema.validate(password) || password.length === 0)
-            setPasswordError(null)
-    }, [passwordFocused])
+            setPasswordError(null);
+    }, [passwordFocused]);
 
     function PasswordErrorMessage(val) {
         switch(val) {
@@ -75,65 +75,65 @@ export default function SignupPage() {
 
     useEffect(() => {
         if (!confirmPasswordFocused && confirmPassword.length > 0 && password.length > 0 && password !== confirmPassword) {
-            setConfirmPasswordError('Passwords do not match.')
+            setConfirmPasswordError('Passwords do not match.');
         }
         else if (password == confirmPassword || confirmPassword.length === 0)
-            setConfirmPasswordError(null)
-    }, [confirmPasswordFocused])
+            setConfirmPasswordError(null);
+    }, [confirmPasswordFocused]);
 
     const dispatch = useAuthDispatch()
-    let { loading, errorMessage } = useAuthState()
+    let { loading, errorMessage } = useAuthState();
 
     useEffect(() => {
-        errorMessage = null
-    }, [])
+        errorMessage = null;
+    }, []);
 
     const handleSignUp = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         try {
-            await signupUser(dispatch, { email, password })
-            setStep(1)
+            await signupUser(dispatch, { email, password });
+            setStep(1);
         } catch (error) {
-            errorMessage = error
+            errorMessage = error;
         } 
     }
     
     const goBack = () => {
-        setStep(0)
+        setStep(0);
     }
     
     const confirmSignUp = async () => {
         try {
-            await confirmUserSignUp(dispatch, { email, authenticationCode })
-            navigate('../Login')
+            await confirmUserSignUp(dispatch, { email, authenticationCode });
+            navigate('../Login');
         } catch (error) {
-            errorMessage = error
+            errorMessage = error;
         }
     }
 
     useEffect(() => {
         if(authenticationCode.length === 6 && autoCompleteSignUp === true) {
-            confirmSignUp()
-            setAutoCompleteSignUp(false)
+            confirmSignUp();
+            setAutoCompleteSignUp(false);
         }
-    }, [autoCompleteSignUp])
+    }, [autoCompleteSignUp]);
 
     return (
         <div id="Signup-Background">
             <div className="container">
                 <div id="Title-Row" className="row">
                     <div className="container">
-                        <div id="Login-Title" class="row justify-content-md-center">
+                        <div id="Signup-Title" class="row justify-content-center">
                             <h1>JumpStart</h1>
                         </div>
                     </div>
                 </div>
                 <div id="Signup-Content-Row" className="row mt-4">
                     <div className="container">
-                        <div className="row justify-content-md-center">
+                        <div className="row justify-content-center">
                             <h2>{step === 0 ? 'Sign Up' : 'Confirm Sign Up'}</h2>
                         </div>
-                        <div className="row justify-content-md-center">
+                        <div className="row justify-content-center">
                             <div id="Signup-Content" className="d-inline-flex flex-column align-items-center justify-content-center">
                                 {step === 0 &&
                                     <>
@@ -173,7 +173,7 @@ export default function SignupPage() {
                                             </div>
                                             <div className="d-flex justify-content-end">{errorMessage ? <p>{errorMessage}</p> : null}</div>
                                             <div className="d-flex justify-content-end">
-                                                {loading === true && <Oval />}<button onClick={handleSignUp} disabled={loading}>Create Account</button>
+                                                {loading === true && <Oval />}<button id='Signup-Button' className='btn btn-secondary' onClick={handleSignUp} disabled={loading}>Create User</button>
                                             </div>
                                         </form>
                                     </>

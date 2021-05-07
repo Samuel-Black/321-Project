@@ -6,7 +6,7 @@ import SimpleBar from 'simplebar-react';
 import { RiLock2Fill } from 'react-icons/ri';
 import { Rewards } from '../components/Rewards-List';
 import { TiHome } from 'react-icons/ti';
-import { GetProgress, getSkillProgress } from '../components/Player-Progress-Functions'
+import { GetProgress, getSkillProgress } from '../components/Player-Progress-Functions';
 //import { ReactPainter } from 'react-painter';
 //import CanvasDraw from "react-canvas-draw";
 //import { SizeMe } from 'react-sizeme';

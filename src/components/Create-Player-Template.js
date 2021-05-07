@@ -2,6 +2,13 @@ import DatePicker from 'react-date-picker';
 
 export default function CreatePlayerTemplate(setNickname, validateNickName, setBirthday, birthday, createPlayer) {
 
+    function validateBirthday() {
+        if (birthday == null) {
+            return false;
+        }
+        return createPlayer();
+    }
+
     return (
         <>
             <div className="d-flex">
@@ -26,8 +33,9 @@ export default function CreatePlayerTemplate(setNickname, validateNickName, setB
                 </div>
             </div>
             <div>
-                <div><button id="Login-Button" onClick={createPlayer} disabled={!validateNickName()}>Create</button></div>
-                <div>{validateNickName() ? null : 'That nickname is already in use!'}</div>
+                <div><button id='Create-Player-Button' className={`btn btn-secondary ${validateNickName() !== true ? 'button-disabled' : ''}`} onClick={() => validateBirthday()} disabled={validateNickName() !== true}>Create</button></div>
+                <div>{validateNickName() !== true && validateNickName()}</div>
+                <div>{(birthday == null || birthday.length === 0) ? 'Please input your birthday!' : null}</div>
             </div>
         </>
     );

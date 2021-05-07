@@ -7,14 +7,24 @@
   }
 }
 
+#Confirm-Change-Password-Button {
+  font-size: 2rem;
+}
+
+
 .popup-content {
+  label {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  }
   text-align: center;
   #Settings-Title {
+    font-family: 'Rabbit-on-the-Moon';
     h3 {
       font-size: 4rem;
     }
   }
   .settingsContent {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     margin: 15px;
     font-size: 2rem;
     a {

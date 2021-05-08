@@ -83,6 +83,8 @@
     .locked-message {
         position: absolute;
         bottom: 5%;
+        color: white;
+        background-color: black;
         @include tiny-phone-up {
             font-size: 1.2rem;
         }

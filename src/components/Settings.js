@@ -55,7 +55,7 @@ export default function Settings(props) {
   } 
 
     return (
-      <>
+      <div className='d-flex align-self-start'>
         <button id="Settings-Button" type="button" className="btn" onClick={() => setOpen(o => !o)}><RiSettings3Fill size={85} /></button>
           <Popup 
               modal
@@ -131,6 +131,6 @@ export default function Settings(props) {
             </div>
           }
       </Popup>
-    </>
+    </div>
     )
 }

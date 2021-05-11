@@ -2,13 +2,17 @@
 
 html, body {
   overflow-x: hidden;
+  overflow-y: auto;
 }
 
 
 .App {
+  overflow-y: auto;
   text-align: center;
   min-height: 100vh;
   min-width: 100vw;
+  max-height: 100vh;
+  max-width: 100vw;
   background-image: url('./assets/backgrounds/Space-Level-Background.png');
   background-repeat: no-repeat;
   background-attachment: fixed;

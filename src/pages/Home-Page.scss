@@ -24,6 +24,12 @@
 }
 
 #Home-Title {
+  @include tiny-phone-up {
+    margin-top: 100px;
+  }
+  @include tablet-up {
+      margin-top: 0px;
+  }
   h1 {
     @include tiny-phone-up {
       font-size: 4.7rem;
@@ -109,6 +115,7 @@
 }
 
 #Create-New-Player-Container {
+  overflow-y: auto;
   h2 {
     @include tiny-phone-up {
       font-size: 2.3rem;

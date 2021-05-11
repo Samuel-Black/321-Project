@@ -1,13 +1,5 @@
 @import '../../components/BreakPoint.scss';
 
-.hop-arms-flex {
-    @include tiny-phone-up {
-        height: 70vh;
-    }
-    @include tablet-up {
-        height: 45vh;
-    }
-}
 .hop-arms-character {
     a:hover {
         img {

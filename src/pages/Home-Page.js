@@ -116,7 +116,7 @@ export default function HomePage() {
     }
 
     function SetRowJustification() { // cards are cut off by the simplebar component when statically defined as centered, this is a solution
-        if(contentWidth > rowWidth) {
+        if(contentWidth > rowWidth && (contentWidth != null || rowWidth != null)) {
             return '';
         } else
             return 'justify-content-center';

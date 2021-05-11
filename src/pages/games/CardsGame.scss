@@ -1,11 +1,21 @@
 @import '../../components/BreakPoint.scss';
 
+#Card-Game {
+    @include tiny-phone-up {
+        padding-top: 140px;
+        min-height: 80vh;
+    }
+    @include phone-up {
+        padding-top: 0px;
+    }
+}
+
 .card-option {
     @include tiny-phone-up {
-        height: 70vh;
+        min-height: 70vh;
     }
     @include tablet-up {
-        height: 45vh;
+        min-height: 50vh;
     }
     img {
         max-height: 350px;

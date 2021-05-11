@@ -19,10 +19,10 @@ export default function CreatePlayerTemplate(setNickname, validateNickName, setB
                     <input type="text" id='nickname' className="form-control-lg" placeholder="nickname" onChange={(e) => setNickname(e.target.value)} />
                 </div>
             </div>
-            <div className="d-flex">
-                <label htmlFor="birthday" className="align-self-center">Birthday</label>
+            <div className="d-flex justify-content-center">
+                <label htmlFor="birthday">Birthday</label>
             </div>
-            <div className="d-flex">
+            <div className="d-flex  justify-content-center">
                 <div className="form-group">
                     <DatePicker
                         onChange={setBirthday}
@@ -32,7 +32,7 @@ export default function CreatePlayerTemplate(setNickname, validateNickName, setB
                     />
                 </div>
             </div>
-            <div>
+            <div className='pt-3'>
                 <div><button id='Create-Player-Button' className={`btn btn-secondary ${validateNickName() !== true ? 'button-disabled' : ''}`} onClick={() => validateBirthday()} disabled={validateNickName() !== true}>Create</button></div>
                 <div>{validateNickName() !== true && validateNickName()}</div>
                 <div>{(birthday == null || birthday.length === 0) ? 'Please input your birthday!' : null}</div>

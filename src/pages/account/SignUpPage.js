@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { signupUser, confirmUserSignUp, useAuthState, useAuthDispatch } from '../../libs';
+import { Auth } from 'aws-amplify';
 import { Link } from 'react-router-dom';
 import { Oval } from 'react-loading-icons';
 import { useNavigate } from 'react-router-dom';
@@ -29,19 +30,25 @@ export default function SignupPage() {
     const [passwordFocused, setPasswordFocused] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('');
     const [confirmPasswordFocused, setConfirmPasswordFocused] = useState(false);
+    const [authenticationSuccesful, setAuthenticationSuccesful] = useState(false);
     const [authenticationCode, setAuthenticationCode] = useState('');
+    const [allValidCredentials, setAllValidCredentials] = useState(false);
     const [step, setStep] = useState(0);
     const [emailError, setEmailError] = useState(null);
     const [passwordError, setPasswordError] = useState(null);
     const [confirmPasswordError, setConfirmPasswordError] = useState(null);
+    const [authCodeError, setAuthCodeError] = useState(null);
     const [autoCompleteSignUp, setAutoCompleteSignUp] = useState(false);
+
+    const dispatch = useAuthDispatch();
+    let { loading, errorMessage } = useAuthState();
 
     useEffect(() => {
         if (email.length > 0 && !emailFocused && !isEmail(email)) // If there is something in the email input field, and It's not focused, and the address Isn't valid, set error message
             setEmailError(`${email} is not a valid email address.`);
         else if (isEmail(email) || email.length === 0) 
             setEmailError(null);
-    }, [emailFocused]);
+    }, [email, emailFocused]);
 
     useEffect(() => {
         if (!passwordFocused && !schema.validate(password) && password.length > 0) {
@@ -74,15 +81,13 @@ export default function SignupPage() {
     }
 
     useEffect(() => {
-        if (!confirmPasswordFocused && confirmPassword.length > 0 && password.length > 0 && password !== confirmPassword) {
+        if (confirmPassword.length > 0 && password.length > 0 && password !== confirmPassword) {
             setConfirmPasswordError('Passwords do not match.');
         }
         else if (password == confirmPassword || confirmPassword.length === 0)
             setConfirmPasswordError(null);
-    }, [confirmPasswordFocused]);
+    }, [confirmPassword]);
 
-    const dispatch = useAuthDispatch()
-    let { loading, errorMessage } = useAuthState();
 
     useEffect(() => {
         errorMessage = null;
@@ -98,16 +103,13 @@ export default function SignupPage() {
         } 
     }
     
-    const goBack = () => {
-        setStep(0);
-    }
-    
     const confirmSignUp = async () => {
+        setAuthCodeError(null);
         try {
-            await confirmUserSignUp(dispatch, { email, authenticationCode });
+            await Auth.confirmSignUp(email, authenticationCode);
             navigate('../Login');
         } catch (error) {
-            errorMessage = error;
+            setAuthCodeError(error);
         }
     }
 
@@ -118,9 +120,26 @@ export default function SignupPage() {
         }
     }, [autoCompleteSignUp]);
 
+    const validateCredentials = () => {
+        if(isEmail(email) && schema.validate(password) && password === confirmPassword) 
+            setAllValidCredentials(true);
+        else 
+            setAllValidCredentials(false);
+    }
+
+    useEffect(() => {
+        validateCredentials();
+    }, [email, password, confirmPassword, confirmPasswordError])
+    
+    useEffect(() => {
+        if(authenticationSuccesful === true) {
+            authenticationSuccesful(false);
+        }
+    }, [authenticationSuccesful])
+
     return (
         <div id="Signup-Background">
-            <div className="container">
+            <div className="container pb-5">
                 <div id="Title-Row" className="row">
                     <div className="container">
                         <div id="Signup-Title" class="row justify-content-center">
@@ -149,9 +168,10 @@ export default function SignupPage() {
                                             <div className="d-flex">
                                                 <div className="form-group">
                                                     <input type="text" id="email" className="form-control-lg" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} name="email" required disabled={loading} onFocus={() => setEmailFocused(true)} onBlur={() => setEmailFocused(false)} />
-                                                    {emailError}
+                                                    
                                                 </div>
                                             </div>
+                                            {emailError}
                                             <div className="d-flex">
                                                 <label htmlFor="password" className="align-self-center">Password</label>
                                             </div>
@@ -159,49 +179,43 @@ export default function SignupPage() {
                                                 <div className="form-group mb-0">
                                                     <input type="password" id="password" className="form-control-lg" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required disabled={loading} onFocus={() => setPasswordFocused(true)} onBlur={() => setPasswordFocused(false)} />
                                                     <PasswordStrengthBar className="pt-1 password-strength-bar" password={password} minLength={8} />
-                                                    {passwordError}
                                                 </div>
                                             </div>
+                                            {passwordError}
                                             <div className="d-flex">
                                                 <label htmlFor="confirmPassword" className="align-self-center">Confirm Password</label>
                                             </div>
                                             <div className="d-flex">
                                                 <div className="form-group">
                                                     <input type="password" id="confirmPassword" className="form-control-lg" placeholder="confirm password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} name="confirmPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required disabled={loading} onFocus={() => setConfirmPasswordFocused(true)} onBlur={() => setConfirmPasswordFocused(false)} />
-                                                    {confirmPasswordError}
                                                 </div>
                                             </div>
+                                            {confirmPasswordError}
                                             <div className="d-flex justify-content-end">{errorMessage ? <p>{errorMessage}</p> : null}</div>
                                             <div className="d-flex justify-content-end">
-                                                {loading === true && <Oval />}<button id='Signup-Button' className='btn btn-secondary' onClick={handleSignUp} disabled={loading}>Create User</button>
+                                                {loading === true && <Oval />}<button id='Signup-Button' className={`btn btn-secondary ${allValidCredentials ? '' : 'button-disabled'}`} onClick={handleSignUp} disabled={loading}>Create</button>
                                             </div>
                                         </form>
                                     </>
                                 }
                                 {step === 1 &&
                                     <div>
-                                        <form className="mt-3">
-                                            <div className="d-flex">
-                                                <label htmlFor="email" className="align-self-center">Email</label>
-                                            </div>
-                                            <div className="d-flex">
-                                                <div className="form-group">
-                                                    <input type="text" value={email} className="form-control-lg" disabled name="email" />
-                                                </div>
-                                            </div>
-                                            <div className="d-flex">
-                                                <label htmlFor="authenticationCode" className="align-self-center">Authentication Code</label>
-                                            </div>
-                                            <div className="d-flex">
-                                                <div className="form-group">
-                                                    <ReactCodeInput type={'number'} fields={6} fieldWidth={75} autoFocus loading={loading} onChange={(code) => setAuthenticationCode(code)} onComplete={() => setAutoCompleteSignUp(true)} />
-                                                </div>
-                                            </div>
-                                            <div className="d-flex justify-content-end">{errorMessage ? <p>{errorMessage}</p> : null}</div>
-                                            <div className="d-flex justify-content-between">
-                                                <button onClick={goBack} disabled={loading}>Go Back</button>{loading === true && <Oval />}<button onClick={confirmSignUp} disabled={loading} >Authenticate</button>
-                                            </div>
-                                        </form>
+                                        <div className="d-flex pt-4">
+                                            <label htmlFor="email" className="align-self-center">Email</label>
+                                        </div>
+                                        <div className="d-flex pb-4">
+                                            <input type="text" style={{color: "white"}} value={email} className="form-control-lg" disabled name="email" />
+                                        </div>
+                                        <div className="d-flex">
+                                            <label htmlFor="authenticationCode" className="align-self-center">Authentication Code</label>
+                                        </div>
+                                        <div id="Auth-Code-Input-Container" className="d-flex justify-content-center">
+                                            <ReactCodeInput type={'number'} fields={6} autoFocus loading={loading} onChange={(code) => setAuthenticationCode(code)} onComplete={() => setAutoCompleteSignUp(true)} />
+                                        </div>
+                                        <div className="d-flex justify-content-center">{authCodeError !== null ? <p>{authCodeError.message}</p> : null}</div>
+                                        <div className="d-flex justify-content-center pt-5">
+                                            {loading === true && <Oval />}<button id="Signup-Authenticate-Button" className='btn btn-secondary' onClick={confirmSignUp} disabled={loading} >Authenticate</button>
+                                        </div>
                                     </div>
                                 }
                             </div>

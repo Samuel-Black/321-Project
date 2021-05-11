@@ -21,8 +21,6 @@ export default function LevelNavigationPage(props) {
         GetProgress(user, currentPlayer, setProgress, setErrorMessage);
     }, []);
 
-    console.log(Skills);
-
     return (
         <div id="Level-Nav-Background">
 

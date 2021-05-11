@@ -100,9 +100,6 @@ export default function Settings(props) {
               <div className="settingsContent">
                 {`Email: ${userData.attributes.email}`}
               </div>
-              <div className="settingsContent">
-                {`Phone Number: ${userData.attributes.phone_number}`}
-              </div>
             </div>
           }
           {popupState === 2 &&

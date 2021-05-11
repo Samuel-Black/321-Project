@@ -55,6 +55,20 @@
   }
 }
 
+#Player-Edit-Pencil {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  svg {
+    fill: rgba(black, 0.95);
+    transition: all 0.15s ease-in-out;
+    &:hover {
+      fill: black;
+      transform: scale(1.18);
+    }
+  }
+}
+
 #Home-Button {
   padding-top: 10%;
 }

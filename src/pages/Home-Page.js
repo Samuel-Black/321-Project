@@ -16,6 +16,7 @@ import SimpleBar from 'simplebar-react';
 import { TiUserAdd } from 'react-icons/ti';
 import { ProfilePictureImages } from '../components/images/ProfilePictureImages';
 import { TiHome } from 'react-icons/ti';
+import { RiPencilFill } from 'react-icons/ri';
 import { SizeMe } from 'react-sizeme';
 
 export default function HomePage() {
@@ -28,6 +29,7 @@ export default function HomePage() {
     const [contentWidth, setContentWidth] = useState(null);
     const [createNewPlayer, setCreateNewPlayer] = useState(false);
     const [newPlayerCreated, setNewPlayerCreated] = useState(false);
+    const [editPlayer, setEditPlayer] = useState(false);
     const [nickname, setNickname] = useState('');
     const [birthday, setBirthday] = useState('');
     const [errorMessage, setErrorMessage] = useState(null);
@@ -126,6 +128,11 @@ export default function HomePage() {
     return(
         <div className="App">
             {( (user !== false) && (!createNewPlayer) ) && <Settings />}
+            {(currentPlayer.player === false && createNewPlayer === true) &&
+                <a onClick={() => setCreateNewPlayer(false)} id='Home-Nav-Button' className='align-self-start pr-2 pl-2'>
+                    <TiHome size={100} />
+                </a>
+            }
             {currentPlayer.player === false ?
                 <>
                     {createNewPlayer === false ? 
@@ -155,7 +162,7 @@ export default function HomePage() {
                                                                         return (
                                                                             <div key={player.NickName} className="Player-Container card mr-3">
                                                                                 <a onClick={() => currentPlayer.setPlayer(player)}>
-                                                                                    <img className="card-img-top" src={ProfilePictureImages[player.ProfilePicture].default} alt="Player Profile Picture" />
+                                                                                    <img className="card-img-top" src={ProfilePictureImages[player.ProfilePicture].default} alt="Player Profile Picture"/>
                                                                                     <div className="card-footer">{player.NickName}</div>
                                                                                 </a>
                                                                             </div>
@@ -179,10 +186,7 @@ export default function HomePage() {
                             </div>
                         </div>
                     :
-                        <div id="Create-New-Player-Container" className="container">
-                            <a onClick={() => setCreateNewPlayer(false)} id='Home-Nav-Button'>
-                                <TiHome size={100} />
-                            </a>
+                        <div id="Create-New-Player-Container" className="container-fluid">
                             <div className="row justify-content-center">
                                 <h2>Create New Player</h2>
                             </div>
@@ -227,7 +231,7 @@ export default function HomePage() {
                     </div>
                 </div>
             }
-            {currentPlayer !== false && <PlayerSignout />}
+            {currentPlayer.player !== false && <PlayerSignout />}
         </div>
     );
 

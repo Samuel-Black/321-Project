@@ -208,7 +208,6 @@ export default function HomePage() {
                 </>
             :
                 <div className="container">
-                    <PlayerSignout />
                     <div id="Home-Title" className="row justify-content-center title">
                         <h1>JumpStart</h1>
                     </div>
@@ -228,6 +227,7 @@ export default function HomePage() {
                     </div>
                 </div>
             }
+            {currentPlayer !== false && <PlayerSignout />}
         </div>
     );
 

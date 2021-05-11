@@ -44,7 +44,7 @@ export default function RewardsPage(props) {
 
     return(
         <div className="App">
-        <Link to='../' id='Home-Nav-Button'>
+        <Link to='../' id='Home-Nav-Button' className='d-flex align-self-start'>
             <TiHome size={100} />
         </Link>
             <div id="Rewards-Page-Container" className="container">

@@ -1,9 +1,8 @@
 @import '../components/BreakPoint.scss';
 
 #Player-Logout-Button {
-    position: absolute;
-    top: 1%;
-    right: 1%;
+    margin-top: 10px;
+    margin-right: 3px;
     svg {
         padding-right: 10px;
         border-style: solid;

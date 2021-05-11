@@ -2,9 +2,8 @@
 @import '../components/BreakPoint.scss';
 
 #Home-Nav-Button {
-    position: absolute;
-    top: 1%;
-    left: 1%;
+    padding-top: 10px;
+    padding-left: 3px;
     svg {
         padding-bottom: 5px;
         border-style: solid;

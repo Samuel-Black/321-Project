@@ -124,7 +124,6 @@ export default function HomePage() {
             return 'justify-content-center';
     }
 
-
     return(
         <div className="App">
             {( (user !== false) && (!createNewPlayer) ) && <Settings />}
@@ -135,73 +134,104 @@ export default function HomePage() {
             }
             {currentPlayer.player === false ?
                 <>
-                    {createNewPlayer === false ? 
-                        <div className="container-fluid">
-                            <div className="container mb-5">
-                                <div className="row justify-content-center">
-                                    <h2>Who's playing?</h2>
-                                </div>
-                            </div>
-                            <div className="container-fluid mb-5">      
-                                <div className="row justify-content-center">
-                                    <SimpleBar style={{ maxWidth: '90vw', width: '85vw', maxHeight: '50vh' }} autoHide={false}>
-                                        <div className="container-fluid">
-                                            <SizeMe
-                                                monitorWidth
-                                                refreshRate={16}>
-                                                {({ size }) => 
-                                                    <div className={`row ${SetRowJustification()}`}>
-                                                        {setRowWidth(size.width)}
-                                                        <SizeMe
+                    {editPlayer === false ?
+                        <>
+                            {createNewPlayer === false ? 
+                                <div className="container-fluid">
+                                    <div className="container mb-5">
+                                        <div className="row justify-content-center">
+                                            <h2>Who's playing?</h2>
+                                        </div>
+                                    </div>
+                                    <div className="container-fluid mb-5">      
+                                        <div className="row justify-content-center">
+                                            <SimpleBar style={{ maxWidth: '90vw', width: '85vw', maxHeight: '50vh' }} autoHide={false}>
+                                                <div className="container-fluid">
+                                                    <SizeMe
                                                         monitorWidth
                                                         refreshRate={16}>
-                                                            {({ size }) => 
-                                                                <div className="d-flex">
-                                                                {setContentWidth(size.width)}
-                                                                    {playerList.map(player => {
-                                                                        return (
-                                                                            <div key={player.NickName} className="Player-Container card mr-3">
-                                                                                <a onClick={() => currentPlayer.setPlayer(player)}>
-                                                                                    <img className="card-img-top" src={ProfilePictureImages[player.ProfilePicture].default} alt="Player Profile Picture"/>
-                                                                                    <div className="card-footer">{player.NickName}</div>
+                                                        {({ size }) => 
+                                                            <div className={`row ${SetRowJustification()}`}>
+                                                                {setRowWidth(size.width)}
+                                                                <SizeMe
+                                                                monitorWidth
+                                                                refreshRate={16}>
+                                                                    {({ size }) => 
+                                                                        <div className="d-flex">
+                                                                        {setContentWidth(size.width)}
+                                                                            {playerList.map(player => {
+                                                                                return (
+                                                                                    <div key={player.NickName} className="Player-Container card mr-3">
+                                                                                        <div className='d-inline-flex justify-content-end align-items-start pr-2'>
+                                                                                            <a className="player-edit-pencil" onClick={() => setEditPlayer(player)}><RiPencilFill size={27} /></a>
+                                                                                        </div>
+                                                                                        <a onClick={() => currentPlayer.setPlayer(player)}>
+                                                                                            <img className="card-img-top pl-2" src={ProfilePictureImages[player.ProfilePicture].default} alt="Player Profile Picture"/>
+                                                                                            <div className="card-footer">{player.NickName}</div>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                )
+                                                                            })}
+                                                                            <div id="Create-Player" className="Player-Container card">
+                                                                                <a onClick={showCreatePlayer}>
+                                                                                    <TiUserAdd size={150} className="card-img-top" />
+                                                                                    <div className="card-footer">New Player</div>
                                                                                 </a>
                                                                             </div>
-                                                                        )
-                                                                    })}
-                                                                    <div id="Create-Player" className="Player-Container card">
-                                                                        <a onClick={showCreatePlayer}>
-                                                                            <TiUserAdd size={150} className="card-img-top" />
-                                                                            <div className="card-footer">New Player</div>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            }
-                                                        </SizeMe>
-                                                    </div>
-                                                }
-                                            </SizeMe>
+                                                                        </div>
+                                                                    }
+                                                                </SizeMe>
+                                                            </div>
+                                                        }
+                                                    </SizeMe>
+                                                </div>
+                                            </SimpleBar>
                                         </div>
-                                    </SimpleBar>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            :
+                                <div id="Create-New-Player-Container" className="container-fluid">
+                                    <div className="row justify-content-center">
+                                        <h2>Create New Player</h2>
+                                    </div>
+                                    <div className="row justify-content-center">
+                                        <div id="Create-Player-Content" className="d-inline-flex flex-column align-items-center justify-content-center">
+                                        <ProfileImageMenu ProfileImageState={setProfileImage} ActiveProfileImage={activeProfileImage} />
+                                        
+                                        {user !== false ? 
+                                            <form id='Create-Player-Form' className="mt-3">
+                                                {CreatePlayerTemplate(setNickname, validateNickName, setBirthday, birthday, createPlayer)}
+                                            </form>
+                                        :
+                                            <>
+                                                {CreatePlayerTemplate(setNickname, validateNickName, setBirthday, birthday, createPlayer)}
+                                            </>
+                                        }
+                                        
+                                            {errorMessage ? <p>{errorMessage}</p> : null}
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </>
+
                     :
-                        <div id="Create-New-Player-Container" className="container-fluid">
+                        <div id="Edit-Player-Container" className="container-fluid">
                             <div className="row justify-content-center">
-                                <h2>Create New Player</h2>
+                                <h2>Change Profile Picture</h2>
                             </div>
                             <div className="row justify-content-center">
                                 <div id="Create-Player-Content" className="d-inline-flex flex-column align-items-center justify-content-center">
                                 <ProfileImageMenu ProfileImageState={setProfileImage} ActiveProfileImage={activeProfileImage} />
                                 
                                 {user !== false ? 
-                                        <form id='Create-Player-Form' className="mt-3">
-                                            {CreatePlayerTemplate(setNickname, validateNickName, setBirthday, birthday, createPlayer)}
-                                        </form>
-                                    :
-                                        <>
-                                            {CreatePlayerTemplate(setNickname, validateNickName, setBirthday, birthday, createPlayer)}
-                                        </>
+                                    <form id='Create-Player-Form' className="mt-3">
+                                        {CreatePlayerTemplate(setNickname, validateNickName, setBirthday, birthday, createPlayer)}
+                                    </form>
+                                :
+                                    <>
+                                        {CreatePlayerTemplate(setNickname, validateNickName, setBirthday, birthday, createPlayer)}
+                                    </>
                                 }
                                 
                                     {errorMessage ? <p>{errorMessage}</p> : null}

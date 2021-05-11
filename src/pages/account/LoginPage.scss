@@ -63,6 +63,14 @@ h2 {
     }
 }
 
+#Forgot-Password-Link, .return-to-login-link {
+    color: #007bff;
+    &:hover {
+        text-decoration: underline;
+        color: rgba(#004a99, 1.0);
+    }
+}
+
 #Login-Content, #Signup-Content {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 

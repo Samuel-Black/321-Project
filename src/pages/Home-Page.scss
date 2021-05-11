@@ -55,10 +55,7 @@
   }
 }
 
-#Player-Edit-Pencil {
-  position: absolute;
-  top: 4px;
-  right: 8px;
+.player-edit-pencil {
   svg {
     fill: rgba(black, 0.95);
     transition: all 0.15s ease-in-out;
@@ -92,9 +89,16 @@
 #Create-Player {
   svg {
     color: $secondaryWhite;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      transform: scale(1.08);
+    }
   }
   &.card {
     background-color: rgba(white, 0.35);
+  }
+  .card-img-top {
+    height: 12.4rem;
   }
 }
 
@@ -124,6 +128,10 @@
   img {
     height: 100%;
     width: auto;
+    transition: all 0.15s ease-in-out;
+    &:hover {
+      transform: scale(1.08);
+    }
   }
   color: black;
 }

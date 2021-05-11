@@ -24,6 +24,12 @@
 }
 
 #Home-Title {
+  @include tiny-phone-up {
+    margin-top: 100px;
+  }
+  @include tablet-up {
+      margin-top: 0px;
+  }
   h1 {
     @include tiny-phone-up {
       font-size: 4.7rem;
@@ -109,6 +115,7 @@
 }
 
 #Create-New-Player-Container {
+  overflow-y: auto;
   h2 {
     @include tiny-phone-up {
       font-size: 2.3rem;
@@ -151,6 +158,18 @@
     box-shadow: 2px 2px 5px rgba(0,0,0,0.5),
             inset 5px 5px 8px rgba(0,0,0,0.5);
   }
+}
+
+#Create-Player-Content {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  label {    
+    @include tiny-phone-up {
+        font-size: 1.05rem;
+    }
+    @include tablet-up {
+        font-size: 2rem;
+    }
+}
 }
 
 #Play-Button {

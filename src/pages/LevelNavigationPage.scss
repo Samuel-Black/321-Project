@@ -6,6 +6,10 @@
   height: 100vh;
 }
 
+#Profile-Picture-Navbar {
+  max-height: 60px;
+}
+
 #Level-Navigation-Title {
   @include tiny-phone-up {    
     font-size: 4rem;

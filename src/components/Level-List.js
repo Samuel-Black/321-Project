@@ -53,7 +53,7 @@ export const Levels = [
         name: "Hop-Arms",
         to: "Hop-Arms", // used as the link for routes
         numLevels: 4,
-        monster: MonsterImages[1].default,
+        monster: MonsterImages[8].default,
         gameType: 'HopArm',
         skillName: 'Hop',
         gameDescription : "When hopping, you should keep both of you arms to your side and bend them up like you're holding a ball.",
@@ -67,7 +67,7 @@ export const Levels = [
         name: "Kick-Eyes",
         to: "Kick-Eyes", // used as the link for routes
         numLevels: 2,
-        monster: MonsterImages[0].default,
+        monster: MonsterImages[8].default,
         gameType: 'Cards',
         skillName: 'Kick',
         gameDescription : "You should always keep your eyes on the ball when kicking.",
@@ -81,7 +81,7 @@ export const Levels = [
         name: "Kick-Foot",
         to: "Kick-Foot", // used as the link for routes
         numLevels: 2,
-        monster: MonsterImages[1].default,
+        monster: MonsterImages[8].default,
         gameType: 'Cards',
         skillName: 'Kick',
         gameDescription : "When passing the ball to a friend you should use the inside of your foot.",
@@ -95,7 +95,7 @@ export const Levels = [
         name: "Kick-Legs",
         to: "Kick-Legs", // used as the link for routes
         numLevels: 6,
-        monster: MonsterImages[5].default,
+        monster: MonsterImages[8].default,
         gameType: 'CardsZoom',
         skillName: 'Kick',
         gameDescription : "Before you kick a ball you should make sure It's lined up with your other foot.",
@@ -109,7 +109,7 @@ export const Levels = [
         name: "Balance-Eyes",
         to: "Balance-Eyes", // used as the link for routes
         numLevels: 2,
-        monster: MonsterImages[0].default,
+        monster: MonsterImages[8].default,
         gameType: 'Cards',
         skillName: 'Balance',
         gameDescription : 'When trying to hold your balance, you should always look straight ahead.',
@@ -123,7 +123,7 @@ export const Levels = [
         name: "Balance-Legs",
         to: "Balance-Legs", // used as the link for routes
         numLevels: 2,
-        monster: MonsterImages[1].default,
+        monster: MonsterImages[5].default,
         gameType: 'Cards',
         skillName: 'Balance',
         gameDescription : 'When trying to hold your balance on one leg, you should have your other leg behind you and slightly bent at the knee.',
@@ -137,7 +137,7 @@ export const Levels = [
         name: "Hop-Eyes",
         to: "Hop-Eyes", // used as the link for routes
         numLevels: 3,
-        monster: MonsterImages[0].default,
+        monster: MonsterImages[2].default,
         gameType: 'Cards',
         skillName: 'Hop',
         gameDescription : 'When hopping, you should always look straight ahead to help keep your balance.',
@@ -151,7 +151,7 @@ export const Levels = [
         name: "Jump-Feet",
         to: "Jump-Feet", // used as the link for routes
         numLevels: 2,
-        monster: MonsterImages[0].default,
+        monster: MonsterImages[8].default,
         gameType: 'Cards',
         skillName: 'Jump',
         gameDescription : "When jumping, you should make sure that both of your feet are touching the ground.",
@@ -165,7 +165,7 @@ export const Levels = [
         name: "Jump-Knees",
         to: "Jump-Knees", // used as the link for routes
         numLevels: 3,
-        monster: MonsterImages[1].default,
+        monster: MonsterImages[2].default,
         gameType: 'Cards',
         skillName: 'Jump',
         gameDescription : "When jumping, you should bend your knees. But don't go down too far!",
@@ -179,7 +179,7 @@ export const Levels = [
         name: "Leap-Eyes",
         to: "Leap-Eyes", // used as the link for routes
         numLevels: 2,
-        monster: MonsterImages[0].default,
+        monster: MonsterImages[4].default,
         gameType: 'Cards',
         skillName: 'Leap',
         gameDescription : "When leaping, you should always look where you're going.",
@@ -193,7 +193,7 @@ export const Levels = [
         name: "Slide-Feet",
         to: "Slide-Feet", // used as the link for routes
         numLevels: 2,
-        monster: MonsterImages[0].default,
+        monster: MonsterImages[9].default,
         gameType: 'Cards',
         skillName: 'Slide',
         gameDescription : "When sliding, your leading foot should be flat on the ground, and your other foot should be sliding on it's tip-toes.",
@@ -207,7 +207,7 @@ export const Levels = [
         name: "Run-Eyes",
         to: "Run-Eyes", // used as the link for routes
         numLevels: 3,
-        monster: MonsterImages[0].default,
+        monster: MonsterImages[2].default,
         gameType: 'Cards',
         skillName: 'Run',
         gameDescription : "When running, you should always look where you're going.",
@@ -221,7 +221,7 @@ export const Levels = [
         name: "Balance-Arms",
         to: "Balance-Arms", // used as the link for routes
         numLevels: 2,
-        monster: MonsterImages[5].default,
+        monster: MonsterImages[9].default,
         gameType: 'Mix & Match',
         skillName: 'Balance',
         gameDescription : 'When trying to hold your balance, you should keep your arms out and hold them straight.',
@@ -239,7 +239,7 @@ export const Levels = [
         name: "Hop-Legs",
         to: "Hop-Legs", // used as the link for routes
         numLevels: 3,
-        monster: MonsterImages[1].default,
+        monster: MonsterImages[6].default,
         gameType: 'Mix & Match',
         skillName: 'Hop',
         gameDescription : 'When hopping, you should keep one leg behind you and slightly bent at the knee.',
@@ -257,7 +257,7 @@ export const Levels = [
         name: "Jump-Arms",
         to: "Jump-Arms", // used as the link for routes
         numLevels: 2,
-        monster: MonsterImages[1].default,
+        monster: MonsterImages[2].default,
         gameType: 'Mix & Match',
         skillName: 'Jump',
         gameDescription : "When jumping, you should swing your arms back and slightly bend your elbows",
@@ -275,7 +275,7 @@ export const Levels = [
         name: "Leap-Legs",
         to: "Leap-Legs", // used as the link for routes
         numLevels: 2,
-        monster: MonsterImages[1].default,
+        monster: MonsterImages[10].default,
         gameType: 'Mix & Match',
         skillName: 'Leap',
         gameDescription : "When leaping, your front and back leg should be spread apart and slightly bent at the knee.",
@@ -293,7 +293,7 @@ export const Levels = [
         name: "Run-Arms",
         to: "Run-Arms", // used as the link for routes
         numLevels: 2,
-        monster: MonsterImages[1].default,
+        monster: MonsterImages[6].default,
         gameType: 'Mix & Match',
         skillName: 'Run',
         gameDescription : "When running, you should have both arms bent up to your sides, one arm swings forward, while the other swings back.",
@@ -311,7 +311,7 @@ export const Levels = [
         name: "Run-Knees",
         to: "Run-Knees", // used as the link for routes
         numLevels: 2,
-        monster: MonsterImages[1].default,
+        monster: MonsterImages[9].default,
         gameType: 'Mix & Match',
         skillName: 'Run',
         gameDescription : "When running, you should always have one foot on the ground slightly bent at the knee, and the other behind your front foot bent up into the air.",
@@ -329,7 +329,7 @@ export const Levels = [
         name: "Throw-Eyes",
         to: "Throw-Eyes", // used as the link for routes
         numLevels: 3,
-        monster: MonsterImages[0].default,
+        monster: MonsterImages[4].default,
         gameType: 'Targets',
         skillName: 'Throw',
         gameDescription : "When throwing something, you should always look where you want to throw.",
@@ -347,7 +347,7 @@ export const Skills = [
         to: "Kick", // used as the link for routes
         numLevels: 10,
         levels: [  ],
-        monster: MonsterImages[0].default,
+        monster: MonsterImages[8].default,
         className: gameClassName
     },     
     {
@@ -356,7 +356,7 @@ export const Skills = [
         to: "Jump", // used as the link for routes
         numLevels: 7,
         levels: [  ],
-        monster: MonsterImages[1].default,
+        monster: MonsterImages[2].default,
         className: gameClassName
     },   
     {
@@ -392,7 +392,7 @@ export const Skills = [
         to: "Hop", // used as the link for routes
         numLevels: 10,
         levels: [  ],
-        monster: MonsterImages[0].default,
+        monster: MonsterImages[6].default,
         className: gameClassName
     },   
     {
@@ -410,7 +410,7 @@ export const Skills = [
         to: "Slide", // used as the link for routes
         numLevels: 2,
         levels: [  ],
-        monster: MonsterImages[6].default,
+        monster: MonsterImages[9].default,
         className: gameClassName
     },   
     {
@@ -428,7 +428,7 @@ export const Skills = [
         to: "Leap", // used as the link for routes
         numLevels: 4,
         levels: [  ],
-        monster: MonsterImages[9].default,
+        monster: MonsterImages[10].default,
         className: gameClassName
     },   
     {

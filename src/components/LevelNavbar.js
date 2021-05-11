@@ -5,6 +5,7 @@ import { TiHome } from 'react-icons/ti'
 import { RiUserFill } from 'react-icons/ri'
 import SimpleBar from 'simplebar-react'
 import { useAuthPlayer } from '../libs'
+import { ProfilePictureImages } from './images/ProfilePictureImages';
 import 'simplebar/dist/simplebar.min.css'
 
 export default function LevelNavbar() {
@@ -18,8 +19,13 @@ export default function LevelNavbar() {
                 <div className="mr-auto">
                     <h1 id="Level-Navigation-Title">JumpStart</h1>
                 </div>
-                <div id="Current-Player" className="align-self-center">
-                    <RiUserFill />{currentPlayer.player.NickName}
+                <div id="Current-Player" className="d-flex">
+                    <div className='d-flex align-items-end mr-2'>
+                        <img id='Profile-Picture-Navbar' src={ProfilePictureImages[currentPlayer.player.ProfilePicture].default} alt='Profile Picture' />
+                    </div>
+                    <div className='d-flex align-items-end'>
+                        {currentPlayer.player.NickName}
+                    </div>
                 </div>
             </div>
             <div id="Level-Navbar" className="d-flex">

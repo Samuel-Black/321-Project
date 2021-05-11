@@ -16,6 +16,7 @@ import SimpleBar from 'simplebar-react';
 import { TiUserAdd } from 'react-icons/ti';
 import { ProfilePictureImages } from '../components/images/ProfilePictureImages';
 import { TiHome } from 'react-icons/ti';
+import { SizeMe } from 'react-sizeme';
 
 export default function HomePage() {
 
@@ -23,6 +24,8 @@ export default function HomePage() {
     const user = useAuthUser();
 
     const [playerList, setPlayerList] = useState([]);
+    const [rowWidth, setRowWidth] = useState(null);
+    const [contentWidth, setContentWidth] = useState(null);
     const [createNewPlayer, setCreateNewPlayer] = useState(false);
     const [newPlayerCreated, setNewPlayerCreated] = useState(false);
     const [nickname, setNickname] = useState('');
@@ -69,7 +72,7 @@ export default function HomePage() {
             const localBirthDay = FormatBirthday(birthday.toString());
             createLocalPlayer(localProfileImage, localBirthDay, nickname);
         }
-
+        setBirthday(null);
         setNewPlayerCreated(true);
     }
 
@@ -112,10 +115,17 @@ export default function HomePage() {
         return true;
     }
 
+    function SetRowJustification() { // cards are cut off by the simplebar component when statically defined as centered, this is a solution
+        if(contentWidth > rowWidth && (contentWidth != null || rowWidth != null)) {
+            return '';
+        } else
+            return 'justify-content-center';
+    }
+
 
     return(
         <div className="App">
-            {user !== false && <Settings />}
+            {( (user !== false) && (!createNewPlayer) ) && <Settings />}
             {currentPlayer.player === false ?
                 <>
                     {createNewPlayer === false ? 
@@ -128,27 +138,41 @@ export default function HomePage() {
                             <div className="container-fluid mb-5">      
                                 <div className="row justify-content-center">
                                     <SimpleBar style={{ maxWidth: '90vw', width: '85vw', maxHeight: '50vh' }} autoHide={false}>
-                                        <div className="container">
-                                            <div className='row'>
-                                                <div className="d-flex">
-                                                    {playerList.map(player => {
-                                                        return (
-                                                            <div key={player.NickName} className="Player-Container card mr-3">
-                                                                <a onClick={() => currentPlayer.setPlayer(player)}>
-                                                                    <img className="card-img-top" src={ProfilePictureImages[player.ProfilePicture].default} alt="Player Profile Picture" />
-                                                                    <div className="card-footer">{player.NickName}</div>
-                                                                </a>
-                                                            </div>
-                                                        )
-                                                    })}
-                                                    <div id="Create-Player" className="Player-Container card">
-                                                        <a onClick={showCreatePlayer}>
-                                                            <TiUserAdd size={150} className="card-img-top" />
-                                                            <div className="card-footer">New Player</div>
-                                                        </a>
+                                        <div className="container-fluid">
+                                            <SizeMe
+                                                monitorWidth
+                                                refreshRate={16}>
+                                                {({ size }) => 
+                                                    <div className={`row ${SetRowJustification()}`}>
+                                                        {setRowWidth(size.width)}
+                                                        <SizeMe
+                                                        monitorWidth
+                                                        refreshRate={16}>
+                                                            {({ size }) => 
+                                                                <div className="d-flex">
+                                                                {setContentWidth(size.width)}
+                                                                    {playerList.map(player => {
+                                                                        return (
+                                                                            <div key={player.NickName} className="Player-Container card mr-3">
+                                                                                <a onClick={() => currentPlayer.setPlayer(player)}>
+                                                                                    <img className="card-img-top" src={ProfilePictureImages[player.ProfilePicture].default} alt="Player Profile Picture" />
+                                                                                    <div className="card-footer">{player.NickName}</div>
+                                                                                </a>
+                                                                            </div>
+                                                                        )
+                                                                    })}
+                                                                    <div id="Create-Player" className="Player-Container card">
+                                                                        <a onClick={showCreatePlayer}>
+                                                                            <TiUserAdd size={150} className="card-img-top" />
+                                                                            <div className="card-footer">New Player</div>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        </SizeMe>
                                                     </div>
-                                                </div>
-                                            </div>
+                                                }
+                                            </SizeMe>
                                         </div>
                                     </SimpleBar>
                                 </div>
@@ -163,11 +187,11 @@ export default function HomePage() {
                                 <h2>Create New Player</h2>
                             </div>
                             <div className="row justify-content-center">
-                                <div id="Login-Content" className="d-inline-flex flex-column align-items-center justify-content-center">
+                                <div id="Create-Player-Content" className="d-inline-flex flex-column align-items-center justify-content-center">
                                 <ProfileImageMenu ProfileImageState={setProfileImage} ActiveProfileImage={activeProfileImage} />
                                 
                                 {user !== false ? 
-                                        <form className="mt-3">
+                                        <form id='Create-Player-Form' className="mt-3">
                                             {CreatePlayerTemplate(setNickname, validateNickName, setBirthday, birthday, createPlayer)}
                                         </form>
                                     :

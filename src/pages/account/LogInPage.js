@@ -32,9 +32,9 @@ export default function LoginPage() {
     const [resetPasswordError, setResetPasswordError] = useState(null);
     const [passwordFocused, setPasswordFocused] = useState(false);
     const [confirmPasswordFocused, setConfirmPasswordFocused] = useState(false);
-    const [confirmPassword, setConfirmPassword] = useState('');
     const [authCode, setAuthCode] = useState('');
     const [authCodeError, setAuthCodeError] = useState(null);
+    const [allValidCredentials, setAllValidCredentials] = useState(false);
     const [step, setStep] = useState(0);
     const [loading, setLoading] = useState(false);
 
@@ -124,6 +124,17 @@ export default function LoginPage() {
             setResetPasswordError(error.message);
             setLoading(false);
         }
+    }
+
+    useEffect(() => {
+        validateCredentials();
+    }, [authCode, resetPassword, confirmResetPassword, confirmResetPasswordError]);
+
+    const validateCredentials = () => {
+        if(schema.validate(resetPassword) && resetPassword === confirmResetPassword && authCode.length === 6) 
+            setAllValidCredentials(true);
+        else 
+            setAllValidCredentials(false);
     }
 
     return (
@@ -250,7 +261,7 @@ export default function LoginPage() {
                                         {confirmResetPasswordError}
                                         {resetPasswordError}
                                         <div className="d-flex justify-content-end">
-                                            {loading === true && <Oval />}<button id="Reset-Password-Button" className='btn btn-secondary' onClick={handleResetPasswordAuth} disabled={loading}>Reset</button>
+                                            {loading === true && <Oval />}<button id="Reset-Password-Button" className={`btn btn-secondary ${allValidCredentials ? '' : 'button-disabled'}`} onClick={handleResetPasswordAuth} disabled={loading}>Reset</button>
                                         </div>
                                     </div>
                                 </form>

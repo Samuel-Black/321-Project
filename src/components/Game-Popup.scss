@@ -40,6 +40,10 @@
               -1px -1px 30px rgba(0,0,0,0.2);
 }
 
+.popup-overlay {
+    overflow: auto;
+}
+
 .popup-content {
     background-color: $vividTangelo !important;
     border-radius: 20px;

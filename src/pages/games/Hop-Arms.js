@@ -1,7 +1,12 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
 import React, { useEffect, useState } from 'react';
 import { shuffleArray, returnRandomHopArmsCharacters } from '../../components/images/Image-Functions';
 import SimpleBar from 'simplebar-react';
-import { SizeMe } from 'react-sizeme';
+import ResponsiveSimpleBar from '../../components/ResponsiveSimpleBar';
 import './CardsGame.scss';
 import './Hop-Arms.scss';
 
@@ -14,8 +19,6 @@ export default function HopArms(props) {
         character4: null,
     });
     const [charactersReady, setCharactersReady] = useState(false);
-    const [rowWidth, setRowWidth] = useState(null);
-    const [contentWidth, setContentWidth] = useState(null);
 
     const [errorMessage, setErrorMessage] = useState(null);
 
@@ -82,49 +85,26 @@ export default function HopArms(props) {
         }
     }
 
-    function SetRowJustification() { // cards are cut off by the simplebar component when statically defined as centered, this is a solution
-        if(contentWidth > rowWidth) {
-            return '';
-        } else
-            return 'justify-content-center';
-    }
-
     return (
         <div className="container-fluid">
             <div className="row justify-content-center">
                 <SimpleBar style={{ width: '85vw' }} autoHide={false}>
                     <div className="container-fluid">
-                        <SizeMe
-                        monitorWidth
-                        refreshRate={16}>
-                            {({ size }) => 
-                                <div className={`row ${SetRowJustification()}`}>
-                                    {setRowWidth(size.width)}
-                                    <SizeMe
-                                    monitorWidth
-                                    refreshRate={16}>
-                                        {({ size }) => 
-                                            <div className="d-flex hop-arms-flex">
-                                            {setContentWidth(size.width)}
-                                                {difficulty <= levels &&
-                                                    <>
-                                                        {currentCards.map((image, i) => {
-                                                            return(
-                                                                <div key={i} className="card-option d-flex align-items-end hop-arms-character mr-2">
-                                                                    <a onClick={() => WinCondition(image.correct)} >
-                                                                        <img src={image.default} />
-                                                                    </a>
-                                                                </div>
-                                                            )
-                                                        })}
-                                                    </>
-                                                }
+                        <ResponsiveSimpleBar>
+                            {difficulty <= levels &&
+                                <>
+                                    {currentCards.map((image, i) => {
+                                        return(
+                                            <div key={i} className="card-option d-flex align-items-end hop-arms-character mr-2">
+                                                <a onClick={() => WinCondition(image.correct)} >
+                                                    <img src={image.default} />
+                                                </a>
                                             </div>
-                                        }
-                                    </SizeMe>
-                                </div>
+                                        )
+                                    })}
+                                </>
                             }
-                        </SizeMe>
+                        </ResponsiveSimpleBar>
                     </div>
                 </SimpleBar>
             </div>

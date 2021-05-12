@@ -1,3 +1,8 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
 import './Home-Page.scss';
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
@@ -16,29 +21,32 @@ import SimpleBar from 'simplebar-react';
 import { TiUserAdd } from 'react-icons/ti';
 import { ProfilePictureImages } from '../components/images/ProfilePictureImages';
 import { TiHome } from 'react-icons/ti';
-import { SizeMe } from 'react-sizeme';
+import ResponsiveSimpleBar from '../components/ResponsiveSimpleBar';
 
 export default function HomePage() {
 
-    const currentPlayer = useAuthPlayer();
-    const user = useAuthUser();
+    const currentPlayer = useAuthPlayer(); // player context
+    const user = useAuthUser(); // authenticated user context
 
-    const [playerList, setPlayerList] = useState([]);
-    const [rowWidth, setRowWidth] = useState(null);
-    const [contentWidth, setContentWidth] = useState(null);
-    const [createNewPlayer, setCreateNewPlayer] = useState(false);
-    const [newPlayerCreated, setNewPlayerCreated] = useState(false);
+    // default display states
+    const [playerList, setPlayerList] = useState([]); // list of available players (local or linked to account depending on if logged in)
+    const [rewardsButtonHover, setRewardsButtonHover] = useState(false); // if rewards button is hovered, show jumping animation
+
+    // create new players states
     const [nickname, setNickname] = useState('');
     const [birthday, setBirthday] = useState('');
-    const [errorMessage, setErrorMessage] = useState(null);
     const [profileImage, setProfileImage] = useState(0);
-    const [rewardsButtonHover, setRewardsButtonHover] = useState(false);
-    const [activeProfileImage, setActiveProfileImage] = useState(0);
+    const [activeProfileImage, setActiveProfileImage] = useState(0); // display black border around currently selected monster for profile image
+    const [createNewPlayer, setCreateNewPlayer] = useState(false); // true if user chooses to create new player
+    const [newPlayerCreated, setNewPlayerCreated] = useState(false); // true after player has been created so the playerList state can be updated
+
+    const [errorMessage, setErrorMessage] = useState(null); 
 
     useEffect(() => {
         setActiveProfileImage(profileImage);
-    }, [profileImage])
+    }, [profileImage]);
 
+    // populate playerList to display available players
     const GetPlayers = () => {
         if(user !== false) { // If using a logged in account, query DB for players
             Axios.post(GetPlayersURL, {
@@ -54,6 +62,7 @@ export default function HomePage() {
         }
     }
 
+    // create a new player
     const createPlayer = () => {
         if(user !== false) { // If using a logged in account, store player in DB
             Axios.post(CreatePlayerURL, {
@@ -76,19 +85,21 @@ export default function HomePage() {
         setNewPlayerCreated(true);
     }
 
-    useEffect(() => { // on page load display available players
+    // on component mount display available players
+    useEffect(() => { 
         GetPlayers();
     }, []);
 
-    useEffect(() => { // on page load display available players
+    // don't allow for a player nickname greater than 12 characters.
+    useEffect(() => { 
         if(nickname.length > 12) {
             setNickname(nickname.substring(0,12));
-            console.log('came here');
         }
     }, [nickname]);
 
-    
-    useEffect(() => { // if a new player is created populate the new list then display
+
+    // if a new player is created populate the new list then display the player list
+    useEffect(() => { 
         if(newPlayerCreated === true) {
             GetPlayers();
             hideCreatePlayer();
@@ -96,14 +107,17 @@ export default function HomePage() {
         }
     }, [newPlayerCreated]);
 
+    // show create new player "page"
     function showCreatePlayer() {
         setCreateNewPlayer(true);
     }
 
+    // hide create new player "page"
     function hideCreatePlayer() {
         setCreateNewPlayer(false);
     }
 
+    // player nickname error checking
     function validateNickName() {
         if(typeof nickname == null) {
             return 'Please enter a Nickname';
@@ -121,13 +135,6 @@ export default function HomePage() {
             }
         }
         return true;
-    }
-
-    function SetRowJustification() { // cards are cut off by the simplebar component when statically defined as centered, this is a solution
-        if(contentWidth > rowWidth && (contentWidth != null || rowWidth != null)) {
-            return '';
-        } else
-            return 'justify-content-center';
     }
 
     return(
@@ -165,40 +172,24 @@ export default function HomePage() {
                                 <div className="row justify-content-center">
                                     <SimpleBar style={{ maxWidth: '90vw', width: '85vw', maxHeight: '50vh' }} autoHide={false}>
                                         <div className="container-fluid">
-                                            <SizeMe
-                                                monitorWidth
-                                                refreshRate={16}>
-                                                {({ size }) => 
-                                                    <div className={`row ${SetRowJustification()}`}>
-                                                        {setRowWidth(size.width)}
-                                                        <SizeMe
-                                                        monitorWidth
-                                                        refreshRate={16}>
-                                                            {({ size }) => 
-                                                                <div className="d-flex">
-                                                                {setContentWidth(size.width)}
-                                                                    {playerList.map(player => {
-                                                                        return (
-                                                                            <div key={player.NickName} className="Player-Container card mr-3">
-                                                                                <a onClick={() => currentPlayer.setPlayer(player)}>
-                                                                                    <img className="card-img-top pl-2" src={ProfilePictureImages[player.ProfilePicture].default} alt="Player Profile Picture"/>
-                                                                                    <div className="card-footer">{player.NickName}</div>
-                                                                                </a>
-                                                                            </div>
-                                                                        )
-                                                                    })}
-                                                                    <div id="Create-Player" className="Player-Container card">
-                                                                        <a onClick={showCreatePlayer}>
-                                                                            <TiUserAdd size={150} className="card-img-top" />
-                                                                            <div className="card-footer">New Player</div>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            }
-                                                        </SizeMe>
-                                                    </div>
-                                                }
-                                            </SizeMe>
+                                            <ResponsiveSimpleBar>
+                                                {playerList.map(player => {
+                                                    return (
+                                                        <div key={player.NickName} className="Player-Container card mr-3">
+                                                            <a onClick={() => currentPlayer.setPlayer(player)}>
+                                                                <img className="card-img-top pl-2" src={ProfilePictureImages[player.ProfilePicture].default} alt="Player Profile Picture"/>
+                                                                <div className="card-footer">{player.NickName}</div>
+                                                            </a>
+                                                        </div>
+                                                    )
+                                                })}
+                                                <div id="Create-Player" className="Player-Container card">
+                                                    <a onClick={showCreatePlayer}>
+                                                        <TiUserAdd size={150} className="card-img-top" />
+                                                        <div className="card-footer">New Player</div>
+                                                    </a>
+                                                </div>
+                                            </ResponsiveSimpleBar>
                                         </div>
                                     </SimpleBar>
                                 </div>

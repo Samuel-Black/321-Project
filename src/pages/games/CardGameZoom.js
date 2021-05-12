@@ -1,13 +1,16 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
 import React, { useEffect, useState } from 'react';
 import { shuffleArray } from '../../components/images/Image-Functions';
 import SimpleBar from 'simplebar-react';
-import { SizeMe } from 'react-sizeme';
+import ResponsiveSimpleBar from '../../components/ResponsiveSimpleBar';
 import './CardsGame.scss';
 
 export default function CardsGameZoom(props) {
     const [currentCards, setCurrentCards] = useState([]);
-    const [rowWidth, setRowWidth] = useState(null);
-    const [contentWidth, setContentWidth] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
 
     const difficulty = props.difficulty;
@@ -76,49 +79,26 @@ export default function CardsGameZoom(props) {
         }
     }
 
-    function SetRowJustification() { // cards are cut off by the simplebar component when statically defined as centered, this is a solution
-        if(contentWidth > rowWidth) {
-            return '';
-        } else
-            return 'justify-content-center';
-    }
-
     return (
         <div id='Card-Game' className="container-fluid">
             <div className="row justify-content-center">
                 <SimpleBar style={{ width: '70vw' }} autoHide={false}>
                     <div className="container-fluid">
-                        <SizeMe
-                            monitorWidth
-                            refreshRate={16}>
-                            {({ size }) => 
-                                <div className={`row ${SetRowJustification()}`}>
-                                    {setRowWidth(size.width)}
-                                    <SizeMe
-                                    monitorWidth
-                                    refreshRate={16}>
-                                        {({ size }) => 
-                                            <div className="d-flex">
-                                                {setContentWidth(size.width)}
-                                                {difficulty <= levels &&
-                                                    <>
-                                                        {currentCards.map((image, i) => {
-                                                            return(
-                                                                <div key={i} className="d-flex align-items-end card-option mr-2">
-                                                                    <a onClick={() => WinCondition(image.correct)} >
-                                                                        <img src={image.default} />
-                                                                    </a>
-                                                                </div>
-                                                            )
-                                                        })}
-                                                    </>
-                                                }
+                        <ResponsiveSimpleBar>
+                            {difficulty <= levels &&
+                                <>
+                                    {currentCards.map((image, i) => {
+                                        return(
+                                            <div key={i} className="d-flex align-items-end card-option mr-2">
+                                                <a onClick={() => WinCondition(image.correct)} >
+                                                    <img src={image.default} />
+                                                </a>
                                             </div>
-                                            }
-                                    </SizeMe>
-                                </div>
+                                        )
+                                    })}
+                                </>
                             }
-                        </SizeMe>
+                        </ResponsiveSimpleBar>
                     </div>
                 </SimpleBar>
             </div>

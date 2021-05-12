@@ -1,3 +1,8 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';

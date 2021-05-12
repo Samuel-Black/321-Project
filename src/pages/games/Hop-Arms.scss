@@ -1,3 +1,8 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
 @import '../../components/BreakPoint.scss';
 
 .hop-arms-character {
@@ -18,9 +23,4 @@
     57%  { transform: scale(1,1)      translateY(-1vh); }
     64%  { transform: scale(1,1)      translateY(0); }
     100% { transform: scale(1,1)      translateY(0); }
-  }
-
-/*@keyframes hop-hover {
-    0%      { transform: translate(0,  0); }
-    100%    { transform: translate(0,  -6vh); }
-}*/
+}

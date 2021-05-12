@@ -1,10 +1,15 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
 import React, { useState, useEffect } from "react"
 import { shuffleArray } from '../../components/images/Image-Functions'
 import SimpleBar from 'simplebar-react';
 import './MixAndMatch.scss'
 import 'simplebar/dist/simplebar.min.css';
 import { FaHandPointUp } from 'react-icons/fa';
-import { SizeMe } from 'react-sizeme';
+import ResponsiveSimpleBar from '../../components/ResponsiveSimpleBar';
 import '../../components/Hand-Drag-Animation.scss'
 
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
@@ -17,7 +22,6 @@ import 'swiper/components/scrollbar/scrollbar.scss';
 // install Swiper modules
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
-//Known issue with Mix and Match, problem with drag and drop component when you drag the correct right card and then the correct left card if using {difficulty === 1 && } logic, find fix later
 export default function MixAndMatch(props) {
 
     const difficulty = props.difficulty
@@ -27,8 +31,6 @@ export default function MixAndMatch(props) {
     const [panel2, setPanel2] = useState(null)
     const [panel3, setPanel3] = useState(null)
     const [showHand, setShowHand] = useState(false);
-    const [rowWidth, setRowWidth] = useState(null);
-    const [contentWidth, setContentWidth] = useState(null);
 
     const [errorMessage, setErrorMessage] = useState(null)
 
@@ -100,13 +102,6 @@ export default function MixAndMatch(props) {
       }
     }
 
-    function SetRowJustification() { // cards are cut off by the simplebar component when statically defined as centered, this is a solution
-        if(contentWidth > rowWidth) {
-            return '';
-        } else
-            return 'justify-content-center';
-    }
-
     return (
       <>
         {difficulty <= levels &&
@@ -116,33 +111,17 @@ export default function MixAndMatch(props) {
               <div className="row justify-content-center">
                 <SimpleBar style={{ width: '70vw' }} autoHide={false}>
                   <div className="container-fluid">
-                    <SizeMe
-                      monitorWidth
-                      refreshRate={16}>
-                      {({ size }) => 
-                        <div className={`row ${SetRowJustification()}`}>
-                          {setRowWidth(size.width)}
-                          <SizeMe
-                          monitorWidth
-                          refreshRate={16}>
-                              {({ size }) => 
-                                <div className="d-flex">
-                                  {setContentWidth(size.width)}
-                                  {props.shuffledImages.easy.map((image, i) => {
-                                      return(
-                                        <div key={i} className="d-flex align-items-end card-option mr-2">
-                                            <a onClick={() => winCondition(image.correct)} >
-                                                <img src={image.default} />
-                                            </a>
-                                        </div>
-                                      )
-                                  })}
-                                </div>
-                              }
-                          </SizeMe>
-                        </div>
-                        }
-                    </SizeMe>
+                    <ResponsiveSimpleBar>
+                      {props.shuffledImages.easy.map((image, i) => {
+                          return(
+                            <div key={i} className="d-flex align-items-end card-option mr-2">
+                                <a onClick={() => winCondition(image.correct)} >
+                                    <img src={image.default} />
+                                </a>
+                            </div>
+                          )
+                      })}
+                    </ResponsiveSimpleBar>
                   </div>
                 </SimpleBar>
               </div>

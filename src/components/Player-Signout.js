@@ -7,10 +7,8 @@ export default function PlayerSignout() {
     const currentPlayer = useAuthPlayer();
 
     return(
-        <div className='d-flex align-self-start'>
-            <div id="Player-Logout-Button" className='d-flex'>
-                <a onClick={() => currentPlayer.setPlayer(false)}><BiLogOut size={100} /></a>
-            </div>
+        <div id="Player-Logout-Button" className='d-flex mr-3 mt-3 ml-auto'>
+            <a onClick={() => currentPlayer.setPlayer(false)}><BiLogOut size={100} /></a>
         </div>
     )
 

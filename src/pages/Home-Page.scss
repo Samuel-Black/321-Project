@@ -4,7 +4,6 @@
 .App {
   min-height: 100vh;
   min-width: 100vw;
-  display: flex;
   align-items: center;
   background-image: url('../assets/backgrounds/Space-Level-Background.png');
   background-repeat: no-repeat;
@@ -55,17 +54,6 @@
   }
 }
 
-.player-edit-pencil {
-  svg {
-    fill: rgba(black, 0.95);
-    transition: all 0.15s ease-in-out;
-    &:hover {
-      fill: black;
-      transform: scale(1.18);
-    }
-  }
-}
-
 #Home-Button {
   padding-top: 10%;
 }
@@ -97,9 +85,10 @@
   &.card {
     background-color: rgba(white, 0.35);
   }
-  .card-img-top {
-    height: 12.4rem;
-  }
+}
+
+#Account-Creation-Prompt {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .Player-Container {

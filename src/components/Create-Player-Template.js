@@ -1,6 +1,6 @@
 import DatePicker from 'react-date-picker';
 
-export default function CreatePlayerTemplate(setNickname, validateNickName, setBirthday, birthday, createPlayer) {
+export default function CreatePlayerTemplate(nickname, setNickname, validateNickName, setBirthday, birthday, createPlayer) {
 
     function validateBirthday() {
         if (birthday == null) {
@@ -16,7 +16,7 @@ export default function CreatePlayerTemplate(setNickname, validateNickName, setB
             </div>
             <div className="d-flex">
                 <div className="form-group">
-                    <input type="text" id='nickname' className="form-control-lg" placeholder="nickname" onChange={(e) => setNickname(e.target.value)} />
+                    <input type="text" id='nickname' className="form-control-lg" placeholder="nickname" value={nickname} onChange={(e) => setNickname(e.target.value)} />
                 </div>
             </div>
             <div className="d-flex justify-content-center">

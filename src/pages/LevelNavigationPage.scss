@@ -35,9 +35,6 @@
 }
 
 #Level-Nav-Background {
-  position: absolute;
-  left: 0px;
-  padding: 15px;
   box-sizing: border-box;
   min-width: 100vw;
   min-height: 100vh;
@@ -48,7 +45,12 @@
 
 #Current-Player {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  font-size: 2rem;
+  @include tiny-phone-up {    
+    font-size: 1.5rem;
+  }
+  @include tablet-up {    
+    font-size: 2rem;
+  }
 }
 
 .nav-item {

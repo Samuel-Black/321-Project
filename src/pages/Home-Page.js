@@ -148,6 +148,13 @@ export default function HomePage() {
                 <div className='d-flex align-items-center' style={{ minHeight: '75vh'}}>
                     {createNewPlayer === false ? 
                         <div className="container-fluid mt-5">
+                            <span id='Account-Creation-Prompt'>
+                                Keep your progress safe by creating an account&nbsp;
+                                <Link to={'./Login'}>
+                                    Click Here.
+                                </Link>
+                                <br />
+                            </span>
                             <div className="container mb-5 mt-5">
                                 <div className="row justify-content-center">
                                     <h2>Who's playing?</h2>

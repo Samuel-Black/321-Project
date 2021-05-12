@@ -33,13 +33,14 @@ export default function LoginPage() {
     const [passwordFocused, setPasswordFocused] = useState(false);
     const [confirmPasswordFocused, setConfirmPasswordFocused] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [authCode, setAuthCode] = useState(null);
+    const [authCode, setAuthCode] = useState('');
     const [authCodeError, setAuthCodeError] = useState(null);
     const [step, setStep] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     const dispatch = useAuthDispatch();
     
-    let { loading, errorMessage } = useAuthState();
+    let { errorMessage } = useAuthState();
 
     useEffect(() => {
         errorMessage = null;
@@ -79,40 +80,49 @@ export default function LoginPage() {
         if (confirmResetPassword.length > 0 && resetPassword.length > 0 && resetPassword !== confirmResetPassword) {
             setConfirmResetPasswordError('Passwords do not match.');
         }
-        else if (password == confirmPassword || confirmPassword.length === 0)
+        else if (resetPassword == confirmResetPassword || confirmResetPassword.length === 0)
             setConfirmResetPasswordError(null);
     }, [confirmResetPassword]);
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             await loginUser(dispatch, { email, password });
+            setLoading(false);
         } catch (error) {
             errorMessage = error;
+            setLoading(false);
         }
     }
 
     const handleResetPassword = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             await Auth.forgotPassword(forgotPasswordEmail);
             setStep(2);
             setResetPasswordEmailError(null);
+            setLoading(false);
         }
         catch (error) {
             setResetPasswordEmailError(error);
+            setLoading(false);
         }
     }
 
     const handleResetPasswordAuth = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             await Auth.forgotPasswordSubmit(forgotPasswordEmail, authCode, resetPassword);
             setStep(0);
             setResetPasswordError(null);
+            setLoading(false);
         }
         catch (error) {
-            setResetPasswordError(error);
+            setResetPasswordError(error.message);
+            setLoading(false);
         }
     }
 
@@ -182,18 +192,20 @@ export default function LoginPage() {
                                             <a>Click Here</a>
                                         </a>
                                     </span>
-                                    <div className="d-flex">
-                                        <label htmlFor="email">Email</label>
-                                    </div>
-                                    <div className="d-flex">
-                                        <div className="form-group">
-                                            <input type="text" id='email' className="form-control-lg" placeholder="email" value={forgotPasswordEmail} onChange={(e) => setForgotPasswordEmail(e.target.value)} disabled={loading} />
+                                    <form>
+                                        <div className="d-flex">
+                                            <label htmlFor="email">Email</label>
                                         </div>
-                                    </div>
-                                    {resetPasswordEmailError !== null ? <p>{resetPasswordEmailError.message}</p> : null}
-                                    <div className="d-flex justify-content-end">
-                                        {loading === true && <Oval />}<button id="Login-Button" className='btn btn-secondary' onClick={handleResetPassword} disabled={loading}>Reset</button>
-                                    </div>
+                                        <div className="d-flex">
+                                            <div className="form-group">
+                                                <input type="text" id='email' className="form-control-lg" placeholder="email" value={forgotPasswordEmail} onChange={(e) => setForgotPasswordEmail(e.target.value)} disabled={loading} />
+                                            </div>
+                                        </div>
+                                        {resetPasswordEmailError !== null ? <p>{resetPasswordEmailError.message}</p> : null}
+                                        <div className="d-flex justify-content-end">
+                                            {loading === true && <Oval />}<button id="Login-Button" className='btn btn-secondary' onClick={handleResetPassword} disabled={loading}>Reset</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -204,43 +216,44 @@ export default function LoginPage() {
                                 <h2>Check your email for the code.</h2>
                             </div>
                             <div className="row justify-content-center">
-                                <div id="Login-Content" className="d-inline-flex flex-column align-items-center justify-content-center">
-                                    <div className="d-flex">
-                                        <label htmlFor="email">Email</label>
-                                    </div>
-                                    <div className="d-flex pb-4">
-                                        <input type="text" style={{color: "white"}} value={forgotPasswordEmail} className="form-control-lg" disabled name="email" />
-                                    </div>
-                                    <div className="d-flex">
-                                        <label htmlFor="authenticationCode" className="align-self-center">Authentication Code</label>
-                                    </div>
-                                    <div id="Auth-Code-Input-Container" className="d-flex justify-content-center">
-                                        <ReactCodeInput type={'number'} fields={6} autoFocus loading={loading} onChange={(code) => setAuthCode(code)} />
-                                    </div>
-                                    <div className="d-flex">
-                                        <label htmlFor="password" className="align-self-center">New Password</label>
-                                    </div>
-                                    <div className="d-flex">
-                                        <div className="form-group mb-0">
-                                            <input type="password" id="password" className="form-control-lg" placeholder="password" value={resetPassword} onChange={(e) => setResetPassword(e.target.value)} name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required disabled={loading} onFocus={() => setPasswordFocused(true)} onBlur={() => setPasswordFocused(false)} />
-                                            <PasswordStrengthBar className="pt-1 password-strength-bar" password={resetPassword} minLength={8} />
+                                <form>
+                                    <div id="Login-Content" className="d-inline-flex flex-column align-items-center justify-content-center">
+                                        <div className="d-flex">
+                                            <label htmlFor="email">Email</label>
+                                        </div>
+                                        <div className="d-flex pb-4">
+                                            <input type="text" style={{color: "white"}} value={forgotPasswordEmail} className="form-control-lg" disabled name="email" />
+                                        </div>
+                                        <div className="d-flex">
+                                            <label htmlFor="authenticationCode" className="align-self-center">Authentication Code</label>
+                                        </div>
+                                        <div id="Auth-Code-Input-Container" className="d-flex justify-content-center">
+                                            <ReactCodeInput type={'number'} fields={6} autoFocus loading={loading} onChange={(code) => setAuthCode(code)} />
+                                        </div>
+                                        <div className="d-flex">
+                                            <label htmlFor="password" className="align-self-center">New Password</label>
+                                        </div>
+                                        <div className="d-flex">
+                                            <div className="form-group mb-0">
+                                                <input type="password" id="password" className="form-control-lg" placeholder="password" value={resetPassword} onChange={(e) => setResetPassword(e.target.value)} name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required disabled={loading} onFocus={() => setPasswordFocused(true)} onBlur={() => setPasswordFocused(false)} />
+                                                <PasswordStrengthBar className="pt-1 password-strength-bar" password={resetPassword} minLength={8} />
+                                            </div>
+                                        </div>
+                                        <div className="d-flex">
+                                            <label htmlFor="confirmPassword" className="align-self-center">Confirm New Password</label>
+                                        </div>
+                                        <div className="d-flex">
+                                            <div className="form-group">
+                                                <input type="password" id="confirmPassword" className="form-control-lg" placeholder="confirm password" value={confirmResetPassword} onChange={(e) => setConfirmResetPassword(e.target.value)} name="confirmPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required disabled={loading} onFocus={() => setConfirmPasswordFocused(true)} onBlur={() => setConfirmPasswordFocused(false)} />
+                                            </div>
+                                        </div>
+                                        {confirmResetPasswordError}
+                                        {resetPasswordError}
+                                        <div className="d-flex justify-content-end">
+                                            {loading === true && <Oval />}<button id="Reset-Password-Button" className='btn btn-secondary' onClick={handleResetPasswordAuth} disabled={loading}>Reset</button>
                                         </div>
                                     </div>
-                                    {resetPasswordError}
-                                    <div className="d-flex">
-                                        <label htmlFor="confirmPassword" className="align-self-center">Confirm New Password</label>
-                                    </div>
-                                    <div className="d-flex">
-                                        <div className="form-group">
-                                            <input type="password" id="confirmPassword" className="form-control-lg" placeholder="confirm password" value={confirmResetPassword} onChange={(e) => setConfirmResetPassword(e.target.value)} name="confirmPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required disabled={loading} onFocus={() => setConfirmPasswordFocused(true)} onBlur={() => setConfirmPasswordFocused(false)} />
-                                        </div>
-                                    </div>
-                                    {confirmResetPasswordError}
-                                    {resetPasswordError !== null ? <p>{resetPasswordError.message}</p> : null}
-                                    <div className="d-flex justify-content-end">
-                                        {loading === true && <Oval />}<button id="Reset-Password-Button" className='btn btn-secondary' onClick={handleResetPasswordAuth} disabled={loading}>Reset</button>
-                                    </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     }

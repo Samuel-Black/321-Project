@@ -3,22 +3,27 @@ Author: Samuel Black
 https://github.com/Samuel-Black
 */
 
+// 720p
 @mixin hd-up {
     @media (min-width: 1366px) { @content; }
 }
 
+// Ipad Pro etc.
 @mixin large-tablet-up {
     @media (min-width: 1024px) { @content; }
 }
 
+// Ipad etc.
 @mixin tablet-up {
     @media (min-width: 768px) { @content; }
 }
 
+// most phones now
 @mixin phone-up {
     @media (min-width: 360px) { @content; }
 }
 
+// mainly older phones, such as iphone 5; also galaxy fold when not folded out
 @mixin tiny-phone-up {
     @media (min-width: 280px) { @content; }
 }

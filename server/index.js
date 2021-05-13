@@ -1,3 +1,8 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -8,6 +13,7 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded( { extended: true } ));
 
+// establish connection to database
 const connection = mysql.createPool({
     host: 'jumpstartdb.cqfqbotvheno.us-east-1.rds.amazonaws.com',
     user: 'admin',
@@ -16,19 +22,7 @@ const connection = mysql.createPool({
     port: 3306
 });
 
-/*
-// function to add Authenticated user to Database or do nothing if already present; 
-// UserName is unique and indexed in the Database to help speed up lookups however, 
-// there may still be a better way of doing this, such as a custom lambda trigger after a user completes authentication
-app.post('/api/verifyuser', (req, res) => { 
-    const UserName = req.body.UserName      
-    const sqlSelect = "INSERT INTO Player (UserName) VALUES (?) ON DUPLICATE KEY UPDATE UserName = UserName;"
-    connection.query(sqlSelect, [UserName], (err, result) => {
-        res.send(result);
-    })
-})
-*/
-
+// when a level is completed insert the details into the DBMS
 app.post('/api/createattempt', (req, res) => {
     const GameName = req.body.GameName;   
     const LevelNumber = req.body.LevelNumber;   
@@ -56,6 +50,7 @@ app.post('/api/createattempt', (req, res) => {
     });
 });
 
+// when a level is completed but the user is played without an authenticated account insert the details into the DBMS
 app.post('/api/createlocalattempt', (req, res) => {
     const GameName = req.body.GameName;   
     const LevelNumber = req.body.LevelNumber;   
@@ -72,6 +67,7 @@ app.post('/api/createlocalattempt', (req, res) => {
     });
 });
 
+// get all players associated with an authenticated account
 app.post('/api/getplayers', (req, res) => {
     const UserName = req.body.UserName;
     const sqlSelect = "SELECT NickName, ProfilePicture FROM Player WHERE ? = Player.UserName;"
@@ -80,6 +76,7 @@ app.post('/api/getplayers', (req, res) => {
     });
 });
 
+// get progress for a player for all skills
 app.post('/api/gettotalprogress', (req, res) => {
     const UserName = req.body.UserName;
     const NickName = req.body.NickName;
@@ -92,9 +89,10 @@ app.post('/api/gettotalprogress', (req, res) => {
                         GROUP BY Attempt.GameName, Game.SkillName;`
     connection.query(sqlSelect, [UserName, NickName], (err, result) => {
         res.send(result);
-    })
-})
+    });
+});
 
+// get progress for a player for a particular skill
 app.post('/api/getlevelprogress', (req, res) => {
     const UserName = req.body.UserName;
     const NickName = req.body.NickName;
@@ -109,9 +107,10 @@ app.post('/api/getlevelprogress', (req, res) => {
                         GROUP BY Attempt.GameName, Game.SkillName;`
     connection.query(sqlSelect, [UserName, NickName, SkillName], (err, result) => {
         res.send(result);
-    })
-})
+    });
+});
 
+// insert a created player into the DBMS for an authenticated user
 app.post('/api/createplayer', (req, res) => {
     const UserName = req.body.UserName;
     const nickname = req.body.nickname;
@@ -124,8 +123,4 @@ app.post('/api/createplayer', (req, res) => {
             console.log(err);
         }
     })
-})
-
-app.listen(3001, () => {
-    console.log("running on port 3001");
-})
+});

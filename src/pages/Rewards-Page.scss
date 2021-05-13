@@ -1,5 +1,10 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
 @import '../components/Colours.scss';
-@import '../components/BreakPoint.scss';
+@import '../components/Break-Point.scss';
 
 #Home-Nav-Button {
     padding-top: 10px;
@@ -171,14 +176,6 @@
 
 .rewards-content-flex {
     max-width: 100%;
-}
-
-.colour-option {
-    width: 30px;
-    height: 30px;
-    border-radius: 10px;
-    border-color: white;
-    border-style: solid;
 }
 
 #Rewards-Draw-Container {

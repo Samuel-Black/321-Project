@@ -6,20 +6,20 @@ https://github.com/Samuel-Black
 import React, { useEffect, useState } from 'react';
 import { shuffleArray, returnRandomHopArmsCharacters } from '../../components/images/Image-Functions';
 import SimpleBar from 'simplebar-react';
-import ResponsiveSimpleBar from '../../components/ResponsiveSimpleBar';
-import './CardsGame.scss';
+import ResponsiveSimpleBar from '../../components/Responsive-SimpleBar';
+import ValidateWinCondition from './Validate-Win-Condition';
+import './Cards-Game.scss';
 import './Hop-Arms.scss';
 
 export default function HopArms(props) {
-    const [currentCards, setCurrentCards] = useState([]);
-    const [characters, setCharacters] = useState({
+    const [currentCards, setCurrentCards] = useState([]); // current selectable characters in play
+    const [characters, setCharacters] = useState({ // four characters/levels
         character1: null,
         character2: null,
         character3: null,
         character4: null,
     });
     const [charactersReady, setCharactersReady] = useState(false);
-
     const [errorMessage, setErrorMessage] = useState(null);
 
     useEffect(() => {
@@ -33,56 +33,47 @@ export default function HopArms(props) {
         setCharactersReady(true);
     }, []);
 
-    const difficulty = props.difficulty;
-    const levels = props.numLevels;
+    const difficulty = props.difficulty; // current difficulty/level
+    const levels = props.numLevels; // total levels in the game
 
+    // on difficulty change, if the character states are not null, randomize their order.
     useEffect(() => {
         if(characters.character1 !== null || characters.character2 !== null || characters.character3 !== null || characters.character4 !== null) {
             ShuffleCards();
         }
     }, [difficulty, charactersReady]);
 
+    // function to slice the array accordingly and set the current cards for the given difficulty/level
+    const setCards = (currentCharacter) => {
+        let cards = []
+        cards = currentCharacter.correct; // put correct card in array
+        cards = cards.concat(currentCharacter.incorrect.slice(0, currentCharacter.incorrect.length)); // put incorrect cards in the array
+        shuffleArray(cards); // randomize the order
+        setCurrentCards(cards); // set the cards
+    }
+
+    // function to set the current cards
     const ShuffleCards = () => {
-        let dummy = []
         if(difficulty === 1) {
-            dummy = characters.character1.correct;
-            dummy = dummy.concat(characters.character1.incorrect.slice(0, characters.character1.incorrect.length));
-            shuffleArray(dummy);
-            setCurrentCards(dummy);
+            setCards(characters.character1); // set cards for level/difficulty 1
         }
         else if(difficulty === 2) {
-            dummy = characters.character2.correct;
-            dummy = dummy.concat(characters.character2.incorrect.slice(0, characters.character2.incorrect.length));
-            shuffleArray(dummy);
-            setCurrentCards(dummy);
+            setCards(characters.character2); // set cards for level/difficulty 2
         }
         else if(difficulty === 3) {
-            dummy = characters.character3.correct;
-            dummy = dummy.concat(characters.character3.incorrect.slice(0, characters.character3.incorrect.length));
-            shuffleArray(dummy);
-            setCurrentCards(dummy);
+            setCards(characters.character3); // set cards for level/difficulty 3
         }
         else if(difficulty === 4) {
-            dummy = characters.character4.correct;
-            dummy = dummy.concat(characters.character4.incorrect.slice(0, characters.character4.incorrect.length));
-            shuffleArray(dummy);
-            setCurrentCards(dummy);
+            setCards(characters.character4); // set cards for level/difficulty 4
         }
     }
 
+    // check if level has been cleared
     const WinCondition = (selection) => {
         props.setFinishTime(new Date().getTime()); // When user clicks an option set the finish time
         
-        if(selection === 'true') {
-            props.setLevelCompleted('True');
-            props.setPopupState(true);
-            props.setAttemptNumber(0);
-            ShuffleCards();
-        }
-        else {
-            props.setAttemptNumber(props.attemptNumber + 1);
-            props.setPopupState(true);
-        }
+        const correctSelection = (selection === 'true'); // truth value of the win condition
+        ValidateWinCondition(correctSelection, props.setLevelCompleted, props.setPopupState, props.setAttemptNumber, props.attemptNumber); // validate win condition
     }
 
     return (
@@ -91,6 +82,8 @@ export default function HopArms(props) {
                 <SimpleBar style={{ width: '85vw' }} autoHide={false}>
                     <div className="container-fluid">
                         <ResponsiveSimpleBar>
+
+                            {/* while the current player has not completed the entire game, display the below */}
                             {difficulty <= levels &&
                                 <>
                                     {currentCards.map((image, i) => {
@@ -104,6 +97,7 @@ export default function HopArms(props) {
                                     })}
                                 </>
                             }
+                            
                         </ResponsiveSimpleBar>
                     </div>
                 </SimpleBar>

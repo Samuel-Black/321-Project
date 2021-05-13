@@ -1,3 +1,8 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
 import React from 'react'
 import './Character.scss'
 

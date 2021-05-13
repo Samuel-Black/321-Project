@@ -1,8 +1,13 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
 import { GetTotalProgressURL } from './Request-URL';
 import { getLocalPlayer } from './localstorage/Local-Storage-Functions';
 import Axios from 'axios';
 
-
+// get a players progress for a particular skill, e.g. Kick
 export function getSkillProgress(SkillName, progress) {
     let total = 0;
     for (let i = 0; i < progress.length; i++) {
@@ -13,6 +18,7 @@ export function getSkillProgress(SkillName, progress) {
     return total;
 }
 
+// get total saved progress either from DBMS or locally for a player
 export function GetProgress(user, currentPlayer, setProgress, setErrorMessage) {
 
     if(user !== false) { // If using a logged in account, get progress from DB
@@ -42,16 +48,3 @@ export function GetProgress(user, currentPlayer, setProgress, setErrorMessage) {
         setProgress(localProgress);
     }
 }
-
-/*
-export function getCompletedSkills(progress) {
-    let completedSkills = [];
-    for(const i in Skills) {
-        if(getSkillProgress(Skills[i].name, progress) >= Skills[i].numLevels) {
-            completedSkills.push(Skills[i].name);
-        }
-    }
-    
-    return completedSkills;
-}
-*/

@@ -1,4 +1,9 @@
-@import '../../components/BreakPoint.scss';
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
+@import '../../components/Break-Point.scss';
 
 .card-option {
     @include tiny-phone-up {

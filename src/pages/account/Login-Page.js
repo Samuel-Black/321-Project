@@ -10,31 +10,31 @@ import { Link } from 'react-router-dom';
 import { Oval } from 'react-loading-icons';
 import PasswordStrengthBar from 'react-password-strength-bar';
 import ReactCodeInput from 'react-verification-code-input';
-import PasswordValidator, { getPasswordErrorMessage } from './PasswordValidator';
-import './LoginPage.scss';
+import PasswordValidator, { getPasswordErrorMessage } from './Password-Validator';
+import './Login-Page.scss';
 
 export default function LoginPage() {
 
     const [step, setStep] = useState(0); // 0 is login "page", 1 is input email "page" for forgotten password, 2 is confirm auth code and new password "page"
 
     // step == 0, states
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState(''); // email input
+    const [password, setPassword] = useState(''); // password input
 
     // step == 1, states
-    const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
-    const [forgotPasswordEmailError, setForgotPasswordEmailError] = useState(null);
+    const [forgotPasswordEmail, setForgotPasswordEmail] = useState(''); // email for account of forgotten password
+    const [forgotPasswordEmailError, setForgotPasswordEmailError] = useState(null); // email for account of forgotten password error message
 
     // step == 2, states
-    const [resetPassword, setResetPassword] = useState('');
-    const [resetPasswordFocused, setResetPasswordFocused] = useState(false);
-    const [resetPasswordError, setResetPasswordError] = useState(null);
+    const [resetPassword, setResetPassword] = useState(''); // reset password input
+    const [resetPasswordFocused, setResetPasswordFocused] = useState(false); // reset password input focus state
+    const [resetPasswordError, setResetPasswordError] = useState(null); // reset password input error message
 
-    const [confirmResetPassword, setConfirmResetPassword] = useState('');
-    const [confirmResetPasswordError, setConfirmResetPasswordError] = useState('');
+    const [confirmResetPassword, setConfirmResetPassword] = useState(''); // confirm reset password input
+    const [confirmResetPasswordError, setConfirmResetPasswordError] = useState(''); // confirm reset password input error message
 
-    const [authenticationCode, setAuthenticationCode] = useState('');
-    const [authCodeError, setAuthCodeError] = useState(null);
+    const [authenticationCode, setAuthenticationCode] = useState(''); // authentication code input
+    const [authCodeError, setAuthCodeError] = useState(null); // authentication code error message
 
     const [allValidCredentials, setAllValidCredentials] = useState(false); // if password confirm password and authentication code are valid, true
     const [loading, setLoading] = useState(false); // some AWS Auth promise responses were causing errors with reducer
@@ -147,7 +147,14 @@ export default function LoginPage() {
                             </div>
                             <div className="row justify-content-center">
                                 <div id="Login-Content" className="d-inline-flex flex-column align-items-center justify-content-center">
-                                    <span>Don't have an account?&nbsp;
+                                    <span className='mt-3'>
+                                        Want to play without an account?&nbsp;
+                                        <Link to='../'>
+                                            <a>Click Here</a>
+                                        </Link>
+                                    </span>
+                                    <span className='mt-3'>
+                                        Don't have an account?&nbsp;
                                         <Link to='../Signup'>
                                             <a>Sign Up Here</a>
                                         </Link>

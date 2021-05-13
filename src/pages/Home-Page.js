@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { FaPlay } from 'react-icons/fa';
 import { GiLockedChest, GiOpenChest } from 'react-icons/gi';
 import Settings from '../components/Settings';
-import PlayerSignout from '../components/Player-Signout';
+import PlayerSignout from '../components/Player-Signout-Button';
 import { useAuthPlayer, useAuthUser } from '../libs';
 import Axios from 'axios';
 import ProfileImageMenu from '../components/Profile-Image-Menu';
@@ -19,9 +19,9 @@ import { GetPlayersURL, CreatePlayerURL } from '../components/Request-URL';
 import { createLocalPlayer, setLocalPlayerList } from '../components/localstorage/Local-Storage-Functions';
 import SimpleBar from 'simplebar-react';
 import { TiUserAdd } from 'react-icons/ti';
-import { ProfilePictureImages } from '../components/images/ProfilePictureImages';
+import { ProfilePictureImages } from '../components/images/Profile-Picture-Images';
 import { TiHome } from 'react-icons/ti';
-import ResponsiveSimpleBar from '../components/ResponsiveSimpleBar';
+import ResponsiveSimpleBar from '../components/Responsive-SimpleBar';
 
 export default function HomePage() {
 
@@ -140,10 +140,15 @@ export default function HomePage() {
     return(
         <div className="App">
             <div className='row'>
-                {( (user !== false) && (!createNewPlayer) ) && <Settings />}
+
+                {/* if a user is currently logged in, and the user is not creating a new player, display a cog wheel settings icon in the top left of the screen */}
+                {( (user !== false) && (!createNewPlayer) ) && <Settings />} 
+
+                {/* if a player is currently selected, display a sign out icon in the top right of the screen */}
                 {currentPlayer.player !== false && <PlayerSignout />}
             </div>
             
+            {/* If a player is not currently selected and the user is in the create new player menu, display a home icon in the top left */}
             {(currentPlayer.player === false && createNewPlayer === true) &&
                 <div className='d-flex align-self-start'>
                     <a onClick={() => setCreateNewPlayer(false)} id='Home-Nav-Button' className='pr-2 pl-2'>
@@ -151,18 +156,27 @@ export default function HomePage() {
                     </a>
                 </div>
             }
+
+            {/* if no player is currently selected, display the below */}
             {currentPlayer.player === false ?
                 <div className='d-flex align-items-center' style={{ minHeight: '75vh'}}>
+
+                    {/* If not in the create new player menu display the below */}
                     {createNewPlayer === false ? 
                         <div className="container-fluid mt-5">
+
+                            {/* If the current user is not using an authenticated and logged in account, notify them that they can do so */}
                             {user === false &&
-                            <span id='Account-Creation-Prompt'>
-                                Keep your progress safe by creating an account&nbsp;
-                                <Link to={'./Login'}>
-                                    Click Here.
-                                </Link>
-                                <br />
-                            </span>}
+                                <span id='Account-Creation-Prompt'>
+                                    Keep your progress safe by creating an account&nbsp;
+                                    <Link to={'./Login'}>
+                                        Click Here.
+                                    </Link>
+                                    <br />
+                                </span>
+                            }
+
+                            {/* else, allow the player to play locally without creating an account */}
                             <div className="container mb-5 mt-5">
                                 <div className="row justify-content-center">
                                     <h2>Who's playing?</h2>
@@ -170,9 +184,11 @@ export default function HomePage() {
                             </div>
                             <div className="container-fluid mb-5">      
                                 <div className="row justify-content-center">
-                                    <SimpleBar style={{ maxWidth: '90vw', width: '85vw', maxHeight: '50vh' }} autoHide={false}>
+                                    <SimpleBar style={{ maxWidth: '90vw', width: '85vw' }} autoHide={false}>
                                         <div className="container-fluid">
                                             <ResponsiveSimpleBar>
+
+                                                {/* display all available players */}
                                                 {playerList.map(player => {
                                                     return (
                                                         <div key={player.NickName} className="Player-Container card mr-3">
@@ -183,19 +199,24 @@ export default function HomePage() {
                                                         </div>
                                                     )
                                                 })}
+
+                                                {/* create new player option */}
                                                 <div id="Create-Player" className="Player-Container card">
                                                     <a onClick={showCreatePlayer}>
                                                         <TiUserAdd size={150} className="card-img-top" />
                                                         <div className="card-footer">New Player</div>
                                                     </a>
                                                 </div>
+
                                             </ResponsiveSimpleBar>
                                         </div>
                                     </SimpleBar>
                                 </div>
                             </div>
                         </div>
-                    :
+
+                    :   // If create new player is selected, display the below
+
                         <div id="Create-New-Player-Container" className="container-fluid">
                             <div className="row justify-content-center">
                                 <h2>Create New Player</h2>
@@ -204,11 +225,14 @@ export default function HomePage() {
                                 <div id="Create-Player-Content" className="d-inline-flex flex-column align-items-center justify-content-center">
                                 <ProfileImageMenu ProfileImageState={setProfileImage} ActiveProfileImage={activeProfileImage} />
                                 
+                                {/* if the user is authenticated, post the new player to the DBMS by wrapping in a form */}
                                 {user !== false ? 
                                     <form id='Create-Player-Form' className="mt-3">
                                         {CreatePlayerTemplate(nickname, setNickname, validateNickName, setBirthday, birthday, createPlayer)}
                                     </form>
-                                :
+                                    
+                                : // If the user Isn't authenticated don't wrap in a form, and save the player locally
+
                                     <>
                                         {CreatePlayerTemplate(nickname, setNickname, validateNickName, setBirthday, birthday, createPlayer)}
                                     </>
@@ -220,7 +244,9 @@ export default function HomePage() {
                         </div>
                     }
                 </div>
-            :
+
+            : // If a current player is selected, display the home page with play and rewards page button
+
                 <div className="container">
                     <div id="Home-Title" className="row justify-content-center title">
                         <h1>JumpStart</h1>

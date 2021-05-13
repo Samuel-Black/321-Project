@@ -1,3 +1,8 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
 .game-background {
   min-height: 100vh;
   min-width: 100vw;
@@ -56,6 +61,7 @@
   .swiper-container {
     object-fit: fill;
     width: 50vw; // if the width Isn't set to 50% of the screen it bugs for some reason
+    text-align: center; // centering for horizontal matching
   }
   img {
     height: auto;

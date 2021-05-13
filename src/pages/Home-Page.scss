@@ -1,5 +1,10 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
 @import '../components/Colours.scss';
-@import '../components/BreakPoint.scss';
+@import '../components/Break-Point.scss';
 
 .App {
   min-height: 100vh;
@@ -12,7 +17,6 @@
 }
 
 #Create-Player-Button {
-  font-family: 'Rabbit-on-the-Moon';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   width: 5em;
@@ -89,6 +93,9 @@
 
 #Account-Creation-Prompt {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  a {
+    font-weight: bold;
+  }
 }
 
 .Player-Container {

@@ -11,27 +11,27 @@ import { Oval } from 'react-loading-icons';
 import { useNavigate } from 'react-router-dom';
 import ReactCodeInput from 'react-verification-code-input';
 import PasswordStrengthBar from 'react-password-strength-bar';
-import PasswordValidator, { getPasswordErrorMessage } from './PasswordValidator';
-import './SignupPage.scss';
+import PasswordValidator, { getPasswordErrorMessage } from './Password-Validator';
+import './Signup-Page.scss';
 const isEmail = require('sane-email-validation');
 
 export default function SignupPage() {
     
     const navigate = useNavigate();
 
-    const [email, setEmail] = useState('');
-    const [emailFocused, setEmailFocused] = useState(false);
-    const [emailError, setEmailError] = useState(null);
+    const [email, setEmail] = useState(''); // email input
+    const [emailFocused, setEmailFocused] = useState(false); // email input focus state
+    const [emailError, setEmailError] = useState(null); // email error message
 
-    const [password, setPassword] = useState('');
-    const [passwordFocused, setPasswordFocused] = useState(false);
-    const [passwordError, setPasswordError] = useState(null);
+    const [password, setPassword] = useState(''); // password input
+    const [passwordFocused, setPasswordFocused] = useState(false); // password input focus state
+    const [passwordError, setPasswordError] = useState(null); // password input error message
 
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [confirmPasswordError, setConfirmPasswordError] = useState(null);
+    const [confirmPassword, setConfirmPassword] = useState(''); // confirm password input
+    const [confirmPasswordError, setConfirmPasswordError] = useState(null); // confirm password input error message
 
-    const [authenticationCode, setAuthenticationCode] = useState(''); 
-    const [authCodeError, setAuthCodeError] = useState(null);
+    const [authenticationCode, setAuthenticationCode] = useState(''); // authentication code input
+    const [authCodeError, setAuthCodeError] = useState(null); // authentication code input error message
 
     const [step, setStep] = useState(0); // 0 is sign up "page", 1 is input authentication code sent via email "page"
     const [allValidCredentials, setAllValidCredentials] = useState(false); // if email, password and confirm password are valid, true
@@ -169,6 +169,7 @@ export default function SignupPage() {
                                             {confirmPasswordError}
                                             <div className="d-flex justify-content-end">{errorMessage ? <p>{errorMessage}</p> : null}</div>
                                             <div className="d-flex justify-content-end">
+                                                {/* if not all valid credentials, disable the button */}
                                                 {loading === true && <Oval />}<button id='Signup-Button' className={`btn btn-secondary ${allValidCredentials ? '' : 'button-disabled'}`} onClick={handleSignUp} disabled={loading}>Create</button>
                                             </div>
                                         </form>

@@ -1,11 +1,18 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
 import { shuffleArray, assignCardsValues, assignHopArmsValues, sortCardsArray, sortCardsArrayWithZoom, sortHopArmsArray } from './Image-Functions';
 
-const importAll = require =>
+// import all images in a specified folder
+const importAll = require => 
   require.keys().reduce((acc, next) => {
     acc[next.replace("./", "")] = require(next);
     return acc;
   }, {});
 
+// import all images, assign appropriate object values and randomize the order for BalanceEyes
 const imageModulesBalanceEyes = importAll(
   require.context('../../assets/games/cards/BalanceEyes/', false, /\.(png|jpe?g|svg)$/)
 );
@@ -14,6 +21,7 @@ balanceEyesImages = assignCardsValues(Object.keys(imageModulesBalanceEyes), bala
 let BalanceEyes = shuffleArray(balanceEyesImages);
 BalanceEyes = sortCardsArray(BalanceEyes);
 
+// import all images, assign appropriate object values and randomize the order for BalanceLegs
 const imageModulesBalanceLegs = importAll(
   require.context('../../assets/games/cards/BalanceLegs/', false, /\.(png|jpe?g|svg)$/)
 );
@@ -22,6 +30,7 @@ balanceLegsImages = assignCardsValues(Object.keys(imageModulesBalanceLegs), bala
 let BalanceLegs = shuffleArray(balanceLegsImages);
 BalanceLegs = sortCardsArray(BalanceLegs);
 
+// import all images, assign appropriate object values and randomize the order for HopEyes
 const imageModulesHopEyes = importAll(
   require.context('../../assets/games/cards/HopEyes/', false, /\.(png|jpe?g|svg)$/)
 );
@@ -30,6 +39,7 @@ hopEyesImages = assignCardsValues(Object.keys(imageModulesHopEyes), hopEyesImage
 let HopEyes = shuffleArray(hopEyesImages);
 HopEyes = sortCardsArray(HopEyes);
 
+// import all images, assign appropriate object values and randomize the order for JumpFeet
 const imageModulesJumpFeet = importAll(
   require.context('../../assets/games/cards/JumpFeet/', false, /\.(png|jpe?g|svg)$/)
 );
@@ -38,6 +48,7 @@ jumpFeetImages = assignCardsValues(Object.keys(imageModulesJumpFeet), jumpFeetIm
 let JumpFeet = shuffleArray(jumpFeetImages);
 JumpFeet = sortCardsArray(JumpFeet);
 
+// import all images, assign appropriate object values and randomize the order for JumpKnees
 const imageModulesJumpKnees = importAll(
   require.context('../../assets/games/cards/JumpKnees/', false, /\.(png|jpe?g|svg)$/)
 );
@@ -46,6 +57,7 @@ jumpKneesImages = assignCardsValues(Object.keys(imageModulesJumpKnees), jumpKnee
 let JumpKnees = shuffleArray(jumpKneesImages);
 JumpKnees = sortCardsArray(JumpKnees);
 
+// import all images, assign appropriate object values and randomize the order for KickEyes
 const imageModulesKickEyes = importAll(
   require.context('../../assets/games/cards/KickEyes/', false, /\.(png|jpe?g|svg)$/)
 );
@@ -54,6 +66,7 @@ kickEyesImages = assignCardsValues(Object.keys(imageModulesKickEyes), kickEyesIm
 let KickEyes = shuffleArray(kickEyesImages);
 KickEyes = sortCardsArray(KickEyes);
 
+// import all images, assign appropriate object values and randomize the order for KickFoot
 const imageModulesKickFoot = importAll(
   require.context('../../assets/games/cards/KickFoot/', false, /\.(png|jpe?g|svg)$/)
 );
@@ -62,6 +75,7 @@ kickFootImages = assignCardsValues(Object.keys(imageModulesKickFoot), kickFootIm
 let KickFoot = shuffleArray(kickFootImages);
 KickFoot = sortCardsArray(KickFoot);
 
+// import all images, assign appropriate object values and randomize the order for KickLegs
 const imageModulesKickLegs = importAll(
   require.context('../../assets/games/cards/KickLegs/', false, /\.(png|jpe?g|svg)$/)
 );
@@ -70,6 +84,7 @@ kickLegsImages = assignCardsValues(Object.keys(imageModulesKickLegs), kickLegsIm
 let KickLegs = shuffleArray(kickLegsImages);
 KickLegs = sortCardsArrayWithZoom(KickLegs);
 
+// import all images, assign appropriate object values and randomize the order for LeapEyes
 const imageModulesLeapEyes = importAll(
   require.context('../../assets/games/cards/LeapEyes/', false, /\.(png|jpe?g|svg)$/)
 );
@@ -78,6 +93,7 @@ leapEyesImages = assignCardsValues(Object.keys(imageModulesLeapEyes), leapEyesIm
 let LeapEyes = shuffleArray(leapEyesImages);
 LeapEyes = sortCardsArray(LeapEyes);
 
+// import all images, assign appropriate object values and randomize the order for RunEyes
 const imageModulesRunEyes = importAll(
   require.context('../../assets/games/cards/RunEyes/', false, /\.(png|jpe?g|svg)$/)
 );
@@ -86,6 +102,7 @@ runEyesImages = assignCardsValues(Object.keys(imageModulesRunEyes), runEyesImage
 let RunEyes = shuffleArray(runEyesImages);
 RunEyes = sortCardsArray(RunEyes);
 
+// import all images, assign appropriate object values and randomize the order for SlideFeet
 const imageModulesSlideFeet = importAll(
   require.context('../../assets/games/cards/SlideFeet/', false, /\.(png|jpe?g|svg)$/)
 );
@@ -94,6 +111,7 @@ slideFeetImages = assignCardsValues(Object.keys(imageModulesSlideFeet), slideFee
 let SlideFeet = shuffleArray(slideFeetImages);
 SlideFeet = sortCardsArray(SlideFeet);
 
+// import all images, assign appropriate object values and randomize the order for HopArms
 const imageModulesHopArms = importAll(
   require.context('../../assets/games/hotspot/Hop_Arms/', false, /\.(png|jpe?g|svg)$/)
 );

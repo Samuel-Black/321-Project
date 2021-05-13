@@ -1,8 +1,14 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
+// set loading and errorMessage to false/none respectively
 export const initialState = {
   loading: false,
   errorMessage: null
 };
- 
+
 export const AuthReducer = (initialState, action) => {
     if (action.type == "REQUEST_LOGIN" || action.type == "CHANGE_PASSWORD" || action.type == "REQUEST_SIGNUP" || action.type == "REQUEST_SIGNUP_CONFIRMATION")
       return {
@@ -21,7 +27,7 @@ export const AuthReducer = (initialState, action) => {
         ...initialState
       }
 
-    if (action.type == "LOGIN_ERROR" || action.type == "CHANGE_PASSWORD_ERROR" || action.type == "SIGNUP_ERROR")
+    if (action.type == "LOGIN_ERROR" || action.type == "SIGNUP_ERROR")
       return {
         ...initialState,
         loading: false,

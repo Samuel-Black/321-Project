@@ -11,7 +11,7 @@ import {
             RunArms, 
             RunKnees, 
             HopLegs 
-        } from '../components/images/MixAndMatchImages'
+        } from './images/Mix-And-Match-Images'
 import { 
             BalanceEyes, 
             BalanceLegs, 
@@ -25,8 +25,8 @@ import {
             RunEyes, 
             SlideFeet, 
             HopArms, 
-        } from '../components/images/CardsGameImages'
-import { ThrowEyes } from '../components/images/ThrowEyesImages'
+        } from './images/Cards-Game-Images'
+import { ThrowEyes } from './images/Throw-Eyes-Images'
 
 const importedImages = {
                         BalanceArms, 

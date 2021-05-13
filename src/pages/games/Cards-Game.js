@@ -6,57 +6,52 @@ https://github.com/Samuel-Black
 import React, { useEffect, useState } from 'react';
 import { shuffleArray } from '../../components/images/Image-Functions';
 import SimpleBar from 'simplebar-react';
-import ResponsiveSimpleBar from '../../components/ResponsiveSimpleBar';
-import './CardsGame.scss';
+import ResponsiveSimpleBar from '../../components/Responsive-SimpleBar';
+import ValidateWinCondition from './Validate-Win-Condition';
+import './Cards-Game.scss';
 
 export default function CardsGame(props) {
 
-    const [currentCards, setCurrentCards] = useState([]);
+    const [currentCards, setCurrentCards] = useState([]); // current selectable cards in play
     const [errorMessage, setErrorMessage] = useState(null);
 
-    const difficulty = props.difficulty;
-    const levels = props.numLevels;
+    const difficulty = props.difficulty; // current difficulty/level
+    const levels = props.numLevels; // total levels in the game
 
+    // on difficulty change, get the cards and randomize the order 
     useEffect(() => {
         shuffleArray(props.shuffledImages.incorrect);
         ShuffleCards();
-    }, [difficulty])
+    }, [difficulty]);
 
+    // function to slice the array accordingly and set the current cards for the given difficulty/level
+    const setCards = (index) => {
+        let cards = [];
+        cards = props.shuffledImages.correct; // put correct card in array
+        cards = cards.concat(props.shuffledImages.incorrect.slice(0, index)); // put index amount of incorrect cards into array depending on difficulty/level
+        shuffleArray(cards); // randomize the order
+        setCurrentCards(cards); // set the cards
+    }
+
+    // function to set the current cards
     const ShuffleCards = () => {
-        let dummy = [];
         if(difficulty === 1) {
-            dummy = props.shuffledImages.correct;
-            dummy = dummy.concat(props.shuffledImages.incorrect.slice(0, 2));
-            shuffleArray(dummy);
-            setCurrentCards(dummy);
+            setCards(2); // use two incorrect images for first level
         }
         else if(difficulty === 2) {
-            dummy = props.shuffledImages.correct;
-            dummy = dummy.concat(props.shuffledImages.incorrect.slice(0, 4));
-            shuffleArray(dummy);
-            setCurrentCards(dummy);
+            setCards(4); // use four incorrect images for second level
         }
         else if(difficulty === 3) {
-            dummy = props.shuffledImages.correct;
-            dummy = dummy.concat(props.shuffledImages.incorrect.slice(0, props.shuffledImages.incorrect.length));
-            shuffleArray(dummy);
-            setCurrentCards(dummy);
+            setCards(props.shuffledImages.incorrect.length); // use all of the incorrect images for third level
         }
     }
 
+    // check if level has been cleared
     const WinCondition = (selection) => {
         props.setFinishTime(new Date().getTime()); // When user clicks an option set the finish time
         
-        if(selection === 'true') {
-            props.setLevelCompleted('True');
-            props.setPopupState(true);
-            props.setAttemptNumber(0);
-            ShuffleCards();
-        }
-        else {
-            props.setAttemptNumber(props.attemptNumber + 1);
-            props.setPopupState(true);
-        }
+        const correctSelection = (selection === 'true'); // truth value of the win condition
+        ValidateWinCondition(correctSelection, props.setLevelCompleted, props.setPopupState, props.setAttemptNumber, props.attemptNumber); // validate win condition
     }
 
     return (
@@ -65,6 +60,8 @@ export default function CardsGame(props) {
                 <SimpleBar style={{ width: '70vw' }} autoHide={false}>
                     <div className="container-fluid">
                         <ResponsiveSimpleBar>
+
+                            {/* While the current player has not compelted the entire game, display the below */}
                             {difficulty <= levels &&
                                 <>
                                     {currentCards.map((image, i) => {
@@ -78,6 +75,7 @@ export default function CardsGame(props) {
                                     })}
                                 </>
                             }
+                            
                         </ResponsiveSimpleBar>
                     </div>
                 </SimpleBar>

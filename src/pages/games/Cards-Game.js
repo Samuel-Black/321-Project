@@ -4,50 +4,31 @@ https://github.com/Samuel-Black
 */
 
 import React, { useEffect, useState } from 'react';
-import { shuffleArray, returnRandomHopArmsCharacters } from '../../components/images/Image-Functions';
+import { shuffleArray } from '../../components/images/Image-Functions';
 import SimpleBar from 'simplebar-react';
 import ResponsiveSimpleBar from '../../components/Responsive-SimpleBar';
 import ValidateWinCondition from './Validate-Win-Condition';
 import './Cards-Game.scss';
-import './Hop-Arms.scss';
 
-export default function HopArms(props) {
-    const [currentCards, setCurrentCards] = useState([]); // current selectable characters in play
-    const [characters, setCharacters] = useState({ // four characters/levels
-        character1: null,
-        character2: null,
-        character3: null,
-        character4: null,
-    });
-    const [charactersReady, setCharactersReady] = useState(false);
+export default function CardsGame(props) {
+
+    const [currentCards, setCurrentCards] = useState([]); // current selectable cards in play
     const [errorMessage, setErrorMessage] = useState(null);
-
-    useEffect(() => {
-        const randomized = returnRandomHopArmsCharacters(props.shuffledImages);
-        setCharacters({
-            character1: randomized[0],
-            character2: randomized[1],
-            character3: randomized[2],
-            character4: randomized[3],
-        });
-        setCharactersReady(true);
-    }, []);
 
     const difficulty = props.difficulty; // current difficulty/level
     const levels = props.numLevels; // total levels in the game
 
-    // on difficulty change, if the character states are not null, randomize their order.
+    // on difficulty change, get the cards and randomize the order 
     useEffect(() => {
-        if(characters.character1 !== null || characters.character2 !== null || characters.character3 !== null || characters.character4 !== null) {
-            ShuffleCards();
-        }
-    }, [difficulty, charactersReady]);
+        shuffleArray(props.shuffledImages.incorrect);
+        ShuffleCards();
+    }, [difficulty]);
 
     // function to slice the array accordingly and set the current cards for the given difficulty/level
-    const setCards = (currentCharacter) => {
-        let cards = []
-        cards = currentCharacter.correct; // put correct card in array
-        cards = cards.concat(currentCharacter.incorrect.slice(0, currentCharacter.incorrect.length)); // put incorrect cards in the array
+    const setCards = (index) => {
+        let cards = [];
+        cards = props.shuffledImages.correct; // put correct card in array
+        cards = cards.concat(props.shuffledImages.incorrect.slice(0, index)); // put index amount of incorrect cards into array depending on difficulty/level
         shuffleArray(cards); // randomize the order
         setCurrentCards(cards); // set the cards
     }
@@ -55,16 +36,13 @@ export default function HopArms(props) {
     // function to set the current cards
     const ShuffleCards = () => {
         if(difficulty === 1) {
-            setCards(characters.character1); // set cards for level/difficulty 1
+            setCards(2); // use two incorrect images for first level
         }
         else if(difficulty === 2) {
-            setCards(characters.character2); // set cards for level/difficulty 2
+            setCards(4); // use four incorrect images for second level
         }
         else if(difficulty === 3) {
-            setCards(characters.character3); // set cards for level/difficulty 3
-        }
-        else if(difficulty === 4) {
-            setCards(characters.character4); // set cards for level/difficulty 4
+            setCards(props.shuffledImages.incorrect.length); // use all of the incorrect images for third level
         }
     }
 
@@ -77,18 +55,18 @@ export default function HopArms(props) {
     }
 
     return (
-        <div className="container-fluid">
+        <div id="Card-Game" className="container-fluid">
             <div className="row justify-content-center">
-                <SimpleBar style={{ width: '85vw' }} autoHide={false}>
+                <SimpleBar style={{ width: '70vw' }} autoHide={false}>
                     <div className="container-fluid">
                         <ResponsiveSimpleBar>
 
-                            {/* while the current player has not completed the entire game, display the below */}
+                            {/* While the current player has not compelted the entire game, display the below */}
                             {difficulty <= levels &&
                                 <>
                                     {currentCards.map((image, i) => {
                                         return(
-                                            <div key={i} className="card-option d-flex align-items-end hop-arms-character mr-2">
+                                            <div key={i} className="d-flex align-items-end card-option mr-2">
                                                 <a onClick={() => WinCondition(image.correct)} >
                                                     <img src={image.default} />
                                                 </a>
@@ -103,5 +81,5 @@ export default function HopArms(props) {
                 </SimpleBar>
             </div>
         </div>
-    )
+    );
 }

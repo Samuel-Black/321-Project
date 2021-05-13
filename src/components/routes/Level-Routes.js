@@ -1,18 +1,24 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
 import { Routes } from 'react-router-dom';
-import LevelNavIndex from '../../pages/LevelNavigationIndex';
+import SkillNavigationIndex from '../../pages/Skill-Navigation-Page';
 import { Skills, Levels } from '../../components/Level-List';
-import SkillNavigationPage from '../../pages/SkillNavigationPage';
+import GameNavigationPage from '../../pages/Game-Navigation-Wrapper';
 import GameWrapper from '../Game-Wrapper';
-import CardsGame from '../../pages/games/CardsGame';
-import CardsGameZoom from '../../pages/games/CardGameZoom';
+import CardsGame from '../../pages/games/Cards-Game';
+import CardsGameZoom from '../../pages/games/Card-Game-Zoom';
 import HopArms from '../../pages/games/Hop-Arms';
-import MixAndMatch from '../../pages/games/MixAndMatch';
+import MixAndMatch from '../../pages/games/Mix-And-Match';
 import ThrowEyes from '../../pages/games/Throw-Eyes';
 import BackButton from '../../components/Back-Button';
-import AppRoute from './AuthenticatedRoute';
+import AppRoute from './Authenticated-Route';
 
 export default function LevelRoutes() {
 
+    // return the game type for creating Routes in a map
     function getGameType(gameType) {
         if(gameType === 'Cards') {
             return CardsGame;
@@ -34,14 +40,16 @@ export default function LevelRoutes() {
 
     return( 
         <Routes>
-            <AppRoute path="/" component={LevelNavIndex} isPrivate={true} requiresPlayer={true} />
+            {/* default route */}
+            <AppRoute path="/" component={SkillNavigationIndex} isPrivate={true} requiresPlayer={true} />
 
+            {/* map skills to Routes e.g. Kick, Throw, Hop etc.*/}
             {Skills.map((skill) => {
                 return(
                     <AppRoute 
                         key={skill.name} 
                         path={`${skill.to}/`} 
-                        component={SkillNavigationPage} 
+                        component={GameNavigationPage} 
                         Levels={skill.levels} 
                         SkillName={skill.name} 
                         isPrivate={true} 
@@ -50,6 +58,7 @@ export default function LevelRoutes() {
                 );
             })}
 
+            {/* map levels to Routes e.g. Kick-Legs, Hop-Arms, Balance-Arms, Throw-Eyes etc.*/}
             {Levels.map((level) => {
                 return(
                     <AppRoute 

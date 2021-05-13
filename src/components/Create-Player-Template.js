@@ -1,7 +1,14 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
 import DatePicker from 'react-date-picker';
 
+// component used by Home-Page.js, input for creating a player including player nickname, and birthday
 export default function CreatePlayerTemplate(nickname, setNickname, validateNickName, setBirthday, birthday, createPlayer) {
 
+    // if birthday field is empty don't allow player to be created
     function validateBirthday() {
         if (birthday == null) {
             return false;
@@ -33,9 +40,16 @@ export default function CreatePlayerTemplate(nickname, setNickname, validateNick
                 </div>
             </div>
             <div className='pt-3'>
-                <div><button id='Create-Player-Button' className={`btn btn-secondary ${validateNickName() !== true ? 'button-disabled' : ''}`} onClick={() => validateBirthday()} disabled={validateNickName() !== true}>Create</button></div>
-                <div>{validateNickName() !== true && validateNickName()}</div>
-                <div>{(birthday == null || birthday.length === 0) ? 'Please input your birthday!' : null}</div>
+                <div>
+                    {/*if nickname cannot be validated, disable the button*/}
+                    <button id='Create-Player-Button' className={`btn btn-secondary ${validateNickName() !== true ? 'button-disabled' : ''}`} onClick={() => validateBirthday()} disabled={validateNickName() !== true}>Create</button>
+                </div>
+                <div>
+                    {validateNickName() !== true && validateNickName()}
+                </div>
+                <div>
+                    {(birthday == null || birthday.length === 0) ? 'Please input your birthday!' : null}
+                </div>
             </div>
         </>
     );

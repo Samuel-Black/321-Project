@@ -1,3 +1,8 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
 import { loginUser, useAuthState, useAuthDispatch } from '../../libs';
 import { Auth } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
@@ -5,77 +10,49 @@ import { Link } from 'react-router-dom';
 import { Oval } from 'react-loading-icons';
 import PasswordStrengthBar from 'react-password-strength-bar';
 import ReactCodeInput from 'react-verification-code-input';
-import './LoginPage.scss';
-
-const passwordValidator = require('password-validator');
+import PasswordValidator, { getPasswordErrorMessage } from './Password-Validator';
+import './Login-Page.scss';
 
 export default function LoginPage() {
-    
-    const schema = new passwordValidator();
 
-    schema
-    .is().min(8)                                    // Minimum length 8
-    .is().max(16)                                  // Maximum length 100
-    .has().uppercase(1)                              // Must have uppercase letters
-    .has().lowercase()                              // Must have lowercase letters
-    .has().digits(1)                                // Must have at least 1 digit
-    .has().not().spaces()                           // Should not have spaces
-    .is().not().oneOf(['Passw0rd', 'Password123', 'Spacebar123', 'Qwerty123', 'Asdf123']);
+    const [step, setStep] = useState(0); // 0 is login "page", 1 is input email "page" for forgotten password, 2 is confirm auth code and new password "page"
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
-    const [resetPassword, setResetPassword] = useState('');
-    const [confirmResetPassword, setConfirmResetPassword] = useState('');
-    const [confirmResetPasswordError, setConfirmResetPasswordError] = useState('');
-    const [resetPasswordEmailError, setResetPasswordEmailError] = useState(null);
-    const [resetPasswordError, setResetPasswordError] = useState(null);
-    const [passwordFocused, setPasswordFocused] = useState(false);
-    const [confirmPasswordFocused, setConfirmPasswordFocused] = useState(false);
-    const [authCode, setAuthCode] = useState('');
-    const [authCodeError, setAuthCodeError] = useState(null);
-    const [allValidCredentials, setAllValidCredentials] = useState(false);
-    const [step, setStep] = useState(0);
-    const [loading, setLoading] = useState(false);
+    // step == 0, states
+    const [email, setEmail] = useState(''); // email input
+    const [password, setPassword] = useState(''); // password input
 
-    const dispatch = useAuthDispatch();
-    
-    let { errorMessage } = useAuthState();
+    // step == 1, states
+    const [forgotPasswordEmail, setForgotPasswordEmail] = useState(''); // email for account of forgotten password
+    const [forgotPasswordEmailError, setForgotPasswordEmailError] = useState(null); // email for account of forgotten password error message
 
+    // step == 2, states
+    const [resetPassword, setResetPassword] = useState(''); // reset password input
+    const [resetPasswordFocused, setResetPasswordFocused] = useState(false); // reset password input focus state
+    const [resetPasswordError, setResetPasswordError] = useState(null); // reset password input error message
+
+    const [confirmResetPassword, setConfirmResetPassword] = useState(''); // confirm reset password input
+    const [confirmResetPasswordError, setConfirmResetPasswordError] = useState(''); // confirm reset password input error message
+
+    const [authenticationCode, setAuthenticationCode] = useState(''); // authentication code input
+    const [authCodeError, setAuthCodeError] = useState(null); // authentication code error message
+
+    const [allValidCredentials, setAllValidCredentials] = useState(false); // if password confirm password and authentication code are valid, true
+    const [loading, setLoading] = useState(false); // some AWS Auth promise responses were causing errors with reducer
+
+    const dispatch = useAuthDispatch(); // reducer
+    let { errorMessage } = useAuthState(); // errors for AWS auth functionality
+
+    // set errorMessage to null on component mount
     useEffect(() => {
         errorMessage = null;
     }, []);
 
+    // set the password error message
     useEffect(() => {
-        if (!passwordFocused && !schema.validate(resetPassword) && resetPassword.length > 0) {
-            const errors = schema.validate(resetPassword, {list: true});
-            let errorMessageString = 'Password must ';
-            for (let i = 0; i < errors.length; i++) {
-                errorMessageString += `${PasswordErrorMessage(errors[i])}${(i === errors.length - 1) ? '.' : ', '}`;
-            }
-            setResetPasswordError(errorMessageString);
-        }
-        else if (schema.validate(password) || password.length === 0)
-            setResetPasswordError(null);
-    }, [passwordFocused]);
+        setResetPasswordError(getPasswordErrorMessage(resetPassword, resetPasswordFocused));
+    }, [resetPasswordFocused]);
 
-    function PasswordErrorMessage(val) {
-        switch(val) {
-            case 'min':
-                return 'be at least 8 characters';
-            case 'spaces':
-                return 'not contain spaces';
-            case 'uppercase':
-                return 'have at least 1 uppercase letter';
-            case 'lowercase':
-                return 'have at least 1 uppercase letter';
-            case 'digits':
-                return 'have at least 2 numbers';
-            case 'oneOf':
-                return ` not be a common password: ${resetPassword}`;
-        }
-    }
-
+    // alert user if passwords do not match
     useEffect(() => {
         if (confirmResetPassword.length > 0 && resetPassword.length > 0 && resetPassword !== confirmResetPassword) {
             setConfirmResetPasswordError('Passwords do not match.');
@@ -84,6 +61,7 @@ export default function LoginPage() {
             setConfirmResetPasswordError(null);
     }, [confirmResetPassword]);
 
+    // if the promise from the reducer returns without an error, the user is logged in and directed to the app home page
     const handleLogin = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -96,26 +74,28 @@ export default function LoginPage() {
         }
     }
 
+    // if the promise 
     const handleResetPassword = async (e) => {
         e.preventDefault();
         setLoading(true);
         try {
             await Auth.forgotPassword(forgotPasswordEmail);
             setStep(2);
-            setResetPasswordEmailError(null);
+            setForgotPasswordEmailError(null);
             setLoading(false);
         }
         catch (error) {
-            setResetPasswordEmailError(error);
+            setForgotPasswordEmailError(error);
             setLoading(false);
         }
     }
 
+    // if the promise 
     const handleResetPasswordAuth = async (e) => {
         e.preventDefault();
         setLoading(true);
         try {
-            await Auth.forgotPasswordSubmit(forgotPasswordEmail, authCode, resetPassword);
+            await Auth.forgotPasswordSubmit(forgotPasswordEmail, authenticationCode, resetPassword);
             setStep(0);
             setResetPasswordError(null);
             setLoading(false);
@@ -126,12 +106,22 @@ export default function LoginPage() {
         }
     }
 
+    // notify user if authentication code is not the appropriate length
+    useEffect(() => {
+        if(authenticationCode.length === 6) 
+            setAuthCodeError(null);
+        else 
+            setAuthCodeError('Authentication Code must be 6 numbers.');
+    }, [authenticationCode]);
+
+    // check for all valid inputs
     useEffect(() => {
         validateCredentials();
-    }, [authCode, resetPassword, confirmResetPassword, confirmResetPasswordError]);
+    }, [authenticationCode, resetPassword, confirmResetPassword, confirmResetPasswordError]);
 
+    // if the authentication code, password, password confirmation and authentication code are all valid, set to true
     const validateCredentials = () => {
-        if(schema.validate(resetPassword) && resetPassword === confirmResetPassword && authCode.length === 6) 
+        if(PasswordValidator.validate(resetPassword) && resetPassword === confirmResetPassword && authenticationCode.length === 6) 
             setAllValidCredentials(true);
         else 
             setAllValidCredentials(false);
@@ -148,6 +138,8 @@ export default function LoginPage() {
                     </div>
                 </div>
                 <div id="Login-Content-Row" className="row">
+                    
+                    {/* default display, log in form */}
                     {step === 0 &&
                         <div className="container">
                             <div className="row justify-content-center">
@@ -155,7 +147,14 @@ export default function LoginPage() {
                             </div>
                             <div className="row justify-content-center">
                                 <div id="Login-Content" className="d-inline-flex flex-column align-items-center justify-content-center">
-                                    <span>Don't have an account?&nbsp;
+                                    <span className='mt-3'>
+                                        Want to play without an account?&nbsp;
+                                        <Link to='../'>
+                                            <a>Click Here</a>
+                                        </Link>
+                                    </span>
+                                    <span className='mt-3'>
+                                        Don't have an account?&nbsp;
                                         <Link to='../Signup'>
                                             <a>Sign Up Here</a>
                                         </Link>
@@ -191,6 +190,8 @@ export default function LoginPage() {
                             </div>
                         </div>
                     }
+
+                    {/* input email for password reset form */}
                     {step === 1 &&
                         <div className="container">
                             <div className="row justify-content-center pb-4">
@@ -212,7 +213,7 @@ export default function LoginPage() {
                                                 <input type="text" id='email' className="form-control-lg" placeholder="email" value={forgotPasswordEmail} onChange={(e) => setForgotPasswordEmail(e.target.value)} disabled={loading} />
                                             </div>
                                         </div>
-                                        {resetPasswordEmailError !== null ? <p>{resetPasswordEmailError.message}</p> : null}
+                                        {forgotPasswordEmailError !== null ? <p>{forgotPasswordEmailError.message}</p> : null}
                                         <div className="d-flex justify-content-end">
                                             {loading === true && <Oval />}<button id="Login-Button" className='btn btn-secondary' onClick={handleResetPassword} disabled={loading}>Reset</button>
                                         </div>
@@ -221,6 +222,8 @@ export default function LoginPage() {
                             </div>
                         </div>
                     }
+
+                    {/* input authentication code, password, and password confirmation for for password reset form */}
                     {step === 2 &&
                         <div className="container">
                             <div className="row justify-content-center pb-4">
@@ -239,14 +242,15 @@ export default function LoginPage() {
                                             <label htmlFor="authenticationCode" className="align-self-center">Authentication Code</label>
                                         </div>
                                         <div id="Auth-Code-Input-Container" className="d-flex justify-content-center">
-                                            <ReactCodeInput type={'number'} fields={6} autoFocus loading={loading} onChange={(code) => setAuthCode(code)} />
+                                            <ReactCodeInput type={'number'} fields={6} autoFocus loading={loading} onChange={(code) => setAuthenticationCode(code)} />
                                         </div>
+                                        {authCodeError}
                                         <div className="d-flex">
                                             <label htmlFor="password" className="align-self-center">New Password</label>
                                         </div>
                                         <div className="d-flex">
                                             <div className="form-group mb-0">
-                                                <input type="password" id="password" className="form-control-lg" placeholder="password" value={resetPassword} onChange={(e) => setResetPassword(e.target.value)} name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required disabled={loading} onFocus={() => setPasswordFocused(true)} onBlur={() => setPasswordFocused(false)} />
+                                                <input type="password" id="password" className="form-control-lg" placeholder="password" value={resetPassword} onChange={(e) => setResetPassword(e.target.value)} name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required disabled={loading} onFocus={() => setResetPasswordFocused(true)} onBlur={() => setResetPasswordFocused(false)} />
                                                 <PasswordStrengthBar className="pt-1 password-strength-bar" password={resetPassword} minLength={8} />
                                             </div>
                                         </div>
@@ -255,7 +259,7 @@ export default function LoginPage() {
                                         </div>
                                         <div className="d-flex">
                                             <div className="form-group">
-                                                <input type="password" id="confirmPassword" className="form-control-lg" placeholder="confirm password" value={confirmResetPassword} onChange={(e) => setConfirmResetPassword(e.target.value)} name="confirmPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required disabled={loading} onFocus={() => setConfirmPasswordFocused(true)} onBlur={() => setConfirmPasswordFocused(false)} />
+                                                <input type="password" id="confirmPassword" className="form-control-lg" placeholder="confirm password" value={confirmResetPassword} onChange={(e) => setConfirmResetPassword(e.target.value)} name="confirmPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required disabled={loading} />
                                             </div>
                                         </div>
                                         {confirmResetPasswordError}

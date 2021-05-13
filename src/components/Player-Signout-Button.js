@@ -1,10 +1,16 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
 import { BiLogOut } from 'react-icons/bi'
 import { useAuthPlayer } from '../libs'
-import './Player-Signout.scss'
+import './Player-Signout-Button.scss'
 
-export default function PlayerSignout() {
+// Signout button in top right of home page
+export default function PlayerSignoutButton() {
 
-    const currentPlayer = useAuthPlayer();
+    const currentPlayer = useAuthPlayer(); // get current player
 
     return(
         <div id="Player-Logout-Button" className='d-flex mr-3 mt-3 ml-auto'>

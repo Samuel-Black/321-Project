@@ -1,9 +1,15 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
 
+// horizontal drag used to show user that image is draggable/slideable in horizontal Mix & Match
 @keyframes horizontal-drag {
     0%      { transform: translate(0,  0); }
     100%    { transform: translate(15vw, 0); }
 }
 
+// vertical drag used to show user that image is draggable/slideable in vertical Mix & Match
 @keyframes vertical-drag {
     0%      { transform: translate(0,  0); }
     100%    { transform: translate(0, 15vh); }

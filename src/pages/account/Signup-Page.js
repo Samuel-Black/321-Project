@@ -1,3 +1,8 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
 import React, { useState, useEffect } from 'react';
 import { signupUser, confirmUserSignUp, useAuthState, useAuthDispatch } from '../../libs';
 import { Auth } from 'aws-amplify';
@@ -6,80 +11,49 @@ import { Oval } from 'react-loading-icons';
 import { useNavigate } from 'react-router-dom';
 import ReactCodeInput from 'react-verification-code-input';
 import PasswordStrengthBar from 'react-password-strength-bar';
-import './SignupPage.scss';
-const passwordValidator = require('password-validator');
+import PasswordValidator, { getPasswordErrorMessage } from './Password-Validator';
+import './Signup-Page.scss';
 const isEmail = require('sane-email-validation');
 
 export default function SignupPage() {
     
-    const schema = new passwordValidator();
     const navigate = useNavigate();
 
-    schema
-    .is().min(8)                                    // Minimum length 8
-    .is().max(16)                                  // Maximum length 100
-    .has().uppercase(1)                              // Must have uppercase letters
-    .has().lowercase()                              // Must have lowercase letters
-    .has().digits(1)                                // Must have at least 1 digit
-    .has().not().spaces()                           // Should not have spaces
-    .is().not().oneOf(['Passw0rd', 'Password123', 'Spacebar123', 'Qwerty123', 'Asdf123']);
+    const [email, setEmail] = useState(''); // email input
+    const [emailFocused, setEmailFocused] = useState(false); // email input focus state
+    const [emailError, setEmailError] = useState(null); // email error message
 
-    const [email, setEmail] = useState('');
-    const [emailFocused, setEmailFocused] = useState(false);
-    const [password, setPassword] = useState('');
-    const [passwordFocused, setPasswordFocused] = useState(false);
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [confirmPasswordFocused, setConfirmPasswordFocused] = useState(false);
-    const [authenticationSuccesful, setAuthenticationSuccesful] = useState(false);
-    const [authenticationCode, setAuthenticationCode] = useState('');
-    const [allValidCredentials, setAllValidCredentials] = useState(false);
-    const [step, setStep] = useState(0);
-    const [emailError, setEmailError] = useState(null);
-    const [passwordError, setPasswordError] = useState(null);
-    const [confirmPasswordError, setConfirmPasswordError] = useState(null);
-    const [authCodeError, setAuthCodeError] = useState(null);
-    const [autoCompleteSignUp, setAutoCompleteSignUp] = useState(false);
+    const [password, setPassword] = useState(''); // password input
+    const [passwordFocused, setPasswordFocused] = useState(false); // password input focus state
+    const [passwordError, setPasswordError] = useState(null); // password input error message
 
-    const dispatch = useAuthDispatch();
-    let { loading, errorMessage } = useAuthState();
+    const [confirmPassword, setConfirmPassword] = useState(''); // confirm password input
+    const [confirmPasswordError, setConfirmPasswordError] = useState(null); // confirm password input error message
 
+    const [authenticationCode, setAuthenticationCode] = useState(''); // authentication code input
+    const [authCodeError, setAuthCodeError] = useState(null); // authentication code input error message
+
+    const [step, setStep] = useState(0); // 0 is sign up "page", 1 is input authentication code sent via email "page"
+    const [allValidCredentials, setAllValidCredentials] = useState(false); // if email, password and confirm password are valid, true
+    const [autoCompleteSignUp, setAutoCompleteSignUp] = useState(false); // if authentication code input has 6 numbers, true
+
+    const dispatch = useAuthDispatch(); // reducer
+    let { loading, errorMessage } = useAuthState(); // errors/loading for AWS auth functionality
+
+    // If there is something in the email input field, and It's not focused, and the address Isn't valid, set error message
     useEffect(() => {
-        if (email.length > 0 && !emailFocused && !isEmail(email)) // If there is something in the email input field, and It's not focused, and the address Isn't valid, set error message
+        if (email.length > 0 && !emailFocused && !isEmail(email)) 
             setEmailError(`${email} is not a valid email address.`);
         else if (isEmail(email) || email.length === 0) 
             setEmailError(null);
     }, [email, emailFocused]);
 
+    // set the password error message
     useEffect(() => {
-        if (!passwordFocused && !schema.validate(password) && password.length > 0) {
-            const errors = schema.validate(password, {list: true});
-            let errorMessageString = 'Password must ';
-            for (let i = 0; i < errors.length; i++) {
-                errorMessageString += `${PasswordErrorMessage(errors[i])}${(i === errors.length - 1) ? '.' : ', '}`;
-            }
-            setPasswordError(errorMessageString);
-        }
-        else if (schema.validate(password) || password.length === 0)
-            setPasswordError(null);
+        setPasswordError(getPasswordErrorMessage(password, passwordFocused));
     }, [passwordFocused]);
 
-    function PasswordErrorMessage(val) {
-        switch(val) {
-            case 'min':
-                return 'be at least 8 characters';
-            case 'spaces':
-                return 'not contain spaces';
-            case 'uppercase':
-                return 'have at least 1 uppercase letter';
-            case 'lowercase':
-                return 'have at least 1 uppercase letter';
-            case 'digits':
-                return 'have at least 2 numbers';
-            case 'oneOf':
-                return ` not be a common password: ${password}`;
-        }
-    }
-
+    // If the password input field and the confirm password input field do not match, prompt the user
     useEffect(() => {
         if (confirmPassword.length > 0 && password.length > 0 && password !== confirmPassword) {
             setConfirmPasswordError('Passwords do not match.');
@@ -89,10 +63,12 @@ export default function SignupPage() {
     }, [confirmPassword]);
 
 
+    // set the error message to null on component mount
     useEffect(() => {
         errorMessage = null;
     }, []);
 
+    // if the promise from the reducer returns without an error, set the "page" to the authentication code input "page" [(setStep()]
     const handleSignUp = async (e) => {
         e.preventDefault();
         try {
@@ -103,6 +79,7 @@ export default function SignupPage() {
         } 
     }
     
+    // if the promise from the reducer returns without an error, authentication was succesful, redirect the user to the login page
     const confirmSignUp = async () => {
         setAuthCodeError(null);
         try {
@@ -113,6 +90,7 @@ export default function SignupPage() {
         }
     }
 
+    // if the authentication code in setStep(1) contains 6 numbers, automatically send the form for authentication 
     useEffect(() => {
         if(authenticationCode.length === 6 && autoCompleteSignUp === true) {
             confirmSignUp();
@@ -120,22 +98,18 @@ export default function SignupPage() {
         }
     }, [autoCompleteSignUp]);
 
+    // if email, password and password confirmation are all valid, set to true
     const validateCredentials = () => {
-        if(isEmail(email) && schema.validate(password) && password === confirmPassword) 
+        if(isEmail(email) && PasswordValidator.validate(password) && password === confirmPassword) 
             setAllValidCredentials(true);
         else 
             setAllValidCredentials(false);
     }
 
+    // on below state changes, check if all are valid
     useEffect(() => {
         validateCredentials();
-    }, [email, password, confirmPassword, confirmPasswordError])
-    
-    useEffect(() => {
-        if(authenticationSuccesful === true) {
-            authenticationSuccesful(false);
-        }
-    }, [authenticationSuccesful])
+    }, [email, password, confirmPassword, confirmPasswordError]);
 
     return (
         <div id="Signup-Background">
@@ -154,6 +128,8 @@ export default function SignupPage() {
                         </div>
                         <div className="row justify-content-center">
                             <div id="Signup-Content" className="d-inline-flex flex-column align-items-center justify-content-center">
+                                
+                                {/* default display, sign up form*/}
                                 {step === 0 &&
                                     <>
                                         <span>Already have an account?&nbsp;
@@ -187,18 +163,20 @@ export default function SignupPage() {
                                             </div>
                                             <div className="d-flex">
                                                 <div className="form-group">
-                                                    <input type="password" id="confirmPassword" className="form-control-lg" placeholder="confirm password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} name="confirmPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required disabled={loading} onFocus={() => setConfirmPasswordFocused(true)} onBlur={() => setConfirmPasswordFocused(false)} />
+                                                    <input type="password" id="confirmPassword" className="form-control-lg" placeholder="confirm password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} name="confirmPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required disabled={loading} />
                                                 </div>
                                             </div>
                                             {confirmPasswordError}
                                             <div className="d-flex justify-content-end">{errorMessage ? <p>{errorMessage}</p> : null}</div>
                                             <div className="d-flex justify-content-end">
+                                                {/* if not all valid credentials, disable the button */}
                                                 {loading === true && <Oval />}<button id='Signup-Button' className={`btn btn-secondary ${allValidCredentials ? '' : 'button-disabled'}`} onClick={handleSignUp} disabled={loading}>Create</button>
                                             </div>
                                         </form>
                                     </>
                                 }
-                                {step === 1 &&
+                                {/* authentication code input */}
+                                {step === 1 && 
                                     <div>
                                         <div className="d-flex pt-4">
                                             <label htmlFor="email" className="align-self-center">Email</label>

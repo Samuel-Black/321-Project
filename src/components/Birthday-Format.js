@@ -1,10 +1,16 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
 
+// format date for use in MySQL
 export default function FormatBirthday(date) {
     let formattedBirthday = date.slice(11,15) + '-' + returnMonth(date) + '-' + date.slice(8,10)
 
     return formattedBirthday;
 }
 
+// return numerical month value for use in MySQL
 function returnMonth(date) {
     switch(date.slice(4,7)) {
         case 'Jan':

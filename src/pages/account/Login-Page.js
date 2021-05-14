@@ -74,7 +74,7 @@ export default function LoginPage() {
         }
     }
 
-    // if the promise 
+    // if the promise from the reducer returns without an error, the user is redirected to the next step in resetting their password
     const handleResetPassword = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -90,7 +90,7 @@ export default function LoginPage() {
         }
     }
 
-    // if the promise 
+    // if the promise from the reducer returns without an error, the users password is succesfully reset and they are redirected to the login page
     const handleResetPasswordAuth = async (e) => {
         e.preventDefault();
         setLoading(true);

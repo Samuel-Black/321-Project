@@ -3,19 +3,19 @@ Author: Samuel Black
 https://github.com/Samuel-Black
 */
 
-import React from 'react'
+import React from 'react';
 import { useLocation, Link } from "react-router-dom";
-import { FaLongArrowAltRight } from 'react-icons/fa'
-import { TiHome } from 'react-icons/ti'
-import SimpleBar from 'simplebar-react'
-import { useAuthPlayer } from '../libs'
+import { FaLongArrowAltRight } from 'react-icons/fa';
+import { TiHome } from 'react-icons/ti';
+import SimpleBar from 'simplebar-react';
+import { useAuthPlayer } from '../libs';
 import { ProfilePictureImages } from './images/Profile-Picture-Images';
-import 'simplebar/dist/simplebar.min.css'
+import 'simplebar/dist/simplebar.min.css';
 
 export default function LevelNavbar() {
 
-    const currentPlayer = useAuthPlayer() // get the current player
-    const paths = useLocation().pathname.split('/') // get paths for menu bar e.g. Home -> LevelNavigation -> Jump etc.
+    const currentPlayer = useAuthPlayer(); // get the current player
+    const paths = useLocation().pathname.split('/'); // get paths for menu bar e.g. Home -> LevelNavigation -> Jump etc.
 
     return (
         <div className="container">
@@ -74,5 +74,5 @@ export default function LevelNavbar() {
             </div>
             
         </div>
-    )
+    );
 }

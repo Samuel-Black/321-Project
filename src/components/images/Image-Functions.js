@@ -148,7 +148,7 @@ function splitHopArmsString(string, object) {
     }
 }
 
-// assign a more readable value to eye position for throw eyes game type
+// assign a position correlating with the target id based on the eye position
 function eyePosition(position) {
     switch(position) {
         case 'FarLeft':

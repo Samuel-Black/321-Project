@@ -14,7 +14,7 @@ import { GetProgress, getSkillProgress } from '../components/Player-Progress-Fun
 import { useAuthPlayer, useAuthUser } from '../libs';
 import './Level-Navigation-Index.scss';
 
-export default function LevelNavigationPage() {
+export default function SkillNavigationPage() {
 
     const [progress, setProgress] = useState([]); // current players progress
     const [errorMessage, setErrorMessage] = useState(null);

@@ -7,10 +7,10 @@ import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import { GetLevelProgressURL } from '../components/Request-URL';
 import { useAuthPlayer, useAuthUser } from '../libs';
-import LevelNavComponent from './Game-Navigation-Page';
+import GameNavigationPage from './Game-Navigation-Page';
 import { getLocalPlayer } from '../components/localstorage/Local-Storage-Functions';
 
-export default function SkillNavigationPage(props) {
+export default function GameNavigationWrapper(props) {
 
     const currentPlayer = useAuthPlayer();
     const user = useAuthUser();
@@ -65,6 +65,6 @@ export default function SkillNavigationPage(props) {
     }, []);
     
     return(
-        <LevelNavComponent Levels={levelList} getProgress={getLevelProgress} />
+        <GameNavigationPage Levels={levelList} getProgress={getLevelProgress} />
     )
 }

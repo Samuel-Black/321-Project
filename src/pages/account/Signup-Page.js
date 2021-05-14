@@ -4,7 +4,7 @@ https://github.com/Samuel-Black
 */
 
 import React, { useState, useEffect } from 'react';
-import { signupUser, confirmUserSignUp, useAuthState, useAuthDispatch } from '../../libs';
+import { signupUser, useAuthState, useAuthDispatch } from '../../libs';
 import { Auth } from 'aws-amplify';
 import { Link } from 'react-router-dom';
 import { Oval } from 'react-loading-icons';
@@ -19,6 +19,8 @@ export default function SignupPage() {
     
     const navigate = useNavigate();
 
+    const [step, setStep] = useState(0); // 0 is sign up "page", 1 is input authentication code sent via email "page"
+    
     const [email, setEmail] = useState(''); // email input
     const [emailFocused, setEmailFocused] = useState(false); // email input focus state
     const [emailError, setEmailError] = useState(null); // email error message
@@ -33,7 +35,6 @@ export default function SignupPage() {
     const [authenticationCode, setAuthenticationCode] = useState(''); // authentication code input
     const [authCodeError, setAuthCodeError] = useState(null); // authentication code input error message
 
-    const [step, setStep] = useState(0); // 0 is sign up "page", 1 is input authentication code sent via email "page"
     const [allValidCredentials, setAllValidCredentials] = useState(false); // if email, password and confirm password are valid, true
     const [autoCompleteSignUp, setAutoCompleteSignUp] = useState(false); // if authentication code input has 6 numbers, true
 

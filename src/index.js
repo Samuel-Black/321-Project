@@ -11,7 +11,6 @@ import Amplify from 'aws-amplify';
 import awsconfig from './aws-exports';
 import { BrowserRouter } from 'react-router-dom';
 import Routes from './components/routes/Routes'
-import App from './App'
 import { AuthProvider } from './libs';
 Amplify.configure(awsconfig);
 
@@ -19,9 +18,7 @@ ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
       <BrowserRouter>
-        <Routes>
-          <App />
-        </Routes>
+        <Routes />
       </BrowserRouter>
     </AuthProvider>
   </React.StrictMode>,

@@ -11,7 +11,7 @@ import { LevelSelectTemplate, LevelSelectTemplateLocked } from '../components/Le
 import 'simplebar/dist/simplebar.min.css'
 
 // Navigation 
-export default function GameNavigation(props) {
+export default function GameNavigationPage(props) {
 
     return (
         <div id="Level-Nav-Background">

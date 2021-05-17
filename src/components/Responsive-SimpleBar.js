@@ -4,42 +4,32 @@ https://github.com/Samuel-Black
 */
 
 import { useState } from 'react';
-import { SizeMe } from 'react-sizeme';
+import { withSize } from 'react-sizeme';
+import ChildComponent from './Child-Component';
 
-// used to ensure responsiveness of elements in SimpleBar component
-export default function ResponsiveSimpleBar(props) {
+// Parent component which renders is aware of it's own size and the ChildComponent's size;
+// used to ensure SimpleBar component is responsive
+function ParentComponent(props) {
     
-    const [rowWidth, setRowWidth] = useState(null); // width of parent container
-    const [contentWidth, setContentWidth] = useState(null); // width of child container
+    const parentWidth = props.size.width; // this components width
+    const[childWidth, setChildWidth] = useState(0); // ChildComponent width
 
-    // content is cut off by the simplebar component when statically defined as centered, this is a solution
-    // If the child container is wider than It's parent container remove the centering of the child components/container
-    function SetRowJustification() { 
-        if(contentWidth > rowWidth && (contentWidth != null || rowWidth != null)) {
+    const onSize = (size) => { // set ChildComponentWidth
+        setChildWidth(size.width);
+    }
+
+    function SetRowJustification() { // if ChildComponent > ParentComponent width, do not center as content is cut off from the left.
+        if(childWidth > parentWidth && (childWidth != 0 || parentWidth != 0)) {
             return ''; 
         } else
             return 'justify-content-center';
     }
 
-    return(
-        <SizeMe
-            monitorWidth
-            refreshRate={16}>
-            {({ size }) => 
-                <div className={`row ${SetRowJustification()}`}>
-                    {setRowWidth(size.width)} {/* set rowWidth state to the current width of the content container */}
-                    <SizeMe
-                        monitorWidth
-                        refreshRate={16}>
-                        {({ size }) => 
-                            <div className="d-flex">
-                                {setContentWidth(size.width)} {/* set contentWidth state to the current width of the content inside the parent container */}
-                                    {props.children} {/* render children between this components tags */}
-                            </div>
-                        }
-                    </SizeMe>
-                </div>
-            }
-        </SizeMe>
+    return (
+        <div className={`row ${SetRowJustification()}`}>
+            <ChildComponent onSize={onSize} children={props.children} />
+        </div>
     );
 }
+  
+export default withSize()(ParentComponent);

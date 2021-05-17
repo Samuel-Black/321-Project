@@ -20,6 +20,8 @@ export default function RewardsPage() {
     
     const [progress, setProgress] = useState(0); // a players total progress
     const [unlockCount, setUnlockCount] = useState(0); // total number of unlocks a player has
+    console.log(progress);
+    console.log(unlockCount);
 
     const [errorMessage, setErrorMessage] = useState(null);
 
@@ -51,7 +53,7 @@ export default function RewardsPage() {
                 <TiHome size={100} />
             </Link>
         </div>
-            <div id="Rewards-Page-Container" className="container">
+            <div id="Rewards-Page-Container" className="container mt-3">
                 <div className="container">
                     <div className="row justify-content-center mt-3">
                         <h1 id="Rewards-Title">Rewards</h1>

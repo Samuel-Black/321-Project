@@ -62,26 +62,33 @@ export default function CardsGameZoom(props) {
         ValidateWinCondition(correctSelection, props.setLevelCompleted, props.setPopupState, props.setAttemptNumber, props.attemptNumber); // validate win condition
     }
 
+    // re-render component on resize to keep responsive
+    const responsiveWrapper = () => {
+        return(
+            <ResponsiveSimpleBar>
+                {difficulty <= levels &&
+                    <>
+                        {currentCards.map((image, i) => {
+                            return(
+                                <div key={i} className="d-flex align-items-end card-option mr-2">
+                                    <a onClick={() => WinCondition(image.correct)} >
+                                        <img src={image.default} />
+                                    </a>
+                                </div>
+                            )
+                        })}
+                    </>
+                }
+            </ResponsiveSimpleBar>
+        );
+    }
+
     return (
         <div id='Card-Game' className="container-fluid">
             <div className="row justify-content-center">
                 <SimpleBar style={{ width: '70vw' }} autoHide={false}>
                     <div className="container-fluid">
-                        <ResponsiveSimpleBar>
-                            {difficulty <= levels &&
-                                <>
-                                    {currentCards.map((image, i) => {
-                                        return(
-                                            <div key={i} className="d-flex align-items-end card-option mr-2">
-                                                <a onClick={() => WinCondition(image.correct)} >
-                                                    <img src={image.default} />
-                                                </a>
-                                            </div>
-                                        )
-                                    })}
-                                </>
-                            }
-                        </ResponsiveSimpleBar>
+                        {responsiveWrapper()}
                     </div>
                 </SimpleBar>
             </div>

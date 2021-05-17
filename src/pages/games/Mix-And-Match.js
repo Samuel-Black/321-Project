@@ -74,6 +74,23 @@ export default function MixAndMatch(props) {
       }
     }
 
+    // re-render component on resize to keep responsive
+    const responsiveWrapper = () => {
+        return(
+          <ResponsiveSimpleBar>
+            {props.shuffledImages.easy.map((image, i) => {
+                return(
+                  <div key={i} className="d-flex align-items-end card-option mr-2">
+                    <a onClick={() => winCondition(image.correct)} >
+                        <img src={image.default} />
+                    </a>
+                  </div>
+                )
+            })}
+          </ResponsiveSimpleBar>
+        );
+    }
+
     return (
       <>
         {/* while the current player has not completed the entire game, display the below */}
@@ -85,17 +102,7 @@ export default function MixAndMatch(props) {
                 <div className="row justify-content-center">
                   <SimpleBar style={{ width: '70vw' }} autoHide={false}>
                     <div className="container-fluid">
-                      <ResponsiveSimpleBar>
-                        {props.shuffledImages.easy.map((image, i) => {
-                            return(
-                              <div key={i} className="d-flex align-items-end card-option mr-2">
-                                <a onClick={() => winCondition(image.correct)} >
-                                    <img src={image.default} />
-                                </a>
-                              </div>
-                            )
-                        })}
-                      </ResponsiveSimpleBar>
+                      {responsiveWrapper()}
                     </div>
                   </SimpleBar>
                 </div>

@@ -21,6 +21,7 @@ import SimpleBar from 'simplebar-react';
 import { TiUserAdd } from 'react-icons/ti';
 import { ProfilePictureImages } from '../components/images/Profile-Picture-Images';
 import { TiHome } from 'react-icons/ti';
+import MathMultiplicationVerification from '../components/Math-Multiplication-Verification'
 import ResponsiveSimpleBar from '../components/Responsive-SimpleBar';
 
 export default function HomePage() {
@@ -31,7 +32,8 @@ export default function HomePage() {
     // default display states
     const [playerList, setPlayerList] = useState([]); // list of available players (local or linked to account depending on if logged in)
     const [rewardsButtonHover, setRewardsButtonHover] = useState(false); // if rewards button is hovered, show jumping animation
-
+    const [navigateLogin, setNavigateLogin] = useState(false);
+  
     // create new players states
     const [nickname, setNickname] = useState('');
     const [birthday, setBirthday] = useState('');
@@ -137,8 +139,40 @@ export default function HomePage() {
         return true;
     }
 
+
+
+    // re-render component on resize to keep responsive
+    const responsiveWrapper = () => {
+        return(
+            <ResponsiveSimpleBar>
+
+                {/* display all available players */}
+                {playerList.map(player => {
+                    return (
+                        <div key={player.NickName} className="Player-Container card mr-3">
+                            <a onClick={() => currentPlayer.setPlayer(player)}>
+                                <img className="card-img-top pl-2" src={ProfilePictureImages[player.ProfilePicture].default} alt="Player Profile Picture"/>
+                                <div className="card-footer">{player.NickName}</div>
+                            </a>
+                        </div>
+                    )
+                })}
+
+                {/* create new player option */}
+                <div id="Create-Player" className="Player-Container card">
+                    <a onClick={showCreatePlayer}>
+                        <TiUserAdd size={150} className="card-img-top" />
+                        <div className="card-footer">New Player</div>
+                    </a>
+                </div>
+
+            </ResponsiveSimpleBar>
+        );
+    }
+
     return(
         <div className="App">
+            {<MathMultiplicationVerification open={navigateLogin} setOpen={setNavigateLogin} />}
             <div className='row'>
 
                 {/* if a user is currently logged in, and the user is not creating a new player, display a cog wheel settings icon in the top left of the screen */}
@@ -169,9 +203,9 @@ export default function HomePage() {
                             {user === false &&
                                 <span id='Account-Creation-Prompt'>
                                     Keep your progress safe by creating an account&nbsp;
-                                    <Link to={'./Login'}>
+                                    <a onClick={() => setNavigateLogin(true)}>
                                         Click Here.
-                                    </Link>
+                                    </a>
                                     <br />
                                 </span>
                             }
@@ -186,29 +220,7 @@ export default function HomePage() {
                                 <div className="row justify-content-center">
                                     <SimpleBar style={{ maxWidth: '90vw', width: '85vw' }} autoHide={false}>
                                         <div className="container-fluid">
-                                            <ResponsiveSimpleBar>
-
-                                                {/* display all available players */}
-                                                {playerList.map(player => {
-                                                    return (
-                                                        <div key={player.NickName} className="Player-Container card mr-3">
-                                                            <a onClick={() => currentPlayer.setPlayer(player)}>
-                                                                <img className="card-img-top pl-2" src={ProfilePictureImages[player.ProfilePicture].default} alt="Player Profile Picture"/>
-                                                                <div className="card-footer">{player.NickName}</div>
-                                                            </a>
-                                                        </div>
-                                                    )
-                                                })}
-
-                                                {/* create new player option */}
-                                                <div id="Create-Player" className="Player-Container card">
-                                                    <a onClick={showCreatePlayer}>
-                                                        <TiUserAdd size={150} className="card-img-top" />
-                                                        <div className="card-footer">New Player</div>
-                                                    </a>
-                                                </div>
-
-                                            </ResponsiveSimpleBar>
+                                            {responsiveWrapper()}
                                         </div>
                                     </SimpleBar>
                                 </div>
@@ -248,8 +260,8 @@ export default function HomePage() {
             : // If a current player is selected, display the home page with play and rewards page button
 
                 <div className="container">
-                    <div id="Home-Title" className="row justify-content-center title">
-                        <h1>JumpStart</h1>
+                    <div id="Home-Title" className="row justify-content-center title mt-3">
+                        <h1>KidFit</h1>
                     </div>
                     <div id="Home-Button" className="row justify-content-center">
                         <div id="Home-Page-Button-Flex" className="d-flex justify-content-around flex-wrap">

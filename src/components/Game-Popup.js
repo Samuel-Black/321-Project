@@ -36,8 +36,7 @@ export default function GamePopup(props) {
     // return a string with the first letter converted to lower case
     function returnMinusFirstCap() { 
         var firstLetter = props.gameDescription.substr(0, 1);
-        let lowerCased = firstLetter.toLowerCase() + props.gameDescription.substr(1);
-        return lowerCased;
+        return firstLetter.toLowerCase() + props.gameDescription.substr(1);
     }
 
     // if the number of levels cleared by a player is greater than the number of levels for a game, the game has been completed

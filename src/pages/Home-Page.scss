@@ -27,12 +27,6 @@ https://github.com/Samuel-Black
 }
 
 #Home-Title {
-  @include tiny-phone-up {
-    margin-top: 100px;
-  }
-  @include tablet-up {
-      margin-top: 0px;
-  }
   h1 {
     @include tiny-phone-up {
       font-size: 4.7rem;
@@ -95,6 +89,10 @@ https://github.com/Samuel-Black
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   a {
     font-weight: bold;
+    color: #007bff;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 

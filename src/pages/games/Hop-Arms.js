@@ -76,29 +76,36 @@ export default function HopArms(props) {
         ValidateWinCondition(correctSelection, props.setLevelCompleted, props.setPopupState, props.setAttemptNumber, props.attemptNumber); // validate win condition
     }
 
+    // re-render component on resize to keep responsive
+    const responsiveWrapper = () => {
+        return(
+            <ResponsiveSimpleBar>
+
+                {/* while the current player has not completed the entire game, display the below */}
+                {difficulty <= levels &&
+                    <>
+                        {currentCards.map((image, i) => {
+                            return(
+                                <div key={i} className="card-option d-flex align-items-end hop-arms-character mr-2">
+                                    <a onClick={() => WinCondition(image.correct)} >
+                                        <img src={image.default} />
+                                    </a>
+                                </div>
+                            )
+                        })}
+                    </>
+                }
+                
+            </ResponsiveSimpleBar>
+        );
+    }
+
     return (
         <div className="container-fluid">
             <div className="row justify-content-center">
                 <SimpleBar style={{ width: '85vw' }} autoHide={false}>
                     <div className="container-fluid">
-                        <ResponsiveSimpleBar>
-
-                            {/* while the current player has not completed the entire game, display the below */}
-                            {difficulty <= levels &&
-                                <>
-                                    {currentCards.map((image, i) => {
-                                        return(
-                                            <div key={i} className="card-option d-flex align-items-end hop-arms-character mr-2">
-                                                <a onClick={() => WinCondition(image.correct)} >
-                                                    <img src={image.default} />
-                                                </a>
-                                            </div>
-                                        )
-                                    })}
-                                </>
-                            }
-                            
-                        </ResponsiveSimpleBar>
+                        {responsiveWrapper()}
                     </div>
                 </SimpleBar>
             </div>

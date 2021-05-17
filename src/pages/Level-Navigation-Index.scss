@@ -59,8 +59,14 @@ https://github.com/Samuel-Black
 }
 
 .nav-item {
-  min-width: 100%;
-  width:100%;
+  @include tiny-phone-up {
+    min-width: 75vw;
+    width:100%;
+  }
+  @include phone-up {
+    min-width: 100%;
+    width:100%;
+  }
 }
 
 #Level-Nav {

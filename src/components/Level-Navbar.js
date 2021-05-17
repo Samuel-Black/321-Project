@@ -23,7 +23,7 @@ export default function LevelNavbar() {
             {/* Header for the navigation menu containing the application title and the current user with their profile picture above the anvigation menu bar */}
             <div className="d-flex flex-wrap mb-3">
                 <div className="mr-auto">
-                    <h1 id="Level-Navigation-Title">JumpStart</h1>
+                    <h1 id="Level-Navigation-Title" className='mt-3'>KidFit</h1>
                 </div>
                 <div id="Current-Player" className="d-flex">
                     <div className='d-flex align-items-end mr-2'>

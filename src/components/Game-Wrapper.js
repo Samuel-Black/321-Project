@@ -48,7 +48,6 @@ export default function GameWrapper(props) {
         else if(user === false) { // If not using an account and not logged in, store player in local storage
             const localPlayer = getLocalPlayer(currentPlayer.player.NickName);
             const localPlayerBirthDay = localPlayer.Birthday;
-            console.log('came here');
             Axios.post(CreateLocalAttemptURL, {
                 GameName: props.GameName,
                 LevelNumber: difficulty,

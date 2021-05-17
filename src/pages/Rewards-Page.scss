@@ -37,12 +37,6 @@ https://github.com/Samuel-Black
     background-color: rgba($vividTangelo, 1.0);
     border-radius: 60px;
     border: 5px solid $maastrichtBlue !important;
-    @include tiny-phone-up {
-        margin-top: 100px;
-    }
-    @include tablet-up {
-        margin-top: 0px;
-    }
     
     box-shadow: 16px 16px 40px rgba(0,0,0,0.5),
     20px 20px 30px rgba(0,0,0,0.5),

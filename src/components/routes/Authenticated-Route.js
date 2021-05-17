@@ -9,8 +9,8 @@ import { useAuthUser, useAuthPlayer } from '../../libs';
 
 // handle unauthorized access to certain pages and navigate user accordingly
 const Container = ({Component, isPrivate, requiresPlayer, ...props}) => {
-    const userData = useAuthUser()
-    const player = useAuthPlayer()
+    const userData = useAuthUser();
+    const player = useAuthPlayer();
     
     /* No longer requires sign in.
     if(isPrivate && userData === false) { // If attempting to access private routes while not logged in/authenticated

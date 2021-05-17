@@ -118,7 +118,7 @@ export default function SignupPage() {
                 <div id="Title-Row" className="row">
                     <div className="container">
                         <div id="Signup-Title" class="row justify-content-center">
-                            <h1>JumpStart</h1>
+                            <h1 className='mt-3'>KidFit</h1>
                         </div>
                     </div>
                 </div>

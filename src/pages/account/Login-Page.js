@@ -133,7 +133,7 @@ export default function LoginPage() {
                 <div id="Title-Row" className="row">
                     <div className="container">
                         <div id="Login-Title" class="row justify-content-center mt-5">
-                            <h1>JumpStart</h1>
+                            <h1>KidFit</h1>
                         </div>
                     </div>
                 </div>
@@ -148,7 +148,7 @@ export default function LoginPage() {
                             <div className="row justify-content-center">
                                 <div id="Login-Content" className="d-inline-flex flex-column align-items-center justify-content-center">
                                     <span className='mt-3'>
-                                        Want to play without an account?&nbsp;
+                                        Play without an account?&nbsp;
                                         <Link to='../'>
                                             <a>Click Here</a>
                                         </Link>

@@ -20,8 +20,6 @@ export default function RewardsPage() {
     
     const [progress, setProgress] = useState(0); // a players total progress
     const [unlockCount, setUnlockCount] = useState(0); // total number of unlocks a player has
-    console.log(progress);
-    console.log(unlockCount);
 
     const [errorMessage, setErrorMessage] = useState(null);
 

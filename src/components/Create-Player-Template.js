@@ -9,11 +9,10 @@ import DatePicker from 'react-date-picker';
 export default function CreatePlayerTemplate(nickname, setNickname, validateNickName, setBirthday, birthday, createPlayer) {
 
     // if birthday field is empty don't allow player to be created
-    function validateBirthday() {
-        if (birthday != null && birthday.length > 0) {
-            return createPlayer();
-        }
-        return false
+    const validateBirthday = (thisBirthday) => {
+        if (thisBirthday == null || thisBirthday.length === 0)
+            return false;
+        return createPlayer();
     }
 
     return (
@@ -42,7 +41,7 @@ export default function CreatePlayerTemplate(nickname, setNickname, validateNick
             <div className='pt-3'>
                 <div>
                     {/*if nickname cannot be validated, disable the button*/}
-                    <button id='Create-Player-Button' className={`btn btn-secondary ${(validateNickName() !== true) ? 'button-disabled' : ''}`} onClick={() => validateBirthday()} disabled={validateNickName() !== true}>Create</button>
+                    <button id='Create-Player-Button' className={`btn btn-secondary ${(validateNickName() !== true) ? 'button-disabled' : ''}`} onClick={() => validateBirthday(birthday)} disabled={validateNickName() !== true}>Create</button>
                 </div>
                 <div>
                     {validateNickName() !== true && validateNickName()}

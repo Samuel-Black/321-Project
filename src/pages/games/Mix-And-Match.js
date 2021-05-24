@@ -51,7 +51,7 @@ export default function MixAndMatch(props) {
     // randomize image array order on component mount
     useEffect(() => {
       randomizeImages();
-    }, [])
+    }, [props.difficulty])
 
     // check if level has been cleared
     function winCondition(selection) {

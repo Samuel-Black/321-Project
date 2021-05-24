@@ -15,14 +15,13 @@ export default function CardsGame(props) {
     const [currentCards, setCurrentCards] = useState([]); // current selectable cards in play
     const [errorMessage, setErrorMessage] = useState(null);
 
-    const difficulty = props.difficulty; // current difficulty/level
     const levels = props.numLevels; // total levels in the game
 
     // on difficulty change, get the cards and randomize the order 
     useEffect(() => {
         shuffleArray(props.shuffledImages.incorrect);
         ShuffleCards();
-    }, [difficulty]);
+    }, [props.difficulty]);
 
     // function to slice the array accordingly and set the current cards for the given difficulty/level
     const setCards = (index) => {
@@ -35,13 +34,13 @@ export default function CardsGame(props) {
 
     // function to set the current cards
     const ShuffleCards = () => {
-        if(difficulty === 1) {
+        if(props.difficulty === 1) {
             setCards(2); // use two incorrect images for first level
         }
-        else if(difficulty === 2) {
+        else if(props.difficulty === 2) {
             setCards(4); // use four incorrect images for second level
         }
-        else if(difficulty === 3) {
+        else if(props.difficulty === 3) {
             setCards(props.shuffledImages.incorrect.length); // use all of the incorrect images for third level
         }
     }
@@ -54,36 +53,27 @@ export default function CardsGame(props) {
         ValidateWinCondition(correctSelection, props.setLevelCompleted, props.setPopupState, props.setAttemptNumber, props.attemptNumber); // validate win condition
     }
 
-    // re-render component on resize to keep responsive
-    const responsiveWrapper = () => {
-        return(
-            <ResponsiveSimpleBar>
-
-                {/* While the current player has not compelted the entire game, display the below */}
-                {difficulty <= levels &&
-                    <>
-                        {currentCards.map((image, i) => {
-                            return(
-                                <div key={i} className="d-flex align-items-end card-option mr-2">
-                                    <a onClick={() => WinCondition(image.correct)} >
-                                        <img src={image.default} />
-                                    </a>
-                                </div>
-                            )
-                        })}
-                    </>
-                }
-                
-            </ResponsiveSimpleBar>
-        );
-    }
-
     return (
         <div id="Card-Game" className="container-fluid">
             <div className="row justify-content-center">
                 <SimpleBar style={{ width: '70vw' }} autoHide={false}>
                     <div className="container-fluid">
-                        {responsiveWrapper()}
+                        <ResponsiveSimpleBar>
+
+                            {/* While the current player has not compelted the entire game, display the below */}
+                            <>
+                                {currentCards.map((image, i) => {
+                                    return(
+                                        <div key={i} className="d-flex align-items-end card-option mr-2">
+                                            <a onClick={() => WinCondition(image.correct)} >
+                                                <img src={image.default} />
+                                            </a>
+                                        </div>
+                                    )
+                                })}
+                            </>
+                            
+                        </ResponsiveSimpleBar>
                     </div>
                 </SimpleBar>
             </div>

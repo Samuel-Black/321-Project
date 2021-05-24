@@ -22,23 +22,22 @@ export default function ThrowEyes(props) {
     const mediumTargets = [false,true,true,true,false]; // true is display a target in this position, false is display a gap
     const hardTargets = [true,true,true,true,true]; // true is display a target in this position, false is display a gap
     
-    const difficulty = props.difficulty; // current difficulty/level
     const levels = props.numLevels; // total levels in the game
 
     // randomize images on difficulty change
     useEffect(() => {
         setChar();
-    }, [difficulty]);
+    }, [props.difficulty]);
 
     // randomly select the eyeball position of a character based on the difficulty
     function setChar() {
-        if(difficulty === 1) {
+        if(props.difficulty === 1) {
             return returnRandomThrowEyesChar(props.shuffledImages.easy); // if difficulty is 1, use the array with 2 images
         }
-        else if (difficulty === 2) {
+        else if (props.difficulty === 2) {
             return returnRandomThrowEyesChar(props.shuffledImages.medium); // if difficulty is 2, use the array with 3 images
         }
-        else if (difficulty === 3) {
+        else if (props.difficulty === 3) {
             return returnRandomThrowEyesChar(props.shuffledImages.hard); // if difficulty is 3, use the array with 5 images
         }
     }
@@ -59,20 +58,20 @@ export default function ThrowEyes(props) {
 
                     {/* If using a mobile device and in landscape mode, display the game */}
                     <Orientation orientation='landscape' alwaysRender={false}>
-                        {difficulty <= levels &&
+                        {props.difficulty <= levels &&
                             <>
                                 <Character image={character.default} />
-                                {difficulty === 1 && 
+                                {props.difficulty === 1 && 
                                 <>
                                     <TargetTemplate targets={easyTargets} winCondition={winCondition} image={props.shuffledImages.target.default} targetID={character.id} />
                                 </>
                                 }
-                                {difficulty === 2 &&
+                                {props.difficulty === 2 &&
                                 <>
                                     <TargetTemplate targets={mediumTargets} winCondition={winCondition} image={props.shuffledImages.target.default} targetID={character.id} />
                                 </>
                                 }
-                                {difficulty === 3 &&
+                                {props.difficulty === 3 &&
                                 <>
                                     <TargetTemplate targets={hardTargets} winCondition={winCondition} image={props.shuffledImages.target.default} targetID={character.id} />
                                 </>

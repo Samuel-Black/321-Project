@@ -33,7 +33,6 @@ export default function HopArms(props) {
         setCharactersReady(true);
     }, []);
 
-    const difficulty = props.difficulty; // current difficulty/level
     const levels = props.numLevels; // total levels in the game
 
     // on difficulty change, if the character states are not null, randomize their order.
@@ -41,7 +40,7 @@ export default function HopArms(props) {
         if(characters.character1 !== null || characters.character2 !== null || characters.character3 !== null || characters.character4 !== null) {
             ShuffleCards();
         }
-    }, [difficulty, charactersReady]);
+    }, [props.difficulty, charactersReady]);
 
     // function to slice the array accordingly and set the current cards for the given difficulty/level
     const setCards = (currentCharacter) => {
@@ -54,16 +53,16 @@ export default function HopArms(props) {
 
     // function to set the current cards
     const ShuffleCards = () => {
-        if(difficulty === 1) {
+        if(props.difficulty === 1) {
             setCards(characters.character1); // set cards for level/difficulty 1
         }
-        else if(difficulty === 2) {
+        else if(props.difficulty === 2) {
             setCards(characters.character2); // set cards for level/difficulty 2
         }
-        else if(difficulty === 3) {
+        else if(props.difficulty === 3) {
             setCards(characters.character3); // set cards for level/difficulty 3
         }
-        else if(difficulty === 4) {
+        else if(props.difficulty === 4) {
             setCards(characters.character4); // set cards for level/difficulty 4
         }
     }
@@ -76,36 +75,27 @@ export default function HopArms(props) {
         ValidateWinCondition(correctSelection, props.setLevelCompleted, props.setPopupState, props.setAttemptNumber, props.attemptNumber); // validate win condition
     }
 
-    // re-render component on resize to keep responsive
-    const responsiveWrapper = () => {
-        return(
-            <ResponsiveSimpleBar>
-
-                {/* while the current player has not completed the entire game, display the below */}
-                {difficulty <= levels &&
-                    <>
-                        {currentCards.map((image, i) => {
-                            return(
-                                <div key={i} className="card-option d-flex align-items-end hop-arms-character mr-2">
-                                    <a onClick={() => WinCondition(image.correct)} >
-                                        <img src={image.default} />
-                                    </a>
-                                </div>
-                            )
-                        })}
-                    </>
-                }
-                
-            </ResponsiveSimpleBar>
-        );
-    }
-
     return (
         <div className="container-fluid">
             <div className="row justify-content-center">
                 <SimpleBar style={{ width: '85vw' }} autoHide={false}>
                     <div className="container-fluid">
-                        {responsiveWrapper()}
+                        <ResponsiveSimpleBar>
+
+                            {/* while the current player has not completed the entire game, display the below */}
+                            <>
+                                {currentCards.map((image, i) => {
+                                    return(
+                                        <div key={i} className="card-option d-flex align-items-end hop-arms-character mr-2">
+                                            <a onClick={() => WinCondition(image.correct)} >
+                                                <img src={image.default} />
+                                            </a>
+                                        </div>
+                                    )
+                                })}
+                            </>
+                            
+                        </ResponsiveSimpleBar>
                     </div>
                 </SimpleBar>
             </div>

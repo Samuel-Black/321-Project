@@ -10,10 +10,10 @@ export default function CreatePlayerTemplate(nickname, setNickname, validateNick
 
     // if birthday field is empty don't allow player to be created
     function validateBirthday() {
-        if (birthday == null) {
-            return false;
+        if (birthday != null && birthday.length > 0) {
+            return createPlayer();
         }
-        return createPlayer();
+        return false
     }
 
     return (
@@ -42,7 +42,7 @@ export default function CreatePlayerTemplate(nickname, setNickname, validateNick
             <div className='pt-3'>
                 <div>
                     {/*if nickname cannot be validated, disable the button*/}
-                    <button id='Create-Player-Button' className={`btn btn-secondary ${validateNickName() !== true ? 'button-disabled' : ''}`} onClick={() => validateBirthday()} disabled={validateNickName() !== true}>Create</button>
+                    <button id='Create-Player-Button' className={`btn btn-secondary ${(validateNickName() !== true) ? 'button-disabled' : ''}`} onClick={() => validateBirthday()} disabled={validateNickName() !== true}>Create</button>
                 </div>
                 <div>
                     {validateNickName() !== true && validateNickName()}

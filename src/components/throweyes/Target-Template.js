@@ -3,6 +3,8 @@ Author: Samuel Black
 https://github.com/Samuel-Black
 */
 
+import './Target.scss';
+
 export default function TargetTemplate(props) {
 
     return (

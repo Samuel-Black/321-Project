@@ -23,26 +23,25 @@ export default function MixAndMatch(props) {
 
     const [errorMessage, setErrorMessage] = useState(null);
 
-    const difficulty = props.difficulty; // current difficulty/level
     const levels = props.numLevels; // total levels in the game
 
     // when popup state is false (user has selected play), show a hand dragging animation to prompt the user to slide the cards
     useEffect(() => {
-      if(props.popupState === false && props.attemptNumber === 0 && difficulty > 1) { // only play animation when > 1 difficulty/level since mix & match starts at level 2
+      if(props.popupState === false && props.attemptNumber === 0 && props.difficulty > 1) { // only play animation when > 1 difficulty/level since mix & match starts at level 2
         setShowHand(true);
         setTimeout(() => setShowHand(false), 4000); // stop hand dragging animation after 4 seconds
       }
     }, [props.popupState]);
 
     function randomizeImages() {
-      if(difficulty === 1) {
+      if(props.difficulty === 1) {
         props.shuffledImages.easy = shuffleArray(props.shuffledImages.easy); // randomize easy array
       }
-      if(difficulty === 2) {
+      if(props.difficulty === 2) {
         props.shuffledImages.medium.Panel1 = shuffleArray(props.shuffledImages.medium.Panel1); // randomize medium arrays
         props.shuffledImages.medium.Panel2 = shuffleArray(props.shuffledImages.medium.Panel2);
       }
-      if(difficulty === 3) {
+      if(props.difficulty === 3) {
         props.shuffledImages.hard.Panel1 = shuffleArray(props.shuffledImages.hard.Panel1); // randomize hard arrays
         props.shuffledImages.hard.Panel2 = shuffleArray(props.shuffledImages.hard.Panel2);
         props.shuffledImages.hard.Panel3 = shuffleArray(props.shuffledImages.hard.Panel3);
@@ -58,51 +57,44 @@ export default function MixAndMatch(props) {
     function winCondition(selection) {
       props.setFinishTime(new Date().getTime()); // When user clicks an option set the finish time
       
-      if(difficulty === 1) {
+      if(props.difficulty === 1) {
         const correctSelection = (selection === 'true'); // truth value of the win condition
         ValidateWinCondition(correctSelection, props.setLevelCompleted, props.setPopupState, props.setAttemptNumber, props.attemptNumber); // validate win condition
       }
       else {
-        if(difficulty === 2) {
+        if(props.difficulty === 2) {
           const correctSelection = (panel1 === 'true' && panel2 === 'true'); // truth value of the win condition
           ValidateWinCondition(correctSelection, props.setLevelCompleted, props.setPopupState, props.setAttemptNumber, props.attemptNumber); // validate win condition
         }
-        if(difficulty === 3) {
+        if(props.difficulty === 3) {
           const correctSelection = (panel1 === 'true' && panel2 === 'true' && panel3 === 'true'); // truth value of the win condition
           ValidateWinCondition(correctSelection, props.setLevelCompleted, props.setPopupState, props.setAttemptNumber, props.attemptNumber); // validate win condition
         }
       }
     }
 
-    // re-render component on resize to keep responsive
-    const responsiveWrapper = () => {
-        return(
-          <ResponsiveSimpleBar>
-            {props.shuffledImages.easy.map((image, i) => {
-                return(
-                  <div key={i} className="d-flex align-items-end card-option mr-2">
-                    <a onClick={() => winCondition(image.correct)} >
-                        <img src={image.default} />
-                    </a>
-                  </div>
-                )
-            })}
-          </ResponsiveSimpleBar>
-        );
-    }
-
     return (
       <>
         {/* while the current player has not completed the entire game, display the below */}
-        {difficulty <= levels &&
+        {props.difficulty <= levels &&
           <>
             {/* the first level/difficulty of Mix & Match is the same as the card selection game */}
-            {difficulty === 1 &&
+            {props.difficulty === 1 &&
               <div id='Card-Game' className="container-fluid">
                 <div className="row justify-content-center">
-                  <SimpleBar style={{ width: '70vw' }} autoHide={false}>
+                  <SimpleBar style={{ width: '70vw' }} autoHide={false} className='simplebar-visible'>
                     <div className="container-fluid">
-                      {responsiveWrapper()}
+                      <ResponsiveSimpleBar>
+                        {props.shuffledImages.easy.map((image, i) => {
+                            return(
+                              <div key={i} className="d-flex align-items-end card-option mr-2">
+                                <a onClick={() => winCondition(image.correct)} >
+                                    <img src={image.default} />
+                                </a>
+                              </div>
+                            )
+                        })}
+                      </ResponsiveSimpleBar>
                     </div>
                   </SimpleBar>
                 </div>
@@ -110,7 +102,7 @@ export default function MixAndMatch(props) {
             }
 
             {/* the second level/difficulty of Mix & Match and above is the card match game type */}
-            {difficulty > 1 &&
+            {props.difficulty > 1 &&
               <div className="container">
                 
                 {/* if the cards are matched vertically, display the below */}
@@ -119,7 +111,7 @@ export default function MixAndMatch(props) {
                     {showHand === true && <FaHandPointUp size={80} className="horizontal-drag-hand" />}
 
                     {/* if the difficulty is 2, there are two panels to match */}
-                    {difficulty === 2 &&
+                    {props.difficulty === 2 &&
                       <>
                         <div className= "row justify-content-center match vertical-match mt-5" >
                           <SwiperComponent direction={'horizontal'} setPanel={setPanel1} images={props.shuffledImages.medium.Panel1} />
@@ -131,7 +123,7 @@ export default function MixAndMatch(props) {
                     }
 
                     {/* if the difficulty is 3, there are three panels to match */}
-                    {difficulty === 3 &&
+                    {props.difficulty === 3 &&
                       <>
                         <div className= "row justify-content-center match vertical-match mt-5">
                           <SwiperComponent direction={'horizontal'} setPanel={setPanel1} images={props.shuffledImages.hard.Panel1} />

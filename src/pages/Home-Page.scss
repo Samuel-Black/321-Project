@@ -1,0 +1,272 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
+@import '../components/Colours.scss';
+@import '../components/Break-Point.scss';
+
+.App {
+  min-height: 100vh;
+  min-width: 100vw;
+  align-items: center;
+  background-image: url('../assets/backgrounds/Space-Level-Background.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+#Create-Player-Button {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 5em;
+}
+
+.button-disabled {
+  pointer-events: none;
+}
+
+#Home-Title {
+  h1 {
+    @include tiny-phone-up {
+      font-size: 4.7rem;
+      -webkit-text-stroke-width: 2.8px;
+    }
+    @include phone-up {
+      font-size: 6rem;
+      -webkit-text-stroke-width: 3px;
+    }
+    @include tablet-up {
+      font-size: 12rem;
+      -webkit-text-stroke-width: 4px;
+    }
+    @include large-tablet-up {
+      font-size: 15rem;
+      -webkit-text-stroke-width: 6px;
+    }
+    @include hd-up { 
+      font-size: 15rem;
+      -webkit-text-stroke-width: 4px;
+    }
+    -webkit-text-stroke-color: black;
+  }
+}
+
+#Home-Button {
+  padding-top: 10%;
+}
+
+.card {
+  border-radius: 25px;
+  @include phone-up {
+    font-size: 1.6em;
+  }
+  @include tablet-up {
+    font-size: 1.8em;
+  }
+  @include large-tablet-up {
+    font-size: 2.5em;
+  }
+  @include hd-up { 
+    font-size: 1.6em;
+  }
+}
+
+#Create-Player {
+  svg {
+    color: $secondaryWhite;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      transform: scale(1.08);
+    }
+  }
+  &.card {
+    background-color: rgba(white, 0.35);
+  }
+}
+
+#Account-Creation-Prompt {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  a {
+    font-weight: bold;
+    color: #007bff;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.Player-Container {
+  margin-bottom: 50px !important;
+  @include tiny-phone-up {
+    width: 180px;
+  }
+  @include phone-up {
+    width: 250px;
+  }
+  @include tablet-up {
+    width: 250px;
+  }
+  @include large-tablet-up {
+    width: 300px;
+  }
+  @include hd-up { 
+    width: 250px;
+  }
+  &.card {
+    background-color: rgba(white, 0.75);
+  }
+  .card-img-top {
+    height: 10rem;
+  }
+  img {
+    height: 100%;
+    width: auto;
+    transition: all 0.15s ease-in-out;
+    &:hover {
+      transform: scale(1.08);
+    }
+  }
+  color: black;
+}
+
+#Create-New-Player-Container {
+  overflow-y: auto;
+  h2 {
+    @include tiny-phone-up {
+      font-size: 2.3rem;
+    }
+    @include phone-up {
+      font-size: 3rem;
+    }
+  }
+  #Create-Player-Button {
+    @include tiny-phone-up {
+      font-size: 2.3rem;
+      height: 2.2em;
+    }
+    @include tablet-up {
+      font-size: 3rem;
+      width: 5em;
+    }
+  }
+}
+
+.react-date-picker {
+  input {
+    color: white;
+  }
+  svg {
+    stroke: white;
+  }
+}
+
+#Rewards-Button {
+  background-color: $cinnabar;
+  border-color: $pansyPurple;
+  svg {
+    animation: shake 3s infinite;
+  }
+  &:hover {
+    svg {
+      animation: bounce 1.3s infinite;
+    }
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5),
+            inset 5px 5px 8px rgba(0,0,0,0.5);
+  }
+}
+
+#Create-Player-Content {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  label {    
+    @include tiny-phone-up {
+        font-size: 1.05rem;
+    }
+    @include tablet-up {
+        font-size: 2rem;
+    }
+}
+}
+
+#Play-Button {
+  background-color: $mediumSeaGreen;
+  border-color: $glaucous;
+  svg {
+    transition: transform .4s ease-in-out;
+  }
+  &:hover {
+    svg {
+      transform: translate3d(1vw, 0px, 0px);
+    }
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5),
+            inset 5px 5px 8px rgba(0,0,0,0.5);
+  }
+}
+
+.btn-primary {
+  font-size: 3.5rem;
+  border-width: 3px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.5),
+            10px 10px 15px rgba(0,0,0,0.5),
+            -1px -1px 30px rgba(0,0,0,0.2);
+  padding: 2rem 3rem;
+  border-radius: 60px;
+  @include tiny-phone-up {
+    width: 8em;
+    font-size: 2rem;
+  }
+  @include tablet-up {
+    width: 8em;
+    font-size: 3rem;
+  }
+  @include hd-up { 
+    width: 7.5em;
+  }
+}
+
+#Home-Page-Button-Flex {
+  width: 80vw;
+}
+
+#Profile-Image-Menu-Container {
+  
+  @include tiny-phone-up {
+  }
+  @include tablet-up {
+    width: 8em;
+    font-size: 3rem;
+  }
+  @include hd-up { 
+    min-height: 170px;
+    .card {
+      min-height: 168px;
+    }
+  }
+  .active {
+    transition: all 200ms linear;
+    border-style: solid;
+    border-color: black;
+    border-width: 3px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5),
+            inset 5px 5px 8px rgba(0,0,0,0.5);
+  }
+}
+
+@keyframes bounce {
+  0%   { transform: scale(1,1)      translateY(0); }
+  10%  { transform: scale(1.1,.9)   translateY(0); }
+  30%  { transform: scale(.9,1.1)   translateY(-15px); }
+  50%  { transform: scale(1.05,.95) translateY(0); }
+  57%  { transform: scale(1,1)      translateY(-7px); }
+  64%  { transform: scale(1,1)      translateY(0); }
+  100% { transform: scale(1,1)      translateY(0); }
+}
+@keyframes shake {
+  0% { transform: translate(0px, 0px) }
+  50% { transform: translate(0px, 0px); }
+  60% { transform: translate(1px, 0px); }
+  70% { transform: translate(-1px, 0px); }
+  80% { transform: translate(1px, 0px); }
+  90% { transform: translate(-1px, 0px); }
+  100% { transform: translate(0px, 0px); }
+}

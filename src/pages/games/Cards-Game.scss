@@ -1,0 +1,28 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
+@import '../../components/Break-Point.scss';
+
+.card-option {
+    @include tiny-phone-up {
+        min-height: 70vh;
+    }
+    @include tablet-up {
+        min-height: 50vh;
+    }
+    img {
+        max-height: 350px;
+        width: auto;
+        transition: transform .4s ease-in-out;
+    }
+    #Card-Game &:hover {
+        img {
+            transform:  translate3d(0px, -1vw, 0px)
+                        scale(1.03, 1.03);
+            border-radius: 17px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+    }
+}

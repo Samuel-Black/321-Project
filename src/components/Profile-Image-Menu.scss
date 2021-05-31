@@ -1,0 +1,48 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
+@import './Break-Point.scss';
+
+#Profile-Image-Menu-Container {
+    
+    .card {
+        .locked-content {
+            border-radius: 25px;
+            img {
+                opacity: 0.6;
+            }
+        }
+        svg {
+            fill: rgb(65, 65, 65);
+            position: absolute;
+            right: 37%;
+            top: 25%;
+        }
+        @include tiny-phone-up {
+            min-width: 10rem; 
+        }
+        @include hd-up { 
+            min-width: 18rem; 
+        }
+        .card-img-top {
+            @include tiny-phone-up {
+                min-height: 6rem;
+                max-height: 6rem;
+            }
+            @include phone-up {
+                font-size: 6rem;
+                -webkit-text-stroke-width: 3px;
+            }
+            @include hd-up { 
+                min-height: 10rem;
+                max-height: 10rem;
+            }
+        }
+        img {
+          height: 100%;
+          width: auto;
+        }
+    }
+}

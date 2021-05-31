@@ -1,0 +1,22 @@
+/*
+Author: Samuel Black
+https://github.com/Samuel-Black
+*/
+
+// makes link unclickable, adds gray background colour and positions the svg lock in the center
+.locked-content {
+    border-radius: 25px;
+    opacity: 1.0;
+    pointer-events: none;
+    img {
+        opacity: 0.6;
+    }
+    svg {
+        fill: rgb(65, 65, 65);
+        position: absolute;
+        right: 42%;
+        top: 25%;
+        z-index: 1;
+        opacity: 1.0;
+    }
+}
